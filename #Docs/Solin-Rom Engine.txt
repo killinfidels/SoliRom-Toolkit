@@ -1,0 +1,67 @@
+Short Term Goals
+-Control image on screen
+
+Working on:
+
+X-get sdl image
+
+
+To do:
+random:
+-make comments
+in order:
+-Finish Assets
+-Window
+-Input
+-Layers
+-Objects
+
+
+
+
+
+Application:
+
+	Window Class:
+		-Has: Name, size, name of renderer/the renderer
+		-Can be multiple windows
+		-Layers
+		-Gets passed window events to change size?
+
+	EventHandler:
+		-Keypresses and such
+		-Takes care of different input modes so game logic functions can stay ignorant
+
+	Storage system:
+		-Data files, text files, or screenshots.
+		-Saves
+
+	-States & Statechanger
+		-Runs all objectmanager scripts
+
+ObjectManager:
+
+	GameObject Class:
+		-Things that are rendered and have data attached to them
+		for example size, collisions, texture, position, layer, scripts, gamestate.
+
+	MenuObject Class:
+		-Selected with either mouse or keyboard, changes game states or settings.
+
+	TextObject Class:
+		-Different settings for how to display text.
+
+AssetManager:
+	-Creates, deletes and keeps track of all assets. (Texture, sound, text file, etc)
+	-Needs an error texture incase
+
+  Asset:
+    -different types, paths, frametimes. Attributes of an asset
+
+
+I MAKE LAYERS. THEY DO STUFF ON UPDATE, EVENT AND MAYBE ON RENDER?
+
+APP.RUN RUNS THE ITS FUNCTIONS, GAME DEFINES THEM
+
+LAYERS:
+	Have an 
