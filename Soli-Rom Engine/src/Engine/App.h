@@ -11,6 +11,7 @@ namespace SoliRom
 
 		void Run();
 
+		Window* getWindow();
 	private:
 		Window* window;
 	};

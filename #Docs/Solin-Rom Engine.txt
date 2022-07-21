@@ -1,23 +1,27 @@
 Short Term Goals
--Control image on screen
+	-Control image on screen
+	-Make weedboy :)
 
 Working on:
 
-X-get sdl image
+	X-get sdl image
 
+	temp for WEEDBOY: Gotta make them good after temp work
+		-Asset: just texture for now, made a temp texture, cant be bothered with figuring out arrays
+		-Window: renderer working
+		-Mouse events: just mouse location and click should do
+		-objects: untouched i think
 
 To do:
-random:
--make comments
-in order:
--Finish Assets
--Window
--Input
--Layers
--Objects
 
-
-
+	random:
+		-make comments
+	in order:
+		-Finish Assets
+		-Window
+		-Input
+		-Layers
+		-Objects
 
 
 Application:

@@ -14,11 +14,14 @@ namespace SoliRom
 
 	class Asset
 	{
+	public:
 		bool createAsset(Window* window, assetType type, std::string path);
 
 		//bool createAsset(assetType type, std::string path);
 
-	
+		SDL_Texture* getTexture();
+
+	private:
 
 		assetType type = ENDOFLIST;
 
@@ -26,7 +29,8 @@ namespace SoliRom
 
 		std::string path = "";
 
-		SDL_Texture* getTexture();
+		//for test
+		SDL_Texture* tempTexture;
 
 		int animationFrames = 1;
 		std::vector<SDL_Texture*> texture;

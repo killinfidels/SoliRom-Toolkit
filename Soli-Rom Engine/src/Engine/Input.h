@@ -3,10 +3,16 @@
 
 namespace SoliRom
 {
+	enum MouseCondition
+	{
+		CLICKED,
+		IDLE
+	};
+
 	struct MouseState
 	{
 		int x, y;
-		int mouseState;
+		MouseCondition mouseState = IDLE;
 	};
 
 	struct Key
@@ -26,15 +32,16 @@ namespace SoliRom
 		EventHandler();
 		~EventHandler();
 
+		MouseState mouse;
+
+		void updateMouse();
+		int getMouseX();
+		int getMouseY();
+		MouseCondition getMouseState();
+
+
 	private:
+		SDL_Event e;
 
 	};
-
-	EventHandler::EventHandler()
-	{
-	}
-
-	EventHandler::~EventHandler()
-	{
-	}
 }

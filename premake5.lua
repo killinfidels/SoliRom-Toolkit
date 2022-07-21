@@ -104,6 +104,12 @@ project "TestSpace"
 		"SDL2_image",
 		"Soli-Rom Engine"
 	}
+	
+	--postbuildcommands
+	--{ -- relpath = relative path, copies EcoScape.dll to Sandbox
+		--("{COPYFILE} %{SolutionDir}Extra/SDL2_image-2.6.0/lib/x64/SDL2_image.dll " .. outputdir.. "/Sandbox"),
+		--("{COPYFILE} %{SolutionDir}Extra/SDL2-2.0.22/lib/x64/SDL2.dll " .. outputdir.. "/Sandbox")
+	--}
 
 	filter "configurations:Debug"
 		defines "SOL_DEBUG"

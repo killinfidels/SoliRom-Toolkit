@@ -12,7 +12,11 @@ namespace SoliRom
 		else
 		{
 			SDL_Log("SDL Init Success.");
+			//	Unecessary
+			//if (IMG_Init())
+			//{
 
+			//}
 		}
 
 		window = new Window;
@@ -40,8 +44,14 @@ namespace SoliRom
 		//free all assets
 	}
 
+	Window* App::getWindow()
+	{
+		return window;
+	}
+
 	App::~App()
 	{
 		SDL_Quit();
+		IMG_Quit();
 	}
 }

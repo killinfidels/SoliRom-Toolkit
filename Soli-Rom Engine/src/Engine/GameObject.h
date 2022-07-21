@@ -7,15 +7,18 @@ namespace SoliRom
 {
 	class GameObject
 	{
-		SDL_Rect Rect;
-
-		virtual int script();
+	public:
+		//virtual int script();
 
 		void setSize(int width, int height);
 		void setPosition(int x, int y);
 
 		bool visible = true;
 
+		SDL_Rect* getRect();
+
+	private:
+		SDL_Rect Rect;
 		int assetsN;
 		std::vector<Asset> Assets;
 	};

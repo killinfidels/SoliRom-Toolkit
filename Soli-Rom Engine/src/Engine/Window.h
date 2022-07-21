@@ -11,15 +11,18 @@ namespace SoliRom
 
 		SDL_Renderer* getRenderer();
 
+		SDL_Window* getWindow();
+		
+		int getWindowWidth();
+		int getWindowHeight();
+
 	private:
 		std::string windowName = "WindowTest :)";
-		SDL_Window* sdlwindow = NULL;
+		SDL_Window* window = NULL;
 		SDL_Surface* screensurface = NULL;
 		SDL_Renderer* renderer = NULL;
-		int tempMul = 2;
-		int x = 0,
-			y = 0,
-			width = 256 * tempMul,
-			height = 192 * tempMul;
+		int tempMul = 4;
+
+		SDL_Rect windowSIZE;
 	};
 }

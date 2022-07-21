@@ -1,15 +1,21 @@
 #include "precompiledheaders.h"
 #include "Window.h"
 #include "Asset.h"
+#include "Log.h"
 
 namespace SoliRom
 {
-	bool Asset::createAsset(Window* window, assetType type, std::string path)
+	bool Asset::createAsset(Window* window, assetType type, std::string _path)
 	{
+		path = _path;
 		switch (type)
 		{
 		case SoliRom::TEXTURE:
-			IMG_LoadTexture(window->getRenderer(), path.c_str());
+			tempTexture = IMG_LoadTexture(window->getRenderer(), path.c_str());
+			if (tempTexture  == NULL)
+			{
+				SR_CORE_WARN("Texture failed to load: %s", path.c_str());
+			}
 			break;
 		case SoliRom::ANIMATION:
 			break;
@@ -23,5 +29,9 @@ namespace SoliRom
 			break;
 		}
 		return false;
+	}
+	SDL_Texture* Asset::getTexture()
+	{
+		return tempTexture;
 	}
 }

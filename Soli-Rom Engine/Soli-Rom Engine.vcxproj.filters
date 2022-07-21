@@ -40,6 +40,9 @@
     <ClCompile Include="src\Engine\GameObject.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Input.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Layer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
