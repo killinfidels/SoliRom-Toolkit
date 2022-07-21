@@ -100,26 +100,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\App.h" />
-    <ClInclude Include="src\Engine\Asset.h" />
-    <ClInclude Include="src\Engine\GameObject.h" />
+    <ClInclude Include="src\Engine\Assets\Asset.h" />
+    <ClInclude Include="src\Engine\Engine Objects\GameObject.h" />
     <ClInclude Include="src\Engine\Input.h" />
-    <ClInclude Include="src\Engine\Layer.h" />
+    <ClInclude Include="src\Engine\Windows\Layer.h" />
     <ClInclude Include="src\Engine\Log.h" />
-    <ClInclude Include="src\Engine\Window.h" />
+    <ClInclude Include="src\Engine\Windows\Window.h" />
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
+    <ClInclude Include="src\Engine\Assets\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp" />
-    <ClCompile Include="src\Engine\Asset.cpp" />
-    <ClCompile Include="src\Engine\GameObject.cpp" />
+    <ClCompile Include="src\Engine\Assets\Asset.cpp" />
+    <ClCompile Include="src\Engine\Engine Objects\GameObject.cpp" />
     <ClCompile Include="src\Engine\Input.cpp" />
-    <ClCompile Include="src\Engine\Layer.cpp" />
+    <ClCompile Include="src\Engine\Windows\Layer.cpp" />
     <ClCompile Include="src\Engine\Log.cpp" />
-    <ClCompile Include="src\Engine\Window.cpp" />
+    <ClCompile Include="src\Engine\Windows\Window.cpp" />
     <ClCompile Include="src\precompiledheaders.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Engine\Assets\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

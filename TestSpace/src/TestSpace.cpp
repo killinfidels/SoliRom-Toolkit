@@ -24,15 +24,15 @@ int main(int argc, char* args[])
 	bool skip = false;
 
 
-	Idle1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_1.png");
-	Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_2.png");
-	Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_3.png");
+	Idle1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/idle_1.png");
+	Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/idle_2.png");
+	Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/idle_3.png");
 
-	Booger.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "nosepick.png");
+	Booger.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/nosepick.png");
 	printf("%s", IMG_GetError());
 
-	Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_1.png");
-	Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_2.png");
+	Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/food_1.png");
+	Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/food_2.png");
 
 	int weedMultiplier = 2;
 

@@ -1,7 +1,4 @@
 #pragma once
-#include "Window.h"
-#include "Asset.h"
-#include "Layer.h"
 
 namespace SoliRom
 {
@@ -20,7 +17,6 @@ namespace SoliRom
 	private:
 		SDL_Rect Rect;
 		int assetsN;
-		std::vector<Asset> Assets;
 	};
 }
 

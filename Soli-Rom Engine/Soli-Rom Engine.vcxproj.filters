@@ -9,49 +9,49 @@
     <ClInclude Include="src\Engine\App.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Asset.h">
+    <ClInclude Include="src\Engine\Assets\Asset.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\GameObject.h">
+    <ClInclude Include="src\Engine\Engine Objects\GameObject.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Layer.h">
+    <ClInclude Include="src\Engine\Windows\Layer.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Log.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Window.h">
+    <ClInclude Include="src\Engine\Windows\Window.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
+    <ClInclude Include="src\Engine\Assets\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Asset.cpp">
+    <ClCompile Include="src\Engine\Assets\Asset.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\GameObject.cpp">
+    <ClCompile Include="src\Engine\Engine Objects\GameObject.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Input.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Layer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Log.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Window.cpp">
+    <ClCompile Include="src\Engine\Windows\Window.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\precompiledheaders.cpp" />
+    <ClCompile Include="src\Engine\Windows\Layer.cpp" />
+    <ClCompile Include="src\Engine\Assets\Texture.cpp" />
   </ItemGroup>
 </Project>

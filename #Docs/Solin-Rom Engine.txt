@@ -6,8 +6,17 @@ Working on:
 
 	X-get sdl image
 
+	-learn arrays again
+
+	-Texture
+	
+	-Animation
+
+	-Asset Manager
+
 	temp for WEEDBOY: Gotta make them good after temp work
-		-Asset: just texture for now, made a temp texture, cant be bothered with figuring out arrays
+		-Asset: just texture for now, made a temp texture, cant be bothered with
+		figuring out arrays
 		-Window: renderer working
 		-Mouse events: just mouse location and click should do
 		-objects: untouched i think
@@ -25,10 +34,14 @@ To do:
 
 
 Application:
+	Application should be able to have a 'current window' so its not needed to
+	select application.getwindow("name").getwindowsize() for ex. instead something
+	like application.getwindowsize() <- maybe overload this with
+	application.getwindowsize("name") to specify window?
 
 	Window Class:
 		-Has: Name, size, name of renderer/the renderer
-		-Can be multiple windows
+		-Each object is a new window
 		-Layers
 		-Gets passed window events to change size?
 
@@ -56,10 +69,16 @@ ObjectManager:
 		-Different settings for how to display text.
 
 AssetManager:
-	-Creates, deletes and keeps track of all assets. (Texture, sound, text file, etc)
+	-Creates, deletes and keeps track of all assets. (Texture, sound, text file,
+	etc)
 	-Needs an error texture incase
+	-2d array where each row is for a different renderer. If a window tries to
+	use a texture from another window it re creates the texture for that
+	windows renderer
 
-  Asset:
+
+  Asset: A Baseclass perhaps? anyways i want different classes for each asset
+	type i think
     -different types, paths, frametimes. Attributes of an asset
 
 
@@ -68,4 +87,4 @@ I MAKE LAYERS. THEY DO STUFF ON UPDATE, EVENT AND MAYBE ON RENDER?
 APP.RUN RUNS THE ITS FUNCTIONS, GAME DEFINES THEM
 
 LAYERS:
-	Have an 
+	Have an

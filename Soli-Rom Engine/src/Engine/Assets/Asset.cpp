@@ -1,7 +1,7 @@
 #include "precompiledheaders.h"
-#include "Window.h"
+#include "../Windows/Window.h"
 #include "Asset.h"
-#include "Log.h"
+#include "../Log.h"
 
 namespace SoliRom
 {

@@ -5,7 +5,7 @@ namespace SoliRom
 {
 	void Log::Init()
 	{
-		//TODO: SET OWN COLORS
+		//TODO: CLIENT SET OWN COLORS
 	}
 
 	void Log::WriteToConsole(Logger lgr, Severity svy, const char* str, ...)
