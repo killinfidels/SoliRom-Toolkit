@@ -18,7 +18,7 @@ Working on:
 		-Asset: just texture for now, made a temp texture, cant be bothered with
 		figuring out arrays
 		-Window: renderer working
-		-Mouse events: just mouse location and click should do
+		X-Mouse events: just mouse location and click should do -EVEN MADE IT SINGLETON >:)
 		-objects: untouched i think
 
 To do:

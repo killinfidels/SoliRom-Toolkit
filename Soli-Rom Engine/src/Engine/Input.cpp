@@ -3,13 +3,9 @@
 
 namespace SoliRom
 {
-	EventHandler::EventHandler()
-	{
-	}
-
-	EventHandler::~EventHandler()
-	{
-	}
+	MouseState EventHandler::mouse = {0, 0, IDLE};
+	SDL_Event EventHandler::e;
+	bool EventHandler::quit = false;
 
 	void EventHandler::updateMouse()
 	{
@@ -22,11 +18,13 @@ namespace SoliRom
 				mouse.y = e.motion.y;
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				mouse.mouseState = MouseCondition::CLICKED;
+				mouse.mouseState = CLICKED;
 				break;
 			case SDL_MOUSEBUTTONUP:
-				mouse.mouseState = MouseCondition::IDLE;
+				mouse.mouseState = IDLE;
 				break;
+			case SDL_QUIT:
+				quit = true;
 			default:
 				break;
 			}
@@ -35,11 +33,21 @@ namespace SoliRom
 
 	int EventHandler::getMouseX()
 	{
-		return 0;
+		return mouse.x;
 	}
 
 	int EventHandler::getMouseY()
 	{
-		return 0;
+		return mouse.y;
+	}
+
+	MouseCondition EventHandler::getMouseState()
+	{
+		return mouse.mouseState;
+	}
+
+	bool EventHandler::getQuit()
+	{
+		return quit;
 	}
 }

@@ -29,19 +29,20 @@ namespace SoliRom
 	class EventHandler
 	{
 	public:
-		EventHandler();
-		~EventHandler();
 
-		MouseState mouse;
 
-		void updateMouse();
-		int getMouseX();
-		int getMouseY();
-		MouseCondition getMouseState();
+		static void updateMouse();
+		static int getMouseX();
+		static int getMouseY();
+		static MouseCondition getMouseState();
+		static bool getQuit();
 
 
 	private:
-		SDL_Event e;
+		EventHandler();
+		static MouseState mouse;
+		static SDL_Event e;
+		static bool quit;
 
 	};
 }

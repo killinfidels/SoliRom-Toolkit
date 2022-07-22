@@ -26,16 +26,20 @@ namespace SoliRom
 
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
-			SR_CORE_ERROR("SDL Init failed: %s", SDL_GetError());
+			SR_CORE_FATAL("SDL Init Failed: %s", SDL_GetError());
 		}
 		else
 		{
 			SR_CORE_INFO("SDL Init Success.");
 			//	Unecessary
-			//if (IMG_Init())
-			//{
-
-			//}
+			if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)))
+			{
+				SR_CORE_FATAL("SDL_img Init Failed: %s", SDL_GetError());
+			}
+			else
+			{
+				SR_CORE_INFO("SDL_img Init Success.");
+			}
 		}
 
 		window = new Window;
