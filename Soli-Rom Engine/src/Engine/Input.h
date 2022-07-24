@@ -6,6 +6,7 @@ namespace SoliRom
 	enum MouseCondition
 	{
 		CLICKED,
+		HELD,
 		IDLE
 	};
 
@@ -23,7 +24,7 @@ namespace SoliRom
 
 	struct KeyState
 	{
-		Key keys[];
+		std::vector<Key> keys;
 	};
 
 	class EventHandler

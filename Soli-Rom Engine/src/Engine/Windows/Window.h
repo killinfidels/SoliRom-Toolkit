@@ -17,7 +17,7 @@ namespace SoliRom
 		int getWindowHeight();
 
 	private:
-		std::string windowName = "WindowTest :)";
+		std::string windowName = "feed him :)";
 		SDL_Window* window = NULL;
 		SDL_Surface* screensurface = NULL;
 		SDL_Renderer* renderer = NULL;

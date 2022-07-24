@@ -1,5 +1,6 @@
 #include "precompiledheaders.h"
 #include "Input.h"
+#include "Log.h"
 
 namespace SoliRom
 {
@@ -9,6 +10,12 @@ namespace SoliRom
 
 	void EventHandler::updateMouse()
 	{
+		//if clicked last update set to held
+		if (mouse.mouseState == CLICKED)
+		{
+			mouse.mouseState = HELD;
+		}
+
 		while (SDL_PollEvent(&e) != 0)
 		{
 			switch (e.type)
@@ -25,6 +32,7 @@ namespace SoliRom
 				break;
 			case SDL_QUIT:
 				quit = true;
+				break;
 			default:
 				break;
 			}

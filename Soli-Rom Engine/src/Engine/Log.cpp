@@ -31,11 +31,11 @@ namespace SoliRom
 
 		switch (svy) //sets text color based on severity of message
 		{
-		case Log::Severity::Trace:
+		case Log::Severity::Info:
 			timeColor = "";
 			textColor = "";
 			break;
-		case Log::Severity::Info:
+		case Log::Severity::Trace:
 			timeColor = "";
 			textColor = textColor + "32m"; // GREEN FG
 			break;

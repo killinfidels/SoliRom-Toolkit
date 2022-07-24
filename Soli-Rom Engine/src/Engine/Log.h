@@ -9,8 +9,8 @@ namespace SoliRom
 
 		enum class Severity
 		{
-			Trace,
 			Info,
+			Trace,
 			Warn,
 			Error,
 			Fatal
