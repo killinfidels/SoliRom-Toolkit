@@ -5,6 +5,8 @@ namespace SoliRom
 	class GameObject
 	{
 	public:
+		GameObject();
+
 		//virtual int script();
 
 		void setSize(int width, int height);

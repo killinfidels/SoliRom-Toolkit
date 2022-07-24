@@ -5,6 +5,11 @@
 
 namespace SoliRom
 {
+	Asset::Asset()
+	{
+		tempTexture = NULL;
+	}
+
 	bool Asset::createAsset(Window* window, assetType type, std::string _path)
 	{
 		path = _path;

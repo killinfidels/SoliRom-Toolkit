@@ -15,6 +15,9 @@ namespace SoliRom
 	class Asset
 	{
 	public:
+
+		Asset();
+
 		bool createAsset(Window* window, assetType type, std::string path);
 
 		//bool createAsset(assetType type, std::string path);

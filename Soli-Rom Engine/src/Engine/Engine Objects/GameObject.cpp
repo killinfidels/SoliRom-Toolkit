@@ -3,6 +3,16 @@
 
 namespace SoliRom
 {
+	GameObject::GameObject()
+	{
+		Rect.x = 0;
+		Rect.y = 0;
+		Rect.w = 10;
+		Rect.h = 10;
+
+		assetsN = 0;
+	}
+
 	void GameObject::setSize(int width, int height)
 	{
 		Rect.w = width;
