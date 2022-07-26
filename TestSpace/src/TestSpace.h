@@ -6,9 +6,9 @@ SoliRom::App TestSpace;
 class things : public SoliRom::GameObject
 {
 private:
-	SDL_Texture* texture;
 
 public:
+	SDL_Texture* texture;
 	void draw()
 	{
 		SDL_RenderCopy(TestSpace.getWindow()->getRenderer(), texture, NULL, getRect());
@@ -27,6 +27,11 @@ protected:
 	{
 		texture = _texture.getTexture();
 	}
+
+	const std::chrono::milliseconds frameTime = std::chrono::milliseconds(200);
+	std::chrono::steady_clock::time_point timeLastFrame = std::chrono::steady_clock::now() - frameTime;
+	std::chrono::steady_clock::time_point timeNow;
+	int frame = 1;
 };
 
 class chip : public things
@@ -43,9 +48,9 @@ public:
 
 	static void loadAssets()
 	{
-		chip1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/chip_1.png");
-		chip2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/chip_2.png");
-		chip3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "../Assets/chip_3.png");
+		chip1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/chip_1.png");
+		chip2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/chip_2.png");
+		chip3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/chip_3.png");
 	};
 
 
@@ -75,11 +80,6 @@ public:
 	static int heldChip;
 
 private:
-	const std::chrono::milliseconds frameTime = std::chrono::milliseconds(200);
-	std::chrono::steady_clock::time_point timeLastFrame = std::chrono::steady_clock::now() - frameTime;
-	std::chrono::steady_clock::time_point timeNow;
-	int frame = 1;
-
 
 	static SoliRom::Asset chip1;
 	static SoliRom::Asset chip2;
@@ -91,3 +91,272 @@ private:
  SoliRom::Asset chip::chip3;
 
  int chip::heldChip = -1;
+
+ class guy : public things
+ {
+ private:
+
+	 //weedguy idle
+	 SoliRom::Asset Idle1;
+	 SoliRom::Asset Idle2;
+	 SoliRom::Asset Idle3;
+	 //weedguy booger
+	 SoliRom::Asset Pick1;
+	 SoliRom::Asset Pick2;
+	 //weedguy wants dorito
+	 SoliRom::Asset Hungry1;
+	 SoliRom::Asset Hungry2;
+	 //smoke
+	 SoliRom::Asset Smoke1;
+	 SoliRom::Asset Smoke2;
+	 //fuck
+	 SoliRom::Asset Fuck1;
+	 SoliRom::Asset Fuck2;
+
+	 int loopcount = 0;
+ public:
+	 void FLIPdraw()
+	 {
+		 SDL_RenderCopyEx(TestSpace.getWindow()->getRenderer(), texture, NULL, getRect(), 0, NULL, SDL_FLIP_VERTICAL);
+	 }
+
+	 enum animation
+	 {
+		 IDLE, BOOGER, HUNGRY, FUCK, BOOF
+	 };
+
+	 animation currentAnimation = IDLE;
+
+	 guy()
+	 {
+		Idle1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_1.png");
+		Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_2.png");
+		Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_3.png");
+		Pick1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
+		Pick2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_2.png");
+		Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_1.png");
+		Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_2.png");
+		Smoke1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_1.png");
+		Smoke2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_2.png");
+		Fuck1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_1.png");
+		Fuck2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_2.png");
+	 }
+
+	 void idle()
+	 {
+		 if (currentAnimation != IDLE)
+		 {
+			 frame = 1;
+			 currentAnimation = IDLE;
+		 }
+
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 switch (frame)
+			 {
+			 case 1:
+				 setTexture(Idle1);
+				 break;
+			 case 2:
+				 setTexture(Idle2);
+				 break;
+			 case 3:
+				 setTexture(Idle3);
+				 frame = 0;
+				 break;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+	 }
+
+	 void booger()
+	 {
+		 if (currentAnimation != BOOGER)
+		 {
+			 frame = 1;
+			 currentAnimation = BOOGER;
+			 loopcount = 0;
+		 }
+
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 switch (frame)
+			 {
+			 case 1:
+				 setTexture(Pick1);
+				 break;
+			 case 2:
+				 setTexture(Pick2);
+				 loopcount++;
+				 frame = 0;
+			 default:
+				 break;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+	 }
+
+	 void hungry()
+	 {
+		 if (currentAnimation != HUNGRY)
+		 {
+			 frame = 1;
+			 currentAnimation = HUNGRY;
+		 }
+
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 switch (frame)
+			 {
+			 case 1:
+				 setTexture(Hungry1);
+				 break;
+			 case 2:
+				 setTexture(Hungry2);
+			 default:
+				 frame = 0;
+				 break;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+	 }
+
+	 void fuck()
+	 {
+		 if (currentAnimation != FUCK)
+		 {
+			 frame = 1;
+			 currentAnimation = FUCK;
+		 }
+
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 switch (frame)
+			 {
+			 case 1:
+				 setTexture(Fuck1);
+				 break;
+			 case 2:
+				 setTexture(Fuck2);
+			 default:
+				 frame = 0;
+				 break;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+	 }
+
+	 void boof()
+	 {
+		 if (currentAnimation != BOOF)
+		 {
+			 frame = 1;
+			 currentAnimation = BOOF;
+			 loopcount = 0;
+		 }
+
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 switch (frame)
+			 {
+			 case 1:
+				 setTexture(Smoke1);
+				 break;
+			 case 2:
+				 setTexture(Smoke2);
+			 default:
+				 frame = 0;
+				 loopcount++;
+				 if (loopcount > 5)
+				 {
+					 //currentAnimation = IDLE;
+				 }
+				 break;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+	 }
+
+	 void animate(animation _setAnim)
+	 {
+		 if (_setAnim == FUCK || currentAnimation == FUCK)
+		 {
+			 fuck();
+		 }
+		 else
+		 {
+
+			 if (loopcount < 5 && currentAnimation == BOOGER)
+			 {
+				 booger();
+			 }
+			 else
+			 {
+				 loopcount = 0;
+				 switch (_setAnim)
+				 {
+				 case IDLE:
+					 idle();
+					 break;
+				 case BOOGER:
+					 booger();
+					 break;
+				 case HUNGRY:
+					 hungry();
+					 break;
+				 case FUCK:
+					 fuck();
+					 break;
+				 case BOOF:
+					 boof();
+					 break;
+				 default:
+					 break;
+				 }
+			 }
+		 }
+	 }
+ };
+
+ class boof : public things
+ {
+	 boof()
+	 {
+		 Boof1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/boof_1.png");
+		 Boof2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/boof_2.png");
+
+	 }
+
+	 SoliRom::Asset Boof1;
+	 SoliRom::Asset Boof2;
+
+	 void animate()
+	 {
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 switch (frame)
+			 {
+			 case 1:
+				 setTexture(Boof1);
+				 break;
+			 case 2:
+				 setTexture(Boof2);
+				 frame = 0;
+				 break;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+	 }
+ };
