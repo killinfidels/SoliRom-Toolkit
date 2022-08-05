@@ -20,7 +20,7 @@ void enableColors()
 
 namespace SoliRom
 {
-	App::App()
+	App::App(int _windowSizeMul)
 	{
 		enableColors();
 
@@ -42,7 +42,7 @@ namespace SoliRom
 			}
 		}
 
-		window = new Window;
+		window = new Window(_windowSizeMul);
 	}
 
 	void App::Run()

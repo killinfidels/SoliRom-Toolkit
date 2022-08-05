@@ -4,8 +4,9 @@
 
 namespace SoliRom
 {
-	Window::Window()
+	Window::Window(int _sizeMul)
 	{
+		tempMul = _sizeMul;
 		windowSIZE.x = 0;
 		windowSIZE.y = 0;
 		windowSIZE.w = 256 * tempMul;

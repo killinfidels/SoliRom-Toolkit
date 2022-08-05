@@ -1,6 +1,6 @@
 #include "Soli-Rom.h"
 
-SoliRom::App TestSpace;
+SoliRom::App TestSpace(3);
 
 
 class things : public SoliRom::GameObject
@@ -22,13 +22,13 @@ public:
 		setPosition(getRect()->x + _x, getRect()->y + _y);
 	}
 
-protected:
 	void setTexture(SoliRom::Asset _texture)
 	{
 		texture = _texture.getTexture();
 	}
+protected:
 
-	const std::chrono::milliseconds frameTime = std::chrono::milliseconds(200);
+	std::chrono::milliseconds frameTime = std::chrono::milliseconds(200);
 	std::chrono::steady_clock::time_point timeLastFrame = std::chrono::steady_clock::now() - frameTime;
 	std::chrono::steady_clock::time_point timeNow;
 	int frame = 1;
@@ -129,17 +129,21 @@ private:
 
 	 guy()
 	 {
-		Idle1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_1.png");
-		Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_2.png");
-		Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_3.png");
-		Pick1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
-		Pick2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_2.png");
-		Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_1.png");
-		Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_2.png");
-		Smoke1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_1.png");
-		Smoke2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_2.png");
-		Fuck1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_1.png");
-		Fuck2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_2.png");
+		 sizeMul = 4;
+		 setSize(100 * sizeMul, 100 * sizeMul);
+		 setPosition(TestSpace.getWindow()->getWindowWidth() - getRect()->w, (int)(TestSpace.getWindow()->getWindowHeight() / 1.5) - (getRect()->h / 2));
+		 
+		 Idle1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_1.png");
+		 Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_2.png");
+		 Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_3.png");
+		 Pick1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
+		 Pick2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_2.png");
+		 Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_1.png");
+		 Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_2.png");
+		 Smoke1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_1.png");
+		 Smoke2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_2.png");
+		 Fuck1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_1.png");
+		 Fuck2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_2.png");
 	 }
 
 	 void idle()
@@ -276,10 +280,6 @@ private:
 			 default:
 				 frame = 0;
 				 loopcount++;
-				 if (loopcount > 5)
-				 {
-					 //currentAnimation = IDLE;
-				 }
 				 break;
 			 }
 			 timeLastFrame = std::chrono::steady_clock::now();
@@ -295,7 +295,12 @@ private:
 		 }
 		 else
 		 {
-
+		 if (loopcount < 5 && currentAnimation == BOOF)
+		 {
+			 boof();
+		 }
+		 else
+		 {
 			 if (loopcount < 5 && currentAnimation == BOOGER)
 			 {
 				 booger();
@@ -325,38 +330,144 @@ private:
 				 }
 			 }
 		 }
+		 }
 	 }
  };
 
  class boof : public things
  {
+ public:
+	 SoliRom::Asset Boof;
+
 	 boof()
 	 {
-		 Boof1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/boof_1.png");
-		 Boof2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/boof_2.png");
-
+		 Boof.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/jont.png");
+		 setTexture(Boof);
+		 setSize(450 / 2, 250 / 2);
 	 }
 
-	 SoliRom::Asset Boof1;
-	 SoliRom::Asset Boof2;
+	 bool held = false;
+
+	 bool jointLogic(guy* _weedguy)
+	 {
+
+			 //IF JOINT CLICKED
+			 if (SoliRom::EventHandler::getMouseX() > getRect()->x && SoliRom::EventHandler::getMouseX() < getRect()->x + getRect()->w)
+			 {
+				 if (SoliRom::EventHandler::getMouseY() > getRect()->y && SoliRom::EventHandler::getMouseY() < getRect()->y + getRect()->h)
+				 {
+
+					 if (SoliRom::EventHandler::getMouseState() != SoliRom::MouseCondition::HELD)
+					 {
+						 held = false;
+					 }
+					 if (SoliRom::EventHandler::getMouseState() == SoliRom::MouseCondition::CLICKED)
+					 {
+						 held = true;
+					 }
+
+					 if (held)
+					 {
+						 setPosition(SoliRom::EventHandler::getMouseX() - (getRect()->w / 2), SoliRom::EventHandler::getMouseY() - (getRect()->h / 2));
+					 }
+					 else
+					 {
+						setPosition(0, 0);
+						 if (SoliRom::EventHandler::getMouseX() > _weedguy->getRect()->x && SoliRom::EventHandler::getMouseX() < _weedguy->getRect()->x + _weedguy->getRect()->w)
+						 {
+							 if (SoliRom::EventHandler::getMouseY() > _weedguy->getRect()->y && SoliRom::EventHandler::getMouseY() < _weedguy->getRect()->y + _weedguy->getRect()->h)
+							 {
+								 //smoke joint
+								 return true;
+							 }
+						 }
+
+					 }
+				 }
+			 }
+
+			 return false;
+	 }
+
+	 int skækness = 90000;
+
+ };
+
+ class knife : public things
+ {
+ public:
+	 bool held = false;
+
+	 knife()
+	 {
+		 std::string load;
+		 for (int i = 0; i < 10; i++)
+		 {
+			 load = "Assets/KNIFE" + std::to_string(i + 1) + ".png";
+			 knives[i].createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, load);
+		 }
+		 frameTime = std::chrono::milliseconds(200);
+		 frame = 0;
+		 sizeMul = 2;
+		 setSize(30 * sizeMul, 78 * sizeMul);
+		 setPosition(TestSpace.getWindow()->getWindowWidth() - getRect()->w, 0);
+		 //size 30 78
+	 }
+	 SoliRom::Asset knives[10];
 
 	 void animate()
 	 {
 		 timeNow = std::chrono::steady_clock::now();
 		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
 		 {
-			 switch (frame)
+			 setTexture(knives[frame]);
+			 if (frame == 9)
 			 {
-			 case 1:
-				 setTexture(Boof1);
-				 break;
-			 case 2:
-				 setTexture(Boof2);
-				 frame = 0;
-				 break;
+				frame = -1;
 			 }
 			 timeLastFrame = std::chrono::steady_clock::now();
 			 frame++;
 		 }
 	 }
+
+	 bool knifeLogic(guy* _weedguy)
+	 {
+		 //IF JOINT CLICKED
+		 if (SoliRom::EventHandler::getMouseX() > getRect()->x && SoliRom::EventHandler::getMouseX() < getRect()->x + getRect()->w)
+		 {
+			 if (SoliRom::EventHandler::getMouseY() > getRect()->y && SoliRom::EventHandler::getMouseY() < getRect()->y + getRect()->h)
+			 {
+
+				 if (SoliRom::EventHandler::getMouseState() != SoliRom::MouseCondition::HELD)
+				 {
+					 held = false;
+				 }
+				 if (SoliRom::EventHandler::getMouseState() == SoliRom::MouseCondition::CLICKED)
+				 {
+					 held = true;
+				 }
+
+				 if (held)
+				 {
+					 setPosition(SoliRom::EventHandler::getMouseX() - (getRect()->w / 2), SoliRom::EventHandler::getMouseY() - (getRect()->h / 2));
+				 }
+				 else
+				 {
+					 setPosition(TestSpace.getWindow()->getWindowWidth() - getRect()->w, 0);
+					 if (SoliRom::EventHandler::getMouseX() > _weedguy->getRect()->x && SoliRom::EventHandler::getMouseX() < _weedguy->getRect()->x + _weedguy->getRect()->w)
+					 {
+						 if (SoliRom::EventHandler::getMouseY() > _weedguy->getRect()->y && SoliRom::EventHandler::getMouseY() < _weedguy->getRect()->y + _weedguy->getRect()->h)
+						 {
+							 //smoke joint
+							 return true;
+						 }
+					 }
+
+				 }
+			 }
+		 }
+
+		 return false;
+	 }
+
  };

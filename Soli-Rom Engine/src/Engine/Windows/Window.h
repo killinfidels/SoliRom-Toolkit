@@ -6,7 +6,7 @@ namespace SoliRom
 	class Window
 	{
 	public:
-		Window();
+		Window(int _sizeMul);
 		~Window();
 
 		SDL_Renderer* getRenderer();
@@ -21,7 +21,7 @@ namespace SoliRom
 		SDL_Window* window = NULL;
 		SDL_Surface* screensurface = NULL;
 		SDL_Renderer* renderer = NULL;
-		int tempMul = 3;
+		int tempMul = 4;
 
 		SDL_Rect windowSIZE;
 	};

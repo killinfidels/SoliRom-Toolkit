@@ -16,6 +16,7 @@ const int chipAmount = 20;
 chip chips[chipAmount];
 bool usingChip[chipAmount];
 
+knife stabby;
 
 int main(int argc, char* args[])
 {
@@ -32,16 +33,11 @@ int main(int argc, char* args[])
 	//dorito textures
 	doritoBag.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/doritobag_1.png");
 	chip::loadAssets();
-	//weedman size position
-	int weedMul = 4; //size mult
-	weedGuy.setSize(100 * weedMul, 100 * weedMul);
-	
-	weedGuy.setPosition((int)(TestSpace.getWindow()->getWindowWidth() / 1.3) - (weedGuy.getRect()->w / 2), (int)(TestSpace.getWindow()->getWindowHeight() / 1.5) - (weedGuy.getRect()->h / 2));
 
 	//dorito size position
 	int bagMul = 2;
 	bagDorito.setSize(100 * bagMul, 100 * bagMul);
-	bagDorito.setPosition(TestSpace.getWindow()->getWindowWidth() / 5, (int)(TestSpace.getWindow()->getWindowHeight() / 1.5));
+	bagDorito.setPosition(TestSpace.getWindow()->getWindowWidth() / 20, (int)(TestSpace.getWindow()->getWindowHeight() / 1.5));
 
 	const std::chrono::milliseconds frameTime(200);
 	std::chrono::steady_clock::time_point t1;
@@ -64,6 +60,15 @@ int main(int argc, char* args[])
 	guy::animation setAnimation = guy::IDLE;
 
 	guy::animation lastAnimation = guy::IDLE;
+
+	boof Jont;
+
+	things block;
+	block.setSize(300, 300);
+	block.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (block.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h) - (block.getRect()->h / 2) - 20);
+	SoliRom::Asset grass;
+	grass.createAsset(TestSpace.getWindow(), SoliRom::TEXTURE, "Assets/grass.png");
+	block.setTexture(grass);
 
 	while (!skip)
 	{
@@ -125,6 +130,12 @@ int main(int argc, char* args[])
 			}
 
 		}
+
+		if (Jont.jointLogic(&weedGuy))
+		{
+			setAnimation = guy::BOOF;
+		}
+		
 
 		//foodguy
 		for (int i = 0; i < chipAmount; i++)
@@ -188,15 +199,23 @@ int main(int argc, char* args[])
 
 		weedGuy.animate(setAnimation);
 
+		stabby.knifeLogic(&weedGuy);
 		//clear
 		SDL_RenderClear(TestSpace.getWindow()->getRenderer());
 
-
+		block.draw();
 
 		weedGuy.draw();
 
+		stabby.animate();
+		stabby.draw();
+
+
+		Jont.draw();
+
 		//render bag dorito
 		SDL_RenderCopy(TestSpace.getWindow()->getRenderer(), doritoBag.getTexture(), NULL, bagDorito.getRect());
+
 
 		//render chip
 		for (int i = 0; i < chipAmount; i++)
@@ -220,6 +239,7 @@ int main(int argc, char* args[])
 			//render return to white
 			SDL_SetRenderDrawColor(TestSpace.getWindow()->getRenderer(), 255, 255, 255, 255);
 		}
+
 
 		//render
 		SDL_RenderPresent(TestSpace.getWindow()->getRenderer());
