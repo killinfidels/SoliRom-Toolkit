@@ -3,47 +3,45 @@
 
 namespace SoliRom
 {
-	enum MouseCondition
+	//Mouse Actions
+	enum MouseState
 	{
-		CLICKED,
 		HELD,
 		IDLE
 	};
-
-	struct MouseState
+	//Mouse state
+	struct Mouse
 	{
 		int x, y;
-		MouseCondition mouseState = IDLE;
+		bool click = false;
+		MouseState state = IDLE;
 	};
-
-	struct Key
-	{
-		int keyID;
-		int keyState;
-	};
-
-	struct KeyState
-	{
-		std::vector<Key> keys;
-	};
+	//key state
 
 	class EventHandler
 	{
 	public:
 
 
-		static void updateMouse();
-		static int getMouseX();
-		static int getMouseY();
-		static MouseCondition getMouseState();
+		static void update();
+
+		static Mouse getMouse();
 		static bool getQuit();
 
 
 	private:
 		EventHandler();
-		static MouseState mouse;
+		//keyboardstate
+		static struct Key
+		{
+			int keyID;
+			bool keyState;
+		};
+		static std::vector<Key> keyboard;
+		//mousestate
+		static Mouse mouse;
 		static SDL_Event e;
-		static bool quit;
-
+		//window events
+		static bool quit; //temp
 	};
 }

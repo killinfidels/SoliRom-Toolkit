@@ -6,10 +6,14 @@ Working on:
 
 	X-get sdl image
 
+	-switch main() to be in engine
+
+	-singleton app class
+
 	-learn arrays again
 
 	-Texture
-	
+
 	-Animation
 
 	-Asset Manager

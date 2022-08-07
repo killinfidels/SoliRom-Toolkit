@@ -1,11 +1,24 @@
 #include "precompiledheaders.h"
 #include "Log.h"
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 namespace SoliRom
 {
 	void Log::Init()
 	{
-		//TODO: CLIENT SET OWN COLORS
+#ifdef _WIN32 //Enables color on console for windows
+		DWORD consoleMode;
+		HANDLE outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+		if (GetConsoleMode(outputHandle, &consoleMode))
+		{
+			SetConsoleMode(outputHandle, consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+		}
+#else
+		SR_CORE_WARN("System is not Windows. Color log may Fail");
+#endif
 	}
 
 	void Log::WriteToConsole(Logger lgr, Severity svy, const char* str, ...)

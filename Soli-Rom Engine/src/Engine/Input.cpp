@@ -4,16 +4,19 @@
 
 namespace SoliRom
 {
-	MouseState EventHandler::mouse = {0, 0, IDLE};
+	Mouse EventHandler::mouse = {0, 0, IDLE};
 	SDL_Event EventHandler::e;
+	std::vector<EventHandler::Key> EventHandler::keyboard;
 	bool EventHandler::quit = false;
 
-	void EventHandler::updateMouse()
+	void EventHandler::update()
 	{
-		//if clicked last update set to held
-		if (mouse.mouseState == CLICKED)
+		//reset click and set held
+		if (mouse.click == true)
 		{
-			mouse.mouseState = HELD;
+			mouse.click = false;
+			//if its not actually held it will be reset by mousebutton up
+			mouse.state = HELD;
 		}
 
 		while (SDL_PollEvent(&e) != 0)
@@ -25,13 +28,44 @@ namespace SoliRom
 				mouse.y = e.motion.y;
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				mouse.mouseState = CLICKED;
+				mouse.click = true;
 				break;
 			case SDL_MOUSEBUTTONUP:
-				mouse.mouseState = IDLE;
+				mouse.state = IDLE;
 				break;
-			case SDL_QUIT:
-				quit = true;
+			case SDL_KEYDOWN:
+				for (int i = 0; i <= keyboard.size(); i++)
+				{
+					//create new entry for key if not found
+					if (i != keyboard.size() - 1)
+					{
+						keyboard.resize(keyboard.size() + 1);
+						keyboard[i].keyID = e.key.keysym.sym;
+					}
+
+					//set key state
+					if (keyboard[i].keyID == e.key.keysym.sym)
+					{
+						keyboard[i].keyState = true;
+						i = keyboard.size() + 1;
+					}
+				}
+				break;
+			case SDL_KEYUP:
+				for (int i = 0; i <= keyboard.size(); i++)
+				{
+					//set key state false
+					if (keyboard[i].keyID == e.key.keysym.sym)
+					{
+						keyboard[i].keyState = false;
+						i = keyboard.size() + 1;
+					}
+				}
+				break;
+			case SDL_WINDOWEVENT:
+				//temp
+				if (e.window.event == SDL_WINDOWEVENT_CLOSE)
+					quit = true;
 				break;
 			default:
 				break;
@@ -39,19 +73,10 @@ namespace SoliRom
 		}
 	}
 
-	int EventHandler::getMouseX()
-	{
-		return mouse.x;
-	}
 
-	int EventHandler::getMouseY()
+	Mouse EventHandler::getMouse()
 	{
-		return mouse.y;
-	}
-
-	MouseCondition EventHandler::getMouseState()
-	{
-		return mouse.mouseState;
+		return mouse;
 	}
 
 	bool EventHandler::getQuit()

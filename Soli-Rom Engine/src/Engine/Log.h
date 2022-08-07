@@ -5,7 +5,8 @@ namespace SoliRom
 	class Log
 	{
 	public:
-		void Init();
+		//Enables console colors, already run in the entrypoint
+		static void Init();
 
 		enum class Severity
 		{

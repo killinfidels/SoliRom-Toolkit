@@ -1,29 +1,13 @@
 #include "precompiledheaders.h"
-#include "App.h"
 #include "Log.h"
-
-#ifdef _WIN32
-
-#include <Windows.h>
-
-void enableColors()
-{
-	DWORD consoleMode;
-	HANDLE outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (GetConsoleMode(outputHandle, &consoleMode))
-	{
-		SetConsoleMode(outputHandle, consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-	}
-}
-
-#endif
+#include "App.h"
+#include "Input.h"
 
 namespace SoliRom
 {
 	App::App()
 	{
-		enableColors();
-
+		//Initialize SDL_2
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
 			SR_CORE_FATAL("SDL Init Failed: %s", SDL_GetError());
@@ -31,7 +15,7 @@ namespace SoliRom
 		else
 		{
 			SR_CORE_INFO("SDL Init Success.");
-			//	Unecessary
+			//	Unecessary BUT: Initialize SDL_img for .PNG and .JPG
 			if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)))
 			{
 				SR_CORE_FATAL("SDL_img Init Failed: %s", SDL_GetError());
@@ -41,8 +25,6 @@ namespace SoliRom
 				SR_CORE_INFO("SDL_img Init Success.");
 			}
 		}
-
-		window = new Window;
 	}
 
 	void App::Run()
@@ -52,7 +34,9 @@ namespace SoliRom
 		while (running)
 		{
 			//call eventhandler, it stores all events in keyboardstate, mousestate and windowstate
+			EventHandler::update();
 
+			running = !EventHandler::getQuit();
 
 
 			//if not minimized
@@ -67,14 +51,17 @@ namespace SoliRom
 		//free all assets
 	}
 
-	Window* App::getWindow()
-	{
-		return window;
-	}
 
 	App::~App()
 	{
 		SDL_Quit();
 		IMG_Quit();
+	}
+
+	Window* App::createWindow(std::string _name, int _width, int _height)
+	{
+		appWindow = Window(_name, _width, _height);
+
+		return &appWindow;
 	}
 }
