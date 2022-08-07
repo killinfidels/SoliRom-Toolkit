@@ -42,10 +42,12 @@ int main(int argc, char* args[])
 	const std::chrono::milliseconds frameTime(200);
 	std::chrono::steady_clock::time_point t1;
 	std::chrono::steady_clock::time_point t2;
+	std::chrono::steady_clock::time_point bloodTime;
 	std::chrono::steady_clock::time_point physics;
 	const std::chrono::milliseconds physicsStep(10);
 	t1 = std::chrono::steady_clock::now() - frameTime;
 	physics = std::chrono::steady_clock::now();
+	bloodTime = std::chrono::steady_clock::now() - std::chrono::milliseconds(100000);
 
 	int frame = 1;
 
@@ -69,6 +71,14 @@ int main(int argc, char* args[])
 	SoliRom::Asset grass;
 	grass.createAsset(TestSpace.getWindow(), SoliRom::TEXTURE, "Assets/grass.png");
 	block.setTexture(grass);
+
+	things blood;
+	blood.setSize(200, 200);
+	blood.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (blood.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h / 2) - (blood.getRect()->h / 2));
+	SoliRom::Asset bloodsplat;
+	bloodsplat.createAsset(TestSpace.getWindow(), SoliRom::TEXTURE, "Assets/blood.png");
+	blood.setTexture(bloodsplat);
+	exhale smoke(&weedGuy);
 
 	while (!skip)
 	{
@@ -135,7 +145,18 @@ int main(int argc, char* args[])
 		{
 			setAnimation = guy::BOOF;
 		}
-		
+
+		if (weedGuy.blowsmoke || !smoke.done)
+		{
+			weedGuy.blowsmoke = false;
+			smoke.animate();
+		}
+
+		if (stabby.knifeLogic(&weedGuy))
+		{
+			bloodTime = std::chrono::steady_clock::now();
+		}
+
 
 		//foodguy
 		for (int i = 0; i < chipAmount; i++)
@@ -181,13 +202,14 @@ int main(int argc, char* args[])
 			{
 				if (i != chip::heldChip && chips[i].used == true)
 				{
-					chips[i].move(0, 1);
+					chips[i].move(0, 5);
 				}
 			}
 
+				physics = std::chrono::steady_clock::now();
+
 			if (SoliRom::EventHandler::getQuit())
 			{
-				physics = std::chrono::steady_clock::now();
 				weedGuy.setPosition(weedGuy.getRect()->x - yeet, weedGuy.getRect()->y - 2);
 				weedGuy.setSize(weedGuy.getRect()->w + 2, weedGuy.getRect()->h + 2);
 			}
@@ -199,13 +221,22 @@ int main(int argc, char* args[])
 
 		weedGuy.animate(setAnimation);
 
-		stabby.knifeLogic(&weedGuy);
 		//clear
 		SDL_RenderClear(TestSpace.getWindow()->getRenderer());
 
 		block.draw();
 
 		weedGuy.draw();
+
+		if (!smoke.done)
+		{
+			smoke.draw();
+		}
+
+		if (std::chrono::duration_cast<std::chrono::milliseconds>(t2.time_since_epoch() - bloodTime.time_since_epoch()) < std::chrono::milliseconds(1000))
+		{
+			blood.draw();
+		}
 
 		stabby.animate();
 		stabby.draw();
@@ -246,7 +277,7 @@ int main(int argc, char* args[])
 
 		//SR_INFO("FrameTime: ");
 
-		lastAnimation = setAnimation;
+		lastAnimation = weedGuy.currentAnimation;
 	}
 
 	return 0;

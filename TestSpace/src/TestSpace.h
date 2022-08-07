@@ -137,7 +137,7 @@ private:
 		 Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_2.png");
 		 Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_3.png");
 		 Pick1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
-		 Pick2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_2.png");
+		 Pick2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
 		 Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_1.png");
 		 Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_2.png");
 		 Smoke1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_1.png");
@@ -287,6 +287,8 @@ private:
 		 }
 	 }
 
+	 bool blowsmoke = false;
+
 	 void animate(animation _setAnim)
 	 {
 		 if (_setAnim == FUCK || currentAnimation == FUCK)
@@ -298,10 +300,14 @@ private:
 		 if (loopcount < 5 && currentAnimation == BOOF)
 		 {
 			 boof();
+			 if (loopcount == 5)
+			 {
+				 blowsmoke = true;
+			 }
 		 }
 		 else
 		 {
-			 if (loopcount < 5 && currentAnimation == BOOGER)
+			 if (loopcount < 2 && currentAnimation == BOOGER)
 			 {
 				 booger();
 			 }
@@ -470,4 +476,50 @@ private:
 		 return false;
 	 }
 
+ };
+
+ class exhale : public things
+ {
+ public:
+	 exhale(guy* _weedGuy)
+	 {
+		 std::string load;
+		 for (int i = 0; i < 12; i++)
+		 {
+			 load = "Assets/smoke" + std::to_string(i + 1) + ".png";
+			 smokes[i].createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, load);
+		 }
+		 frameTime = std::chrono::milliseconds(200);
+		 frame = 0;
+		 sizeMul = 2;
+		 setSize(300, 300);
+		 setPosition(_weedGuy->getRect()->x + (_weedGuy->getRect()->w / 2.8), _weedGuy->getRect()->y + (_weedGuy->getRect()->h / 1.6) - getRect()->h);
+		 //size 30 78
+	 }
+	 SoliRom::Asset smokes[12];
+
+	 bool done = true;
+
+	 bool animate()
+	 {
+		 if (done && frame == 0)
+		 {
+			 done = false;
+		 }
+
+		 timeNow = std::chrono::steady_clock::now();
+		 if (std::chrono::duration_cast<std::chrono::milliseconds>(timeNow.time_since_epoch() - timeLastFrame.time_since_epoch()) > frameTime)
+		 {
+			 setTexture(smokes[frame]);
+			 if (frame == 9)
+			 {
+				 done = true;
+				 frame = -1;
+			 }
+			 timeLastFrame = std::chrono::steady_clock::now();
+			 frame++;
+		 }
+
+		 return done;
+	 }
  };
