@@ -6,7 +6,7 @@ namespace SoliRom
 	class App
 	{
 	public:
-		App(int _windowSizeMul);
+		App(float _windowSizeMul);
 		~App();
 
 		void Run();

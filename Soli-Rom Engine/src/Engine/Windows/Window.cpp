@@ -4,13 +4,13 @@
 
 namespace SoliRom
 {
-	Window::Window(int _sizeMul)
+	Window::Window(float _sizeMul)
 	{
 		tempMul = _sizeMul;
 		windowSIZE.x = 0;
 		windowSIZE.y = 0;
-		windowSIZE.w = 256 * tempMul;
-		windowSIZE.h = 192 * tempMul;
+		windowSIZE.w = 1280 * tempMul;
+		windowSIZE.h = 960 * tempMul;
 
 		window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSIZE.w, windowSIZE.h, SDL_WINDOW_SHOWN);
 		if (window == NULL)

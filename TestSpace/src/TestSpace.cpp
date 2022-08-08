@@ -6,7 +6,7 @@
 //textures
 
 //dorito
-SoliRom::Asset doritoBag;
+SoliRom::Texture doritoBag;
 
 //objects
 guy weedGuy;
@@ -31,7 +31,7 @@ int main(int argc, char* args[])
 
 
 	//dorito textures
-	doritoBag.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/doritobag_1.png");
+	doritoBag.create("Assets/doritobag_1.png");
 	chip::loadAssets();
 
 	//dorito size position
@@ -68,15 +68,15 @@ int main(int argc, char* args[])
 	things block;
 	block.setSize(300, 300);
 	block.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (block.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h) - (block.getRect()->h / 2) - 20);
-	SoliRom::Asset grass;
-	grass.createAsset(TestSpace.getWindow(), SoliRom::TEXTURE, "Assets/grass.png");
+	SoliRom::Texture grass;
+	grass.create("Assets/grass.png");
 	block.setTexture(grass);
 
 	things blood;
 	blood.setSize(200, 200);
 	blood.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (blood.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h / 2) - (blood.getRect()->h / 2));
-	SoliRom::Asset bloodsplat;
-	bloodsplat.createAsset(TestSpace.getWindow(), SoliRom::TEXTURE, "Assets/blood.png");
+	SoliRom::Texture bloodsplat;
+	bloodsplat.create("Assets/blood.png");
 	blood.setTexture(bloodsplat);
 	exhale smoke(&weedGuy);
 

@@ -1,7 +1,6 @@
 #include "Soli-Rom.h"
 
-SoliRom::App TestSpace(3);
-
+SoliRom::App TestSpace(1);
 
 class things : public SoliRom::GameObject
 {
@@ -22,7 +21,7 @@ public:
 		setPosition(getRect()->x + _x, getRect()->y + _y);
 	}
 
-	void setTexture(SoliRom::Asset _texture)
+	void setTexture(SoliRom::Texture _texture)
 	{
 		texture = _texture.getTexture();
 	}
@@ -48,9 +47,9 @@ public:
 
 	static void loadAssets()
 	{
-		chip1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/chip_1.png");
-		chip2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/chip_2.png");
-		chip3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/chip_3.png");
+		chip1.create("Assets/chip_1.png");
+		chip2.create("Assets/chip_2.png");
+		chip3.create("Assets/chip_3.png");
 	};
 
 
@@ -81,14 +80,14 @@ public:
 
 private:
 
-	static SoliRom::Asset chip1;
-	static SoliRom::Asset chip2;
-	static SoliRom::Asset chip3;
+	static SoliRom::Texture chip1;
+	static SoliRom::Texture chip2;
+	static SoliRom::Texture chip3;
 };
 
- SoliRom::Asset chip::chip1;
- SoliRom::Asset chip::chip2;
- SoliRom::Asset chip::chip3;
+ SoliRom::Texture chip::chip1;
+ SoliRom::Texture chip::chip2;
+ SoliRom::Texture chip::chip3;
 
  int chip::heldChip = -1;
 
@@ -97,21 +96,21 @@ private:
  private:
 
 	 //weedguy idle
-	 SoliRom::Asset Idle1;
-	 SoliRom::Asset Idle2;
-	 SoliRom::Asset Idle3;
+	 SoliRom::Texture Idle1;
+	 SoliRom::Texture Idle2;
+	 SoliRom::Texture Idle3;
 	 //weedguy booger
-	 SoliRom::Asset Pick1;
-	 SoliRom::Asset Pick2;
+	 SoliRom::Texture Pick1;
+	 SoliRom::Texture Pick2;
 	 //weedguy wants dorito
-	 SoliRom::Asset Hungry1;
-	 SoliRom::Asset Hungry2;
+	 SoliRom::Texture Hungry1;
+	 SoliRom::Texture Hungry2;
 	 //smoke
-	 SoliRom::Asset Smoke1;
-	 SoliRom::Asset Smoke2;
+	 SoliRom::Texture Smoke1;
+	 SoliRom::Texture Smoke2;
 	 //fuck
-	 SoliRom::Asset Fuck1;
-	 SoliRom::Asset Fuck2;
+	 SoliRom::Texture Fuck1;
+	 SoliRom::Texture Fuck2;
 
 	 int loopcount = 0;
  public:
@@ -133,17 +132,17 @@ private:
 		 setSize(100 * sizeMul, 100 * sizeMul);
 		 setPosition(TestSpace.getWindow()->getWindowWidth() - getRect()->w, (int)(TestSpace.getWindow()->getWindowHeight() / 1.5) - (getRect()->h / 2));
 		 
-		 Idle1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_1.png");
-		 Idle2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_2.png");
-		 Idle3.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/idle_3.png");
-		 Pick1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
-		 Pick2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/nosepick_1.png");
-		 Hungry1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_1.png");
-		 Hungry2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/food_2.png");
-		 Smoke1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_1.png");
-		 Smoke2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/smoke_2.png");
-		 Fuck1.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_1.png");
-		 Fuck2.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/fuck_2.png");
+		 Idle1.create("Assets/idle_1.png");
+		 Idle2.create("Assets/idle_2.png");
+		 Idle3.create("Assets/idle_3.png");
+		 Pick1.create("Assets/nosepick_1.png");
+		 Pick2.create("Assets/nosepick_2.png");
+		 Hungry1.create("Assets/food_1.png");
+		 Hungry2.create("Assets/food_2.png");
+		 Smoke1.create("Assets/smoke_1.png");
+		 Smoke2.create("Assets/smoke_2.png");
+		 Fuck1.create("Assets/fuck_1.png");
+		 Fuck2.create("Assets/fuck_2.png");
 	 }
 
 	 void idle()
@@ -343,11 +342,11 @@ private:
  class boof : public things
  {
  public:
-	 SoliRom::Asset Boof;
+	 SoliRom::Texture Boof;
 
 	 boof()
 	 {
-		 Boof.createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, "Assets/jont.png");
+		 Boof.create("Assets/jont.png");
 		 setTexture(Boof);
 		 setSize(450 / 2, 250 / 2);
 	 }
@@ -410,7 +409,7 @@ private:
 		 for (int i = 0; i < 10; i++)
 		 {
 			 load = "Assets/KNIFE" + std::to_string(i + 1) + ".png";
-			 knives[i].createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, load);
+			 knives[i].create(load);
 		 }
 		 frameTime = std::chrono::milliseconds(200);
 		 frame = 0;
@@ -419,7 +418,7 @@ private:
 		 setPosition(TestSpace.getWindow()->getWindowWidth() - getRect()->w, 0);
 		 //size 30 78
 	 }
-	 SoliRom::Asset knives[10];
+	 SoliRom::Texture knives[10];
 
 	 void animate()
 	 {
@@ -487,7 +486,7 @@ private:
 		 for (int i = 0; i < 12; i++)
 		 {
 			 load = "Assets/smoke" + std::to_string(i + 1) + ".png";
-			 smokes[i].createAsset(TestSpace.getWindow(), SoliRom::assetType::TEXTURE, load);
+			 smokes[i].create(load);
 		 }
 		 frameTime = std::chrono::milliseconds(200);
 		 frame = 0;
@@ -496,7 +495,7 @@ private:
 		 setPosition(_weedGuy->getRect()->x + (_weedGuy->getRect()->w / 2.8), _weedGuy->getRect()->y + (_weedGuy->getRect()->h / 1.6) - getRect()->h);
 		 //size 30 78
 	 }
-	 SoliRom::Asset smokes[12];
+	 SoliRom::Texture smokes[12];
 
 	 bool done = true;
 

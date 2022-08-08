@@ -1,6 +1,7 @@
 #include "precompiledheaders.h"
 #include "App.h"
 #include "Log.h"
+#include "Assets/Texture.h"
 
 #ifdef _WIN32
 
@@ -20,7 +21,7 @@ void enableColors()
 
 namespace SoliRom
 {
-	App::App(int _windowSizeMul)
+	App::App(float _windowSizeMul)
 	{
 		enableColors();
 
@@ -43,6 +44,8 @@ namespace SoliRom
 		}
 
 		window = new Window(_windowSizeMul);
+
+		SoliRom::Texture::setWindow(window);
 	}
 
 	void App::Run()

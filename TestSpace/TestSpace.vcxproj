@@ -95,9 +95,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="src\TestSpace.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="src\TestSpace.cpp" />
   </ItemGroup>
   <ItemGroup>

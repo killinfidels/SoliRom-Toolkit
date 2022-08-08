@@ -100,7 +100,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\App.h" />
-    <ClInclude Include="src\Engine\Assets\Asset.h" />
     <ClInclude Include="src\Engine\Engine Objects\GameObject.h" />
     <ClInclude Include="src\Engine\Input.h" />
     <ClInclude Include="src\Engine\Windows\Layer.h" />
@@ -112,7 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp" />
-    <ClCompile Include="src\Engine\Assets\Asset.cpp" />
     <ClCompile Include="src\Engine\Engine Objects\GameObject.cpp" />
     <ClCompile Include="src\Engine\Input.cpp" />
     <ClCompile Include="src\Engine\Windows\Layer.cpp" />
