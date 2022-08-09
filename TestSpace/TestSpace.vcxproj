@@ -95,11 +95,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\TestSpace.h" />
+    <ClInclude Include="src\timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\TestSpace.cpp" />
   </ItemGroup>
   <ItemGroup>

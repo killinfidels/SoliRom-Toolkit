@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <chrono>
 #include "TestSpace.h"
+#include "Scene.h"
 
 //textures
 

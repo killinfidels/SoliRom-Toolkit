@@ -26,6 +26,7 @@ namespace SoliRom
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				mouse.mouseState = CLICKED;
+				SR_CORE_INFO("x: %i, y: %i", mouse.x, mouse.y);
 				break;
 			case SDL_MOUSEBUTTONUP:
 				mouse.mouseState = IDLE;
