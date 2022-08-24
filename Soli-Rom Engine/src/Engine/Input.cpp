@@ -59,4 +59,26 @@ namespace SoliRom
 	{
 		return quit;
 	}
+
+	bool EventHandler::mouseInObj(GameObject* _obj)
+	{
+		if (EventHandler::getMouseX() > _obj->scaled.x && EventHandler::getMouseX() < _obj->scaled.x + _obj->scaled.w)
+		{
+			if (EventHandler::getMouseY() > _obj->scaled.y && EventHandler::getMouseY() < _obj->scaled.y + _obj->scaled.h)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+	bool EventHandler::click()
+	{
+		if (mouse.mouseState == CLICKED)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

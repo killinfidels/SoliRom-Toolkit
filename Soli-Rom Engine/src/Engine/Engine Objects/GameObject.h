@@ -13,9 +13,11 @@ namespace SoliRom
 		void setPosition(int x, int y);
 
 		bool visible = true;
+		bool use = true;
 
 		SDL_Rect* getRect();
 
+		SDL_Rect scaled;
 	private:
 		SDL_Rect Rect;
 		int assetsN;

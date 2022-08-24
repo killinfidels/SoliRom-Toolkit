@@ -9,10 +9,10 @@ namespace SoliRom
 		tempMul = _sizeMul;
 		windowSIZE.x = 0;
 		windowSIZE.y = 0;
-		windowSIZE.w = 1280 * tempMul;
-		windowSIZE.h = 960 * tempMul;
+		windowSIZE.w = 1280;
+		windowSIZE.h = 960;
 
-		window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSIZE.w, windowSIZE.h, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSIZE.w * tempMul, windowSIZE.h * tempMul, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			SR_CORE_ERROR("Window: %s, failed. Error: %s", windowName.c_str(), SDL_GetError());

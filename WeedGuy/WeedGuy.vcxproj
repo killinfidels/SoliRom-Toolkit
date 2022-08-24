@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7155070A-DDBF-BB80-26FE-6C2692A799D5}</ProjectGuid>
+    <ProjectGuid>{DF08BF1F-4BE8-3DBB-5400-C991C05EA41C}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestSpace</RootNamespace>
+    <RootNamespace>WeedGuy</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,16 +42,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\Debug\TestSpace\</OutDir>
-    <IntDir>..\bin-obj\Debug\TestSpace\</IntDir>
-    <TargetName>TestSpace</TargetName>
+    <OutDir>..\bin\Debug\WeedGuy\</OutDir>
+    <IntDir>..\bin-obj\Debug\WeedGuy\</IntDir>
+    <TargetName>WeedGuy</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Release\TestSpace\</OutDir>
-    <IntDir>..\bin-obj\Release\TestSpace\</IntDir>
-    <TargetName>TestSpace</TargetName>
+    <OutDir>..\bin\Release\WeedGuy\</OutDir>
+    <IntDir>..\bin-obj\Release\WeedGuy\</IntDir>
+    <TargetName>WeedGuy</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,15 +95,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Shack.h" />
-    <ClInclude Include="src\WeedGuy.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Zone.h" />
     <ClInclude Include="src\core.h" />
     <ClInclude Include="src\timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Shack.cpp" />
-    <ClCompile Include="src\WeedGuy.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\core.cpp" />
   </ItemGroup>
   <ItemGroup>

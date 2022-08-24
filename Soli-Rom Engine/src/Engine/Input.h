@@ -1,5 +1,6 @@
 #pragma once
 #include "precompiledheaders.h"
+#include "Engine Objects/GameObject.h"
 
 namespace SoliRom
 {
@@ -37,8 +38,8 @@ namespace SoliRom
 		static int getMouseY();
 		static MouseCondition getMouseState();
 		static bool getQuit();
-
-
+		static bool mouseInObj(GameObject* obj);
+		static bool click();
 	private:
 		EventHandler();
 		static MouseState mouse;
