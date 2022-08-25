@@ -106,6 +106,7 @@
     <ClInclude Include="src\Engine\Windows\Layer.h" />
     <ClInclude Include="src\Engine\Log.h" />
     <ClInclude Include="src\Engine\Windows\Window.h" />
+    <ClInclude Include="src\Engine\EntryPoint.h" />
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
     <ClInclude Include="src\Engine\Assets\Texture.h" />
