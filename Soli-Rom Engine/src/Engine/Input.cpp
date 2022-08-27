@@ -4,7 +4,7 @@
 
 namespace SoliRom
 {
-	Mouse EventHandler::mouse = {0, 0, IDLE};
+	Mouse EventHandler::mouse;
 	SDL_Event EventHandler::e;
 	std::vector<EventHandler::Key> EventHandler::keyboard;
 	bool EventHandler::quit = false;
@@ -21,6 +21,8 @@ namespace SoliRom
 
 		while (SDL_PollEvent(&e) != 0)
 		{
+			bool success = false;
+
 			switch (e.type)
 			{
 			case SDL_MOUSEMOTION:
@@ -34,25 +36,25 @@ namespace SoliRom
 				mouse.state = IDLE;
 				break;
 			case SDL_KEYDOWN:
-				for (int i = 0; i <= keyboard.size(); i++)
+				for (int i = 0; i <= keyboard.size() + 1; i++)
 				{
-					//create new entry for key if not found
-					if (i != keyboard.size() - 1)
-					{
-						keyboard.resize(keyboard.size() + 1);
-						keyboard[i].keyID = e.key.keysym.sym;
-					}
-
 					//set key state
-					if (keyboard[i].keyID == e.key.keysym.sym)
+					if (keyboard.size() != 0 && keyboard[i].keyID == e.key.keysym.sym)
 					{
 						keyboard[i].keyState = true;
-						i = keyboard.size() + 1;
+						success = true;
+						break;
+					}
+					else if ( i >= (int)keyboard.size() - 1)
+					{
+						keyboard.resize(keyboard.size() + 1);
+						keyboard[keyboard.size() - 1].keyID = e.key.keysym.sym;
+						i--;
 					}
 				}
 				break;
 			case SDL_KEYUP:
-				for (int i = 0; i <= keyboard.size(); i++)
+				for (int i = 0; i < keyboard.size(); i++)
 				{
 					//set key state false
 					if (keyboard[i].keyID == e.key.keysym.sym)
@@ -73,6 +75,18 @@ namespace SoliRom
 		}
 	}
 
+	bool EventHandler::keyPressed(int _keyID)
+	{
+		for (int i = 0; i < keyboard.size(); i++)
+		{
+			if (keyboard[i].keyID == _keyID)
+			{
+				return keyboard[i].keyState;
+			}
+		}
+
+		return false;
+	}
 
 	Mouse EventHandler::getMouse()
 	{

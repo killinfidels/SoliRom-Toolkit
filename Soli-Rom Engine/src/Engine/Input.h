@@ -27,6 +27,7 @@ namespace SoliRom
 
 		static Mouse getMouse();
 		static bool getQuit();
+		static bool keyPressed(int _keyCode);
 
 
 	private:
