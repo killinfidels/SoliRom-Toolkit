@@ -1,94 +1,82 @@
 Short Term Goals
-	-Control image on screen
-	-Make weedboy :)
+	-Make weedboy :) ---- working on it ;)
 
 Working on:
-
-	X-get sdl image
-
-	-switch main() to be in engine
-
-	-singleton app class
-
-	-learn arrays again
-
-	-Texture
-
-	-Animation
-
-	-Asset Manager
-
-	temp for WEEDBOY: Gotta make them good after temp work
-		-Asset: just texture for now, made a temp texture, cant be bothered with
-		figuring out arrays
-		-Window: renderer working
-		X-Mouse events: just mouse location and click should do -EVEN MADE IT SINGLETON >:)
-		-objects: untouched i think
+	-switch main() to be in engine //yes but cant really do much yet
+	-singleton app class //i think so, will leave up until sure
+	-WINDOW and application window commands - skeleton
 
 To do:
+	-window resizing
+	-camera
+	-geometry rendering
+	-managers
+	-Texture
+	-Animation
+	-Asset Manager
+	-make comments
+	-time class
 
-	random:
-		-make comments
-	in order:
-		-Finish Assets
+	preferred order:
 		-Window
-		-Input
 		-Layers
+		-Finish Assets
 		-Objects
+		-Input
 
+Loose plan:
+	I MAKE LAYERS. THEY DO STUFF ON UPDATE, EVENT AND MAYBE ON RENDER?
 
-Application:
-	Application should be able to have a 'current window' so its not needed to
-	select application.getwindow("name").getwindowsize() for ex. instead something
-	like application.getwindowsize() <- maybe overload this with
-	application.getwindowsize("name") to specify window?
+	APP.RUN RUNS THE ITS FUNCTIONS, GAME DEFINES THEM
 
+Detailed plan:
+	Application:
+		Application should be able to have a 'current window' so its not needed to
+		select application.getwindow("name").getwindowsize() for ex. instead something
+		like application.getwindowsize() <- maybe overload this with
+		application.getwindowsize("name") to specify window?
 	Window Class:
 		-Has: Name, size, name of renderer/the renderer
 		-Each object is a new window
 		-Layers
 		-Gets passed window events to change size?
-
 	EventHandler:
 		-Keypresses and such
 		-Takes care of different input modes so game logic functions can stay ignorant
-
 	Storage system:
 		-Data files, text files, or screenshots.
 		-Saves
-
-	-States & Statechanger
+	States & Statechanger:
 		-Runs all objectmanager scripts
-
-ObjectManager:
-
+	ObjectManager:
 	GameObject Class:
 		-Things that are rendered and have data attached to them
 		for example size, collisions, texture, position, layer, scripts, gamestate.
-
 	MenuObject Class:
 		-Selected with either mouse or keyboard, changes game states or settings.
-
 	TextObject Class:
 		-Different settings for how to display text.
-
-AssetManager:
-	-Creates, deletes and keeps track of all assets. (Texture, sound, text file,
-	etc)
-	-Needs an error texture incase
-	-2d array where each row is for a different renderer. If a window tries to
-	use a texture from another window it re creates the texture for that
-	windows renderer
-
-
-  Asset: A Baseclass perhaps? anyways i want different classes for each asset
-	type i think
+	AssetManager:
+		-Creates, deletes and keeps track of all assets. (Texture, sound, text file,
+		etc)
+		-Needs an error texture incase
+		-2d array where each row is for a different renderer. If a window tries to
+		use a texture from another window it re creates the texture for that
+		windows renderer
+  Asset:
+		-A Baseclass perhaps? anyways i want different classes for each asset
+		type i think
     -different types, paths, frametimes. Attributes of an asset
+	LAYERS:
+		-Have an
 
+Finished:
+	X-learn arrays again
+	X-get sdl image
 
-I MAKE LAYERS. THEY DO STUFF ON UPDATE, EVENT AND MAYBE ON RENDER?
-
-APP.RUN RUNS THE ITS FUNCTIONS, GAME DEFINES THEM
-
-LAYERS:
-	Have an
+	temp for WEEDBOY: Gotta make them good after temp work
+			x-Asset: just texture for now, made a temp texture, cant be bothered with
+			figuring out arrays
+			x-Window: renderer working
+			X-Mouse events: just mouse location and click should do -EVEN MADE IT SINGLETON >:)
+			-objects: untouched i think
