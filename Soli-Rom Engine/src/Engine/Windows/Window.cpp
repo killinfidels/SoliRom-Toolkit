@@ -4,12 +4,6 @@
 
 namespace SoliRom
 {
-	Window::Window()
-	{ //Un initialized window: initialize with app.initWindow;
-		width = 64;
-		height = 64;
-	}
-
 	Window::Window(std::string _name, int _width, int _height)
 	{
 		name = _name;
@@ -39,7 +33,28 @@ namespace SoliRom
 		}
 	}
 
+	std::string Window::getWindowName()
+	{
+		return name;
+	}
+
 	Window::~Window()
 	{
+	}
+	SDL_Renderer* Window::getSDL_Renderer()
+	{
+		return renderer;
+	}
+	SDL_Window* Window::getSDL_Window()
+	{
+		return window;
+	}
+	int Window::getWidth()
+	{
+		return width;
+	}
+	int Window::getHeight()
+	{
+		return height;
 	}
 }
