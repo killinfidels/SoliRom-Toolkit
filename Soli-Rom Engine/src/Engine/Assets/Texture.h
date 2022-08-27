@@ -10,8 +10,8 @@ namespace SoliRom
 			bool create(std::string _path);
 			bool create(std::string _path, Window* _window);
 
+			SDL_Texture* get();
 		protected:
-			SDL_Texture* getTexture();
 
 			SDL_Texture* texture;
 
