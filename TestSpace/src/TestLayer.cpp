@@ -36,14 +36,14 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 
 	for (int i = 0; i < 24; i++)
 	{
-		tree[i].setSize(size, size * 2.246543);
+		tree[i].setSize(size, -size * 2.246543);
 
 		tree[i].setZ(zSpace * zRow);
-		tree[i].setPosition(-xSpace - tree[i].getRect()->w, -tree[i].getRect()->h);
+		tree[i].setPosition(-xSpace, 0);
 
 		if ((i) % 2 != 0)
 		{
-			tree[i].setPosition(xSpace, -tree[i].getRect()->h);
+			tree[i].setPosition(xSpace, 0);
 			zRow++;
 		}
 	}
@@ -55,20 +55,25 @@ point TestLayer::pointToScreen(int _x, int _y, int _z)
 	int relY = _y - cam.pos.y;
 	int relZ = _z - cam.pos.z;
 
-
+	//y axis rot
 	int rotX = relX * cos(-cam.xD * 3.14159265 / 180) + relZ * sin(-cam.xD * 3.14159265 / 180);
 	int rotY = relY;
 	int rotZ = relZ * cos(-cam.xD * 3.14159265 / 180) - relX * sin(-cam.xD * 3.14159265 / 180);
 
-	if (rotZ == 0)
-		rotZ = 1;
+	//again but x??
+	int NrotX = rotX;
+	int NrotY = rotY * cos(-cam.yD * 3.14159265 / 180) - rotZ * sin(-cam.yD * 3.14159265 / 180);
+	int NrotZ = rotZ * cos(-cam.yD * 3.14159265 / 180) + rotY * sin(-cam.yD * 3.14159265 / 180);
 
+	if (NrotZ == 0)
+		NrotZ = 1;
+	
 	point screenPoint;
-	screenPoint.x = (cam.screenDistance * rotX / rotZ) + cam.middleX;
-	screenPoint.y = (cam.screenDistance * rotY / rotZ) + cam.middleY;
+	screenPoint.x = (cam.screenDistance * NrotX / NrotZ) + cam.middleX;
+	screenPoint.y = (cam.screenDistance * NrotY / NrotZ) + cam.middleY;
 	screenPoint.z = rotZ;
 
-	SDL_RenderDrawPoint(w_2DTest->getSDL_Renderer(), rotX/5 + cam.middleX2, -rotZ/5 + cam.middleY2);
+	SDL_RenderDrawPoint(w_2DTest->getSDL_Renderer(), NrotX /5 + cam.middleX2, -NrotZ/5 + cam.middleY2);
 
 	SDL_RenderDrawPoint(w_2DTest->getSDL_Renderer(), screenPoint.x - cam.middleX + cam.middleX2, screenPoint.y - cam.middleY + cam.middleY2);
 
@@ -79,17 +84,26 @@ void TestLayer::objSetScreenRect(obj_3D* _obj)
 {
 	point screenPoint
 		= pointToScreen(_obj->getRect()->x, _obj->getRect()->y, _obj->getZ());
-	point screenPointWH = pointToScreen(
-		_obj->getRect()->x + _obj->getRect()->w,
-		_obj->getRect()->y + _obj->getRect()->h,
-		_obj->getZ());	
+
+	point screenPointH = pointToScreen(
+		_obj->getRect()->x,
+		_obj->getRect()->h,
+		_obj->getZ());
+
+	//SDL_Rect screenRect
+	//{
+	//	screenPoint.x - (-screenPointWH.y * 1 / 2.246543) / 2,
+	//	screenPoint.y + screenPointWH.y,
+	//	screenPoint.y - screenPointWH.y * 1 / 2.246543,
+	//	screenPoint.y - screenPointWH.y
+	//};
 
 	SDL_Rect screenRect
 	{
-		screenPoint.x,
-		screenPoint.y,
-		screenPointWH.x - screenPoint.x,
-		screenPointWH.y - screenPoint.y
+		screenPoint.x - ((screenPoint.y - screenPointH.y) * 1 / 2.246543) / 2,
+		screenPoint.y - (screenPoint.y - screenPointH.y),
+		(screenPoint.y - screenPointH.y) * 1 / 2.246543,
+		(screenPoint.y - screenPointH.y)
 	};
 
 	//screenRect.w = screenRect.h / 2.246543;
@@ -110,9 +124,9 @@ void TestLayer::drawRoad()
 	int relz2 = z2 - cam.pos.z;
 
 	SDL_Rect roadSize = {
-		tree[0].getRect()->x + tree[0].getRect()->w / 2,
+		tree[0].getRect()->x,
 		0,
-		(tree[1].getRect()->x + tree[1].getRect()->w / 2) - (tree[0].getRect()->x + tree[0].getRect()->w / 2),
+		tree[1].getRect()->x - tree[0].getRect()->x,
 		0
 	};
 
@@ -127,6 +141,8 @@ void TestLayer::drawRoad()
 			1
 		};
 
+		int y = pointToScreen(roadSize.x + roadSize.w, roadSize.y, i + cam.pos.z).y - pointToScreen(roadSize.x, roadSize.y, i + cam.pos.z).y;
+
 		SDL_Point size;
 		SDL_QueryTexture(t_road.get(), NULL, NULL, &size.x, &size.y);
 		textureRect = {
@@ -136,11 +152,18 @@ void TestLayer::drawRoad()
 			1
 		};
 
+		SDL_Point zero = {
+			0, 0
+		};
+
+		drawRect.w = sqrt(y * y + drawRect.w * drawRect.w);
+		
 		//draw until next liksom
-		for (drawRect.y; drawRect.y < pointToScreen(roadSize.x, roadSize.y, i - 1 + cam.pos.z).y; drawRect.y++)
+		//for (drawRect.y; drawRect.y < pointToScreen(roadSize.x, roadSize.y, i - 1 + cam.pos.z).y; drawRect.y++)
 		{
-			SDL_RenderCopy(w_3DTest->getSDL_Renderer(), t_road.get(), &textureRect, &drawRect);
+			SDL_RenderCopyEx(w_3DTest->getSDL_Renderer(), t_road.get(), &textureRect, &drawRect, atan2(y,drawRect.w) * 180 / 3.14159265, &zero, SDL_FLIP_NONE);
 		}
+
 	}
 }
 
