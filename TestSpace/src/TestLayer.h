@@ -49,6 +49,8 @@ private:
 	void objSetScreenRect(obj_3D* _obj);
 	void draw2D();
 	void drawRoad();
+	void vertexRender();
+
 	SoliRom::Window* w_3DTest;
 	SoliRom::Window* w_2DTest;
 
@@ -56,4 +58,5 @@ private:
 	SoliRom::Asset::Texture t_tree;
 	obj_3D tree[24];
 	SoliRom::Asset::Texture t_road;
+	SoliRom::Asset::Texture t_road2;
 };

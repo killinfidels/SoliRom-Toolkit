@@ -23,6 +23,7 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 
 	t_tree.create("assets/Tree.png", w_3DTest);
 	t_road.create("assets/Road.png", w_3DTest);
+	t_road2.create("assets/Road.png", w_2DTest);
 
 	obj_3D::setTexture(&t_tree);
 	obj_3D::setRenderer(w_3DTest);
@@ -197,6 +198,73 @@ void TestLayer::draw2D()
 	}
 }
 
+void TestLayer::vertexRender()
+{
+	int z1 = tree[0].getZ();
+	int z2 = tree[23].getZ();
+	int relz1 = z1 - cam.pos.z;
+	int relz2 = z2 - cam.pos.z;
+
+	SDL_Rect roadSize = {
+		tree[0].getRect()->x,
+		0,
+		tree[1].getRect()->x - tree[0].getRect()->x,
+		0
+	};
+
+	pointToScreen(roadSize.x, 0, z2);
+	pointToScreen(roadSize.x + roadSize.w, 0, z2);
+
+	pointToScreen(roadSize.x, 0, z1);
+	pointToScreen(roadSize.x + roadSize.w, 0, z1);
+	SDL_Vertex roadVert[6];
+	roadVert[0].position = { (float)pointToScreen(roadSize.x, 0, z2).x, (float)pointToScreen(roadSize.x, 0, z2).y };
+	roadVert[0].tex_coord = { 0, 0 };
+	//roadVert[0].color = { 255, 0, 0, 255 };
+
+	roadVert[1].position = { (float)pointToScreen(roadSize.x, 0, z1).x, (float)pointToScreen(roadSize.x, 0, z1).y };
+	roadVert[1].tex_coord = { 0, 1 };
+	//roadVert[2].color = { 0, 255, 0, 255 };
+
+	roadVert[2].position = { (float)pointToScreen(roadSize.x + roadSize.w, 0, z2).x, (float)pointToScreen(roadSize.x + roadSize.w, 0, z2).y };
+	roadVert[2].tex_coord = { 1, 0 };
+	//roadVert[1].color = { 255, 0, 0, 255 };
+
+	roadVert[3].position = { (float)pointToScreen(roadSize.x, 0, z1).x, (float)pointToScreen(roadSize.x, 0, z1).y };
+	roadVert[3].tex_coord = { 0, 1 };
+	//roadVert[4].color = { 0, 255, 0, 255 };
+
+	roadVert[4].position = { (float)pointToScreen(roadSize.x + roadSize.w, 0, z1).x, (float)pointToScreen(roadSize.x + roadSize.w, 0, z1).y };
+	roadVert[4].tex_coord = { 1, 1 };
+	//roadVert[5].color = { 0, 255, 0, 255 };
+
+	roadVert[5].position = { (float)pointToScreen(roadSize.x + roadSize.w, 0, z2).x, (float)pointToScreen(roadSize.x + roadSize.w, 0, z2).y };
+	roadVert[5].tex_coord = { 1, 0 };
+	//roadVert[3].color = { 255, 0, 0, 255 };
+
+	SDL_Vertex vert[3];
+
+	// center
+	vert[0].position = { (float)cam.middleX2, (float)cam.middleY2 / 2 };
+	vert[0].color = { 255, 0, 0, 255 };
+	vert[0].tex_coord = {0.5 , 0};
+
+	// left
+	vert[1].position = { (float)cam.middleX2 / 2, (float)cam.middleY2 / 2 * 3 };
+	vert[1].color = { 0, 0, 255, 255 };
+	vert[1].tex_coord = { 0 , 1 };
+
+	// right 
+	vert[2].position = { (float)cam.middleX2 / 2 * 3, (float)cam.middleY2 / 2 * 3};
+	vert[2].color = { 0, 255, 0, 255 };
+	vert[2].tex_coord = { 1 , 1 };
+
+	//SDL_RenderGeometry(w_2DTest->getSDL_Renderer(), NULL, vert, 3, NULL, 0);
+
+	SDL_RenderGeometry(w_2DTest->getSDL_Renderer(), t_road2.get(), roadVert, 6, NULL, 0);
+	//SDL_Log("%s\n", SDL_GetError());
+}
+
 void TestLayer::onUpdate()
 {
 	int light = 25;
@@ -261,15 +329,15 @@ void TestLayer::onUpdate()
 	if (SoliRom::EventHandler::keyPressed(SDLK_LEFT))
 		cam.xD -= newSpeed / 2;
 
-	if (cam.xD > 360)
+	if (cam.xD > 180)
 		cam.xD -= 360;
-	if (cam.xD < 0)
+	if (cam.xD < -180)
 		cam.xD += 360;
 
-	if (cam.yD > 360)
-		cam.yD -= 360;
-	if (cam.yD < 0)
-		cam.yD += 360;
+	if (cam.yD > 90)
+		cam.yD = 90;
+	if (cam.yD < -90)
+		cam.yD = -90;
 
 
 	if (SoliRom::EventHandler::keyPressed(SDLK_0) && SoliRom::EventHandler::keyPressed(SDLK_1))
@@ -287,6 +355,7 @@ void TestLayer::onUpdate()
 
 	draw2D();
 
+	vertexRender();
 
 	SDL_RenderPresent(w_2DTest->getSDL_Renderer());
 	SDL_RenderPresent(w_3DTest->getSDL_Renderer());

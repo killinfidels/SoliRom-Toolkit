@@ -37,7 +37,7 @@ project "Soli-Rom Engine"
 	libdirs
 	{
 		--"Extra/SDL2-2.0.14/lib/x64/"
-		"Extra/SDL2-2.0.14/lib/x64/",
+		"Extra/SDL2-2.0.22/lib/x64/",
 		"Extra/SDL2_image-2.6.0/lib/x64/",
 
 	}
@@ -85,7 +85,7 @@ project "TestSpace"
 	includedirs
 	{
 		--"Extra/SDL2-2.0.14/include",
-		"Extra/SDL2-2.0.14/include",
+		"Extra/SDL2-2.0.22/include",
 		"Extra/SDL2_image-2.6.0/include",
 		"Soli-Rom Engine/src"
 	}
@@ -93,7 +93,7 @@ project "TestSpace"
 	libdirs
 	{
 		--"Extra/SDL2-2.0.14/lib/x64/"
-		"Extra/SDL2-2.0.14/lib/x64/",
+		"Extra/SDL2-2.0.22/lib/x64/",
 		"Extra/SDL2_image-2.6.0/lib/x64/",
 	}
 

@@ -4,37 +4,53 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Assets">
+      <UniqueIdentifier>{5D4A3130-C90A-AD66-9245-F6E3FEC4F142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine Objects">
+      <UniqueIdentifier>{8A13F703-F67F-B2FE-BF73-4A5C2B9FD466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Windows">
+      <UniqueIdentifier>{151D2DBC-01EB-20C2-EA7E-91E8D6EBFC26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\App.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Assets\Texture.h">
+      <Filter>Engine\Assets</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Engine Objects\GameObject.h">
+      <Filter>Engine\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\EntryPoint.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Windows\Layer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Log.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Windows\Layer.h">
+      <Filter>Engine\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Windows\Window.h">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
-    <ClInclude Include="src\Engine\Assets\Texture.h" />
-    <ClInclude Include="src\Engine\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Assets\Texture.cpp">
+      <Filter>Engine\Assets</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Engine Objects\GameObject.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Engine Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Input.cpp">
       <Filter>Engine</Filter>
@@ -42,11 +58,12 @@
     <ClCompile Include="src\Engine\Log.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Windows\Layer.cpp">
+      <Filter>Engine\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Windows\Window.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\precompiledheaders.cpp" />
-    <ClCompile Include="src\Engine\Windows\Layer.cpp" />
-    <ClCompile Include="src\Engine\Assets\Texture.cpp" />
   </ItemGroup>
 </Project>
