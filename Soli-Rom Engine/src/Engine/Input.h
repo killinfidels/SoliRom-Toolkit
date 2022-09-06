@@ -1,11 +1,13 @@
 #pragma once
 #include "precompiledheaders.h"
+#include "Engine Objects/GameObject.h"
 
 namespace SoliRom
 {
 	//Mouse Actions
 	enum MouseState
 	{
+		CLICKED,
 		HELD,
 		IDLE
 	};
@@ -30,6 +32,8 @@ namespace SoliRom
 		static bool keyPressed(int _keyCode);
 
 
+		static bool mouseInObj(GameObject* obj);
+		static bool click();
 	private:
 		EventHandler();
 		//keyboardstate
