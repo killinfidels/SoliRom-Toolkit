@@ -2,8 +2,6 @@
 
 Shack* Shack::instance = 0;
 
-SoliRom::App Game(scale);
-
 Guy weedGuy;
 
 Boof joint;
@@ -11,15 +9,15 @@ Boof joint;
 Knife knife;
 
 things bagDorito; //makedoritobag class
-SoliRom::Texture doritoBag;
+SoliRom::Asset::Texture doritoBag;
 chip chips[chipAmount];
 bool usingChip[chipAmount];
 
 things block;
-SoliRom::Texture grass;
+SoliRom::Asset::Texture grass;
 
 things blood;
-SoliRom::Texture bloodsplat;
+SoliRom::Asset::Texture bloodsplat;
 exhale smoke(&weedGuy);
 
 Shack* Shack::getInstance()
@@ -37,28 +35,30 @@ Shack::Shack()
 	scene = { "ext", "int" };
 	currentScene = 0;
 
+	w_game = getWindow();
+
 	//exterior
-	exterior.create("Assets/shackExt.jpg");
-	arrow.create("Assets/Arrow.png");
+	exterior.create("Assets/shackExt.jpg", w_game);
+	arrow.create("Assets/Arrow.png", w_game);
 
 	right.setTexture(arrow);
 	left.setTexture(arrow);
 
-	screen.setSize(Game.getWindow()->getWindowWidth(), Game.getWindow()->getWindowHeight());
+	screen.setSize(getWindow()->getWidth(), getWindow()->getHeight());
 	right.setSize(128, 128);
 	left.setSize(128, 128);
 	door.setSize(187, 482);
 
-	right.setPosition(Game.getWindow()->getWindowWidth() - right.getRect()->w, (Game.getWindow()->getWindowHeight() / 2) - (right.getRect()->h / 2));
+	right.setPosition(getWindow()->getWidth() - right.getRect()->w, (getWindow()->getHeight() / 2) - (right.getRect()->h / 2));
 	left.setPosition(0, right.getRect()->y);
 	door.setPosition(405, 310);
 
 	//interior
-	interior.create("Assets/shackInt.jpg");
-	arrowDown.create("Assets/ArrowDown.png");
-	doritoBag.create("Assets/doritobag_1.png");
-	grass.create("Assets/grass.png");
-	bloodsplat.create("Assets/blood.png");
+	interior.create("Assets/shackInt.jpg", w_game);
+	arrowDown.create("Assets/ArrowDown.png", w_game);
+	doritoBag.create("Assets/doritobag_1.png", w_game);
+	grass.create("Assets/grass.png", w_game);
+	bloodsplat.create("Assets/blood.png", w_game);
 
 	back.setTexture(arrowDown);
 	bagDorito.setTexture(doritoBag);
@@ -71,8 +71,8 @@ Shack::Shack()
 	block.setSize(300, 300);
 	blood.setSize(200, 200);
 
-	back.setPosition((Game.getWindow()->getWindowWidth() / 2) - (back.getRect()->w / 2), Game.getWindow()->getWindowHeight() - right.getRect()->h);
-	bagDorito.setPosition(bagDorito.getRect()->w/10, (int)(Game.getWindow()->getWindowHeight() - bagDorito.getRect()->h));
+	back.setPosition((getWindow()->getWidth() / 2) - (back.getRect()->w / 2), getWindow()->getHeight() - right.getRect()->h);
+	bagDorito.setPosition(bagDorito.getRect()->w/10, (int)(getWindow()->getHeight() - bagDorito.getRect()->h));
 	block.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (block.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h) - (block.getRect()->h / 2) - 20);
 	blood.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (blood.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h / 2) - (blood.getRect()->h / 2));
 
@@ -118,7 +118,7 @@ void Shack::Script()
 				{
 					if (chips[i].used == false)
 					{
-						chips[i].setPosition((SoliRom::EventHandler::getMouseX() * (1 / scale)) - (chips[i].getRect()->w / 2), (SoliRom::EventHandler::getMouseY() * (1 / scale)) - (chips[i].getRect()->h / 2));
+						chips[i].setPosition((SoliRom::EventHandler::getMouse().x * (1 / scale)) - (chips[i].getRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (chips[i].getRect()->h / 2));
 						chips[i].used = true;
 						break;
 						//chip::heldChip = i;
@@ -145,17 +145,17 @@ void Shack::Script()
 		}
 
 		//mouse holding:
-		if (SoliRom::EventHandler::getMouseState() == SoliRom::MouseCondition::HELD)
+		if (SoliRom::EventHandler::getMouse().state == SoliRom::MouseState::HELD)
 		{
 			//if held on dorito follow mouse
 			if (chip::heldChip != -1)
 			{
-				chips[chip::heldChip].setPosition((SoliRom::EventHandler::getMouseX() * (1/scale)) - (chips[chip::heldChip].getRect()->w / 2), (SoliRom::EventHandler::getMouseY() * (1 / scale)) - (chips[chip::heldChip].getRect()->h / 2));
+				chips[chip::heldChip].setPosition((SoliRom::EventHandler::getMouse().x * (1/scale)) - (chips[chip::heldChip].getRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (chips[chip::heldChip].getRect()->h / 2));
 			}
 		}
 
 		//mouse idle
-		if (SoliRom::EventHandler::getMouseState() == SoliRom::MouseCondition::IDLE)
+		if (SoliRom::EventHandler::getMouse().state == SoliRom::MouseState::IDLE)
 		{
 			chip::heldChip = -1;
 		}
@@ -175,7 +175,7 @@ void Shack::Script()
 				}
 			}
 			//set used chip when used
-			if (chips[i].getRect()->y > Game.getWindow()->getWindowHeight() && i != chip::heldChip)
+			if (chips[i].getRect()->y > getWindow()->getHeight() && i != chip::heldChip)
 			{
 				chips[i].used = false;
 			}
@@ -274,7 +274,7 @@ bool Shack::SceneTransition()
 
 void Shack::Draw()
 {
-	SDL_RenderClear(Game.getWindow()->getRenderer());
+	SDL_RenderClear(getWindow()->getSDL_Renderer());
 
 	//exterior scene
 	if (scene[currentScene] == "ext")
@@ -328,7 +328,7 @@ void Shack::Draw()
 
 	}
 
-	SDL_RenderPresent(Game.getWindow()->getRenderer());
+	SDL_RenderPresent(getWindow()->getSDL_Renderer());
 }
 
 bool Shack::SpecialQUIT()

@@ -95,7 +95,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameLayer.h" />
+    <ClInclude Include="src\WeedGame.h" />
     <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Shack.h" />
     <ClInclude Include="src\Zone.h" />
@@ -103,7 +104,8 @@
     <ClInclude Include="src\timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\WeedGame.cpp" />
+    <ClCompile Include="src\GameLayer.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Shack.cpp" />
     <ClCompile Include="src\core.cpp" />

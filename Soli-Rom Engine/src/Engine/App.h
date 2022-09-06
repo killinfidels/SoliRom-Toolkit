@@ -12,7 +12,7 @@ namespace SoliRom
 
 		//Create new Window
 		static Window* createWindow(std::string _name, int _width, int _height);
-		Window* getCurrentWindow();
+		static Window* getCurrentWindow();
 		Window* getCurrentWindow(std::string _name);
 		bool setCurrentWindow(std::string _name);
 		bool addLayer(Layer* _layer);
@@ -24,10 +24,10 @@ namespace SoliRom
 
 	public:
 		//Layers - tempTest
-		std::vector<Layer*> appLayers;
+		static std::vector<Layer*> appLayers;
 
 		//Windows
-		std::vector<Window*> appWindows;
+		static std::vector<Window*> appWindows;
 		int currentWindow = 0;
 
 		//Creates app, defiend in Client

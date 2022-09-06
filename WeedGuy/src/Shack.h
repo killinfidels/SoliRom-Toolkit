@@ -28,11 +28,11 @@ private:
 	Shack();
 	static Shack* instance;
 
-	SoliRom::Texture exterior;
-	SoliRom::Texture interior;
+	SoliRom::Asset::Texture exterior;
+	SoliRom::Asset::Texture interior;
 
-	SoliRom::Texture arrow;
-	SoliRom::Texture arrowDown;
+	SoliRom::Asset::Texture arrow;
+	SoliRom::Asset::Texture arrowDown;
 
 	things screen;
 
@@ -41,17 +41,19 @@ private:
 	things right;
 	things back;
 
+	SoliRom::Window* w_game;
+
 };
 extern Guy weedGuy;
 extern Boof joint;
 extern Knife knife;
 extern things bagDorito; //makedoritobag class
-extern SoliRom::Texture doritoBag;
+extern SoliRom::Asset::Texture doritoBag;
 const int chipAmount = 20;
 extern chip chips[chipAmount];
 extern bool usingChip[chipAmount];
 extern things block;
-extern SoliRom::Texture grass;
+extern SoliRom::Asset::Texture grass;
 //block.setSize(300, 300);
 //block.setPosition(weedGuy.getRect()->x + (weedGuy.getRect()->w / 2) - (block.getRect()->w / 2), weedGuy.getRect()->y + (weedGuy.getRect()->h) - (block.getRect()->h / 2) - 20);
 //grass.create("Assets/grass.png");
@@ -61,5 +63,5 @@ extern SoliRom::Texture grass;
 //bloodsplat.create("Assets/blood.png");
 //blood.setTexture(bloodsplat);
 extern things blood;
-extern SoliRom::Texture bloodsplat;
+extern SoliRom::Asset::Texture bloodsplat;
 extern exhale smoke;

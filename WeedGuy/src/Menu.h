@@ -27,7 +27,7 @@ private:
 		Title, Main, Option
 	};
 private:
-	SoliRom::Texture titleTexture;
-	SoliRom::Texture mainTexture;
-	SoliRom::Texture optionsTexture;
+	SoliRom::Asset::Texture titleTexture;
+	SoliRom::Asset::Texture mainTexture;
+	SoliRom::Asset::Texture optionsTexture;
 };

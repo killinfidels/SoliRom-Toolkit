@@ -1,5 +1,6 @@
 #include "Menu.h"
 
+Menu* Menu::instance = 0;
 Menu* Menu::getInstance()
 {
 	if (!instance)
@@ -8,4 +9,8 @@ Menu* Menu::getInstance()
 	}
 
 	return instance;
+}
+
+Menu::Menu()
+{
 }

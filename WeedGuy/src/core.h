@@ -6,7 +6,7 @@
 
 const float scale = 1;
 
-extern SoliRom::App Game;
+SoliRom::Window* getWindow();
 
 class things : public SoliRom::GameObject
 {
@@ -27,25 +27,25 @@ public:
 	void draw()
 	{
 		reScale();
-		SDL_RenderCopy(Game.getWindow()->getRenderer(), texture, NULL, &scaled);
+		SDL_RenderCopy(getWindow()->getSDL_Renderer(), texture, NULL, &scaled);
 	}
 
 	void draw(SDL_RendererFlip _flip)
 	{
 		reScale();
-		SDL_RenderCopyEx(Game.getWindow()->getRenderer(), texture, NULL, &scaled, NULL, NULL, _flip);
+		SDL_RenderCopyEx(getWindow()->getSDL_Renderer(), texture, NULL, &scaled, NULL, NULL, _flip);
 	}
 
 	void drawRect(bool defaultColor)
 	{
 		reScale();
 		if (defaultColor)
-			SDL_SetRenderDrawColor(Game.getWindow()->getRenderer(), 255, 0, 0, 255);
+			SDL_SetRenderDrawColor(getWindow()->getSDL_Renderer(), 255, 0, 0, 255);
 
-		SDL_RenderDrawRect(Game.getWindow()->getRenderer(), &scaled);
+		SDL_RenderDrawRect(getWindow()->getSDL_Renderer(), &scaled);
 
 		if (defaultColor)
-			SDL_SetRenderDrawColor(Game.getWindow()->getRenderer(), 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(getWindow()->getSDL_Renderer(), 255, 255, 255, 255);
 	}
 
 	//move that amount left or right
@@ -54,9 +54,9 @@ public:
 		setPosition(getRect()->x + _x, getRect()->y + _y);
 	}
 
-	void setTexture(SoliRom::Texture _texture)
+	void setTexture(SoliRom::Asset::Texture _texture)
 	{
-		texture = _texture.getTexture();
+		texture = _texture.get();
 	}
 protected:
 
@@ -82,9 +82,9 @@ public:
 
 	static void loadAssets()
 	{
-		chip1.create("Assets/chip_1.png");
-		chip2.create("Assets/chip_2.png");
-		chip3.create("Assets/chip_3.png");
+		chip1.create("Assets/chip_1.png", getWindow());
+		chip2.create("Assets/chip_2.png", getWindow());
+		chip3.create("Assets/chip_3.png", getWindow());
 	};
 
 
@@ -115,9 +115,9 @@ public:
 
 private:
 
-	static SoliRom::Texture chip1;
-	static SoliRom::Texture chip2;
-	static SoliRom::Texture chip3;
+	static SoliRom::Asset::Texture chip1;
+	static SoliRom::Asset::Texture chip2;
+	static SoliRom::Asset::Texture chip3;
 };
 
 class Guy : public things
@@ -125,21 +125,21 @@ class Guy : public things
 private:
 
 	//weedguy idle
-	SoliRom::Texture Idle1;
-	SoliRom::Texture Idle2;
-	SoliRom::Texture Idle3;
+	SoliRom::Asset::Texture Idle1;
+	SoliRom::Asset::Texture Idle2;
+	SoliRom::Asset::Texture Idle3;
 	//weedguy booger
-	SoliRom::Texture Pick1;
-	SoliRom::Texture Pick2;
+	SoliRom::Asset::Texture Pick1;
+	SoliRom::Asset::Texture Pick2;
 	//weedguy wants dorito
-	SoliRom::Texture Hungry1;
-	SoliRom::Texture Hungry2;
+	SoliRom::Asset::Texture Hungry1;
+	SoliRom::Asset::Texture Hungry2;
 	//smoke
-	SoliRom::Texture Smoke1;
-	SoliRom::Texture Smoke2;
+	SoliRom::Asset::Texture Smoke1;
+	SoliRom::Asset::Texture Smoke2;
 	//fuck
-	SoliRom::Texture Fuck1;
-	SoliRom::Texture Fuck2;
+	SoliRom::Asset::Texture Fuck1;
+	SoliRom::Asset::Texture Fuck2;
 
 	int loopcount = 0;
 
@@ -354,11 +354,11 @@ public:
 class Boof : public things
 {
 public:
-	SoliRom::Texture boof;
+	SoliRom::Asset::Texture boof;
 
 	Boof()
 	{
-		boof.create("Assets/jont.png");
+		boof.create("Assets/jont.png", getWindow());
 		setTexture(boof);
 		setSize(450 / 2, 250 / 2);
 	}
@@ -380,9 +380,9 @@ public:
 
 		if (held)
 		{
-			setPosition((SoliRom::EventHandler::getMouseX() * (1 / scale)) - (getRect()->w / 2), (SoliRom::EventHandler::getMouseY() * (1 / scale)) - (getRect()->h / 2));
+			setPosition((SoliRom::EventHandler::getMouse().x * (1 / scale)) - (getRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (getRect()->h / 2));
 
-			if (SoliRom::EventHandler::getMouseState() != SoliRom::MouseCondition::HELD && !SoliRom::EventHandler::click())
+			if (SoliRom::EventHandler::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::EventHandler::click())
 			{
 				held = false;
 				setPosition(0, 0);
@@ -414,16 +414,16 @@ public:
 		for (int i = 0; i < 10; i++)
 		{
 			load = "Assets/KNIFE" + std::to_string(i + 1) + ".png";
-			knives[i].create(load);
+			knives[i].create(load, getWindow());
 		}
 		frameTime = std::chrono::milliseconds(200);
 		frame = 0;
 		sizeMul = 3;
 		setSize(30 * sizeMul, 78 * sizeMul);
-		setPosition(Game.getWindow()->getWindowWidth() - getRect()->w, (int)(Game.getWindow()->getWindowHeight() / 1.5) - (getRect()->h / 2));
+		setPosition(getWindow()->getWidth() - getRect()->w, (int)(getWindow()->getHeight() / 1.5) - (getRect()->h / 2));
 		//size 30 78
 	}
-	SoliRom::Texture knives[10];
+	SoliRom::Asset::Texture knives[10];
 
 	void animate()
 	{
@@ -453,12 +453,12 @@ public:
 
 		if (held)
 		{
-			setPosition((SoliRom::EventHandler::getMouseX() * (1 / scale)) - (getRect()->w / 2), (SoliRom::EventHandler::getMouseY() * (1 / scale)) - (getRect()->h / 2));
+			setPosition((SoliRom::EventHandler::getMouse().x * (1 / scale)) - (getRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (getRect()->h / 2));
 
-			if (SoliRom::EventHandler::getMouseState() != SoliRom::MouseCondition::HELD && !SoliRom::EventHandler::click())
+			if (SoliRom::EventHandler::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::EventHandler::click())
 			{
 				held = false;
-				setPosition(Game.getWindow()->getWindowWidth() - getRect()->w, (int)(Game.getWindow()->getWindowHeight() / 1.5) - (getRect()->h / 2));
+				setPosition(getWindow()->getWidth() - getRect()->w, (int)(getWindow()->getHeight() / 1.5) - (getRect()->h / 2));
 
 				if (SoliRom::EventHandler::mouseInObj(_weedguy))
 				{
@@ -482,7 +482,7 @@ public:
 		for (int i = 0; i < 12; i++)
 		{
 			load = "Assets/smoke" + std::to_string(i + 1) + ".png";
-			smokes[i].create(load);
+			smokes[i].create(load, getWindow());
 		}
 		frameTime = std::chrono::milliseconds(200);
 		frame = 0;
@@ -491,7 +491,7 @@ public:
 		setPosition(_weedGuy->getRect()->x + (_weedGuy->getRect()->w / 2.8), _weedGuy->getRect()->y + (_weedGuy->getRect()->h / 1.6) - getRect()->h);
 		//size 30 78
 	}
-	SoliRom::Texture smokes[12];
+	SoliRom::Asset::Texture smokes[12];
 
 	bool done = true;
 

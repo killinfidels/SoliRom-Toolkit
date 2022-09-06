@@ -7,6 +7,9 @@ namespace SoliRom
 {
 	App* App::instance = nullptr;
 
+	std::vector<Window*> App::appWindows;
+	std::vector<Layer*> App::appLayers;
+
 	bool App::addLayer(Layer* _layer)
 	{
 		appLayers.push_back(_layer);
@@ -113,5 +116,15 @@ namespace SoliRom
 		instance->appWindows.push_back(new Window(updatedName, _width, _height));
 
 		return instance->appWindows.back();
+	}
+
+	Window* App::getCurrentWindow()
+	{
+		if (appWindows.size() == 1)
+		{
+			return appWindows[0];
+		}
+
+		return NULL;
 	}
 }
