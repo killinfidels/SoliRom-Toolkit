@@ -48,6 +48,8 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 			zRow++;
 		}
 	}
+
+	frameTime.reset();
 }
 
 point TestLayer::pointToScreen(int _x, int _y, int _z)
@@ -360,5 +362,9 @@ void TestLayer::onUpdate()
 	SDL_RenderPresent(w_2DTest->getSDL_Renderer());
 	SDL_RenderPresent(w_3DTest->getSDL_Renderer());
 
+	SR_TRACE("FRAMETIME: %f", frameTime.elapsed());
+	printf("\x1B[F");
+	frameTime.reset();
+	
 	SDL_Delay(20);
 }

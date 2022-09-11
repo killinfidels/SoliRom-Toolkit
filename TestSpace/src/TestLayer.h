@@ -59,4 +59,6 @@ private:
 	obj_3D tree[24];
 	SoliRom::Asset::Texture t_road;
 	SoliRom::Asset::Texture t_road2;
+
+	SoliRom::Timer frameTime;
 };

@@ -109,6 +109,7 @@
     <ClInclude Include="src\Engine\Windows\Window.h" />
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
+    <ClInclude Include="src\Engine\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="src\precompiledheaders.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Engine\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

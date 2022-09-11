@@ -6,3 +6,4 @@
 #include "Engine/Engine Objects/GameObject.h"
 #include "Engine/Input.h"
 #include "Engine/Assets/Texture.h"
+#include "Engine/Timer.h"

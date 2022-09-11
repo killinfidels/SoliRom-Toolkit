@@ -68,14 +68,14 @@ namespace SoliRom
 			break;
 		}
 
-		std::time_t rawTime;
-		struct tm* timeStruct;
+		std::time_t rawTime = time(nullptr);
+		auto timeStruct = localtime(&rawTime);;
 
-		time(&rawTime);
-		timeStruct = localtime(&rawTime);
+		std::ostringstream fromattedTime;
+		fromattedTime << std::put_time(timeStruct, "%H:%M:%S");
 
 		// print time and set colors
-		printf("%s[%i:%i:%i] %s%s: ", timeColor.c_str(), timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, textColor.c_str(), console);
+		printf("%s[%s] %s%s: ", timeColor.c_str(), fromattedTime.str().c_str(), textColor.c_str(), console);
 
 		// print log
 		vprintf(str, args); // hehehe variadrics bitch
