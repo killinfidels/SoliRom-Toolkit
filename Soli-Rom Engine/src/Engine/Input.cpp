@@ -31,9 +31,11 @@ namespace SoliRom
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				mouse.click = true;
+				mouse.state = CLICKED;
 				break;
 			case SDL_MOUSEBUTTONUP:
 				mouse.state = IDLE;
+				mouse.click = false;
 				break;
 			case SDL_KEYDOWN:
 				for (int i = 0; i <= keyboard.size() + 1; i++)

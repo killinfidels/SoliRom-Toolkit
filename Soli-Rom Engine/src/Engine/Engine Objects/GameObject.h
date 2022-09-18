@@ -18,6 +18,7 @@ namespace SoliRom
 		SDL_Rect* getRect();
 
 		SDL_Rect scaled;
+		int sizeMul;
 	private:
 		SDL_Rect Rect;
 		int assetsN;

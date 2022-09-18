@@ -41,7 +41,10 @@
     </ClInclude>
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
-    <ClInclude Include="src\Engine\Timer.h" />
+    <ClInclude Include="src\Engine\Tools\Timer.h" />
+    <ClInclude Include="src\Engine\Assets\Animation.h" />
+    <ClInclude Include="src\Engine\Assets\Sound.h" />
+    <ClInclude Include="src\Engine\Assets\AssetManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp">
@@ -66,6 +69,9 @@
       <Filter>Engine\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\precompiledheaders.cpp" />
-    <ClCompile Include="src\Engine\Timer.cpp" />
+    <ClCompile Include="src\Engine\Tools\Timer.cpp" />
+    <ClCompile Include="src\Engine\Assets\Animation.cpp" />
+    <ClCompile Include="src\Engine\Assets\Sound.cpp" />
+    <ClCompile Include="src\Engine\Assets\AssetManager.cpp" />
   </ItemGroup>
 </Project>
