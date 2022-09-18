@@ -5,18 +5,20 @@ Working on:
 	-switch main() to be in engine //yes but cant really do much yet
 	-singleton app class //i think so, will leave up until sure
 	-WINDOW and application window commands - skeleton
+	-SOUND
+	-FINALLY ASSET MANAGER - :) its functional now but not finished
+		Should be able to load all assets automatically from a text file containing a list of all assets
+		also a way to create that text file
+	-Animation loading from text file and saving to text file
 
 To do:
 	-window resizing
 	-camera
 	-geometry rendering
 	-managers
-	-Texture
-	-Animation
 	-Asset Manager
 	-make comments
-	-time class
-
+	
 	preferred order:
 		-Window
 		-Layers
@@ -73,7 +75,9 @@ Detailed plan:
 Finished:
 	X-learn arrays again
 	X-get sdl image
-
+	X-Textures
+	X-Timer class
+	
 	temp for WEEDBOY: Gotta make them good after temp work
 			x-Asset: just texture for now, made a temp texture, cant be bothered with
 			figuring out arrays
