@@ -16,7 +16,7 @@ private:
 	//SoliRom::Window* w_TestSpace;
 };
 
-SoliRom::App* SoliRom::App::CreateApp()
+SoliRom::App* SoliRom::CreateApp()
 {
 	return new TestSpace;
 }

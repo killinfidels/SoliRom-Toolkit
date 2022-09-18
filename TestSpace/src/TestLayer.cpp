@@ -5,8 +5,9 @@ SoliRom::Asset::Texture* obj_3D::texture;
 
 TestLayer::TestLayer() : Layer("The Test Layer")
 {
-	w_3DTest = SoliRom::App::createWindow("WOAH 3D!?!?!?", 700, 600);
-	w_2DTest = SoliRom::App::createWindow("TOP DOWN DEBUG!", 700, 600);
+	w_3DTest = SoliRom::App::Get()->createWindow("WOAH 3D!?!?!?", 700, 600);
+	w_2DTest = SoliRom::App::Get()->createWindow("TOP DOWN DEBUG!", 700, 600);
+
 	int x, y;
 	SDL_GetWindowPosition(w_3DTest->getSDL_Window(), &x, &y);
 	SDL_SetWindowPosition(w_3DTest->getSDL_Window(), x - 300, y);
@@ -21,11 +22,17 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 	cam.camSpeed = 5;
 	cam.xD = 0, cam.yD = 0;
 
-	t_tree.create("assets/Tree.png", w_3DTest);
-	t_road.create("assets/Road.png", w_3DTest);
-	t_road2.create("assets/Road.png", w_2DTest);
+	//3d
+	SoliRom::AssetManager::Get()->setWindow(w_3DTest);
+	t_tree = SoliRom::AssetManager::Get()->createTexture("assets/Tree.png");
+	t_road = SoliRom::AssetManager::Get()->createTexture("assets/Road.png");
 
-	obj_3D::setTexture(&t_tree);
+	//2d
+	SoliRom::AssetManager::Get()->setWindow(w_2DTest);
+	t_road2 = SoliRom::AssetManager::Get()->createTexture("assets/Road.png");
+
+	SoliRom::AssetManager::Get()->setWindow(w_3DTest);
+	obj_3D::setTexture(t_tree);
 	obj_3D::setRenderer(w_3DTest);
 	
 	float scale = 1;
@@ -49,7 +56,12 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 		}
 	}
 
-	frameTime.reset();
+	animationTest = SoliRom::AssetManager::Get()->createAnimation("assets/idle_1.png", 200);
+
+	animationTest->Reset();
+	animationTest->Start();
+
+	frameTime.Reset();
 }
 
 point TestLayer::pointToScreen(int _x, int _y, int _z)
@@ -147,7 +159,9 @@ void TestLayer::drawRoad()
 		int y = pointToScreen(roadSize.x + roadSize.w, roadSize.y, i + cam.pos.z).y - pointToScreen(roadSize.x, roadSize.y, i + cam.pos.z).y;
 
 		SDL_Point size;
-		SDL_QueryTexture(t_road.get(), NULL, NULL, &size.x, &size.y);
+
+		SDL_QueryTexture(t_road->Get(), NULL, NULL, &size.x, &size.y);
+
 		textureRect = {
 			0,
 			((size.y * (i - relz1 )) / (relz2 - relz1)),
@@ -164,7 +178,7 @@ void TestLayer::drawRoad()
 		//draw until next liksom
 		//for (drawRect.y; drawRect.y < pointToScreen(roadSize.x, roadSize.y, i - 1 + cam.pos.z).y; drawRect.y++)
 		{
-			SDL_RenderCopyEx(w_3DTest->getSDL_Renderer(), t_road.get(), &textureRect, &drawRect, atan2(y,drawRect.w) * 180 / 3.14159265, &zero, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(w_3DTest->getSDL_Renderer(), t_road->Get(), &textureRect, &drawRect, atan2(y,drawRect.w) * 180 / 3.14159265, &zero, SDL_FLIP_NONE);
 		}
 
 	}
@@ -263,7 +277,7 @@ void TestLayer::vertexRender()
 
 	//SDL_RenderGeometry(w_2DTest->getSDL_Renderer(), NULL, vert, 3, NULL, 0);
 
-	SDL_RenderGeometry(w_2DTest->getSDL_Renderer(), t_road2.get(), roadVert, 6, NULL, 0);
+	SDL_RenderGeometry(w_2DTest->getSDL_Renderer(), t_road2->Get(), roadVert, 6, NULL, 0);
 	//SDL_Log("%s\n", SDL_GetError());
 }
 
@@ -347,6 +361,8 @@ void TestLayer::onUpdate()
 
 	drawRoad();
 
+	obj_3D::setTexture(animationTest->Get());
+
 	for (int i = 0; i < 24; i++)
 	{
 		objSetScreenRect(&tree[i]);
@@ -362,9 +378,32 @@ void TestLayer::onUpdate()
 	SDL_RenderPresent(w_2DTest->getSDL_Renderer());
 	SDL_RenderPresent(w_3DTest->getSDL_Renderer());
 
+	frameTime.update();
+
+	if (SoliRom::EventHandler::keyPressed(SDLK_1) && !pauseOnce)
+	{
+		//pauseOnce = true;
+		frameTime.Stop();
+		SR_INFO("TIMER PAUSED");
+	}
+
+	if (SoliRom::EventHandler::keyPressed(SDLK_2) && !unpauseOnce)
+	{
+		//unpauseOnce = true;
+		frameTime.Start();
+		SR_INFO("TIMER UNPAUSED");
+	}
+
+	if (SoliRom::EventHandler::keyPressed(SDLK_3) && !resetOnce)
+	{
+		//resetOnce = true;
+		frameTime.Reset();
+		SR_INFO("TIMER RESET");
+	}
+	
 	SR_TRACE("FRAMETIME: %f", frameTime.elapsed());
 	printf("\x1B[F");
-	frameTime.reset();
-	
-	SDL_Delay(20);
+
+
+	//SDL_Delay(20);
 }

@@ -12,7 +12,7 @@ public:
 	void setZ(int _z) { z = _z; }
 	int getZ() { return z; }
 	void drawRect() { if (visible) { SDL_RenderDrawRect(renderer, &renderRect); } }
-	void draw() { if (visible) { SDL_RenderCopy(renderer, texture->get(), NULL, &renderRect); } }
+	void draw() { if (visible) { SDL_RenderCopy(renderer, texture->Get(), NULL, &renderRect); } }
 	static void setTexture(SoliRom::Asset::Texture* _texture) { texture = _texture; }
 	static void setRenderer(SoliRom::Window* _window) { renderer = _window->getSDL_Renderer(); }
 	void setRenderRect(SDL_Rect _rect) { renderRect = _rect; }
@@ -44,7 +44,6 @@ private:
 		int xD, yD;
 	};
 
-
 	point pointToScreen(int _x, int _y, int _z);
 	void objSetScreenRect(obj_3D* _obj);
 	void draw2D();
@@ -55,10 +54,15 @@ private:
 	SoliRom::Window* w_2DTest;
 
 	camera cam;
-	SoliRom::Asset::Texture t_tree;
+	SoliRom::Asset::Texture* t_tree;
+	SoliRom::Asset::Texture* t_road;
+	SoliRom::Asset::Texture* t_road2;
 	obj_3D tree[24];
-	SoliRom::Asset::Texture t_road;
-	SoliRom::Asset::Texture t_road2;
+
+	SoliRom::Asset::Animation* animationTest;
 
 	SoliRom::Timer frameTime;
+	bool pauseOnce = false;
+	bool unpauseOnce = false;
+	bool resetOnce = false;
 };
