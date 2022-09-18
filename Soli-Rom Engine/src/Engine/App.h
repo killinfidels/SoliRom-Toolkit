@@ -11,27 +11,25 @@ namespace SoliRom
 		~App();
 
 		//Create new Window
-		static Window* createWindow(std::string _name, int _width, int _height);
-		static Window* getCurrentWindow();
+		Window* createWindow(std::string _name, int _width, int _height);
+		Window* getCurrentWindow();
 		Window* getCurrentWindow(std::string _name);
 		bool setCurrentWindow(std::string _name);
 		bool addLayer(Layer* _layer);
 
-		static App& getInstance();
+		//Returns pointer to instance
+		static App* Get();
 
 	protected:
 		App();
 
 	public:
 		//Layers - tempTest
-		static std::vector<Layer*> appLayers;
+		std::vector<Layer*> appLayers;
 
 		//Windows
-		static std::vector<Window*> appWindows;
+		std::vector<Window*> appWindows;
 		int currentWindow = 0;
-
-		//Creates app, defiend in Client
-		static App* CreateApp();
 
 		//App run loop
 		void Run();
@@ -42,4 +40,7 @@ namespace SoliRom
 		//set main function as friend so it can run app privates
 		friend int ::main(int argc, char** argv);
 	};
+
+	//Creates app, defiend in Client
+	App* CreateApp();
 }

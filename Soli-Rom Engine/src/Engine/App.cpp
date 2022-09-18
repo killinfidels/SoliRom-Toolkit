@@ -7,25 +7,22 @@ namespace SoliRom
 {
 	App* App::instance = nullptr;
 
-	std::vector<Window*> App::appWindows;
-	std::vector<Layer*> App::appLayers;
-
 	bool App::addLayer(Layer* _layer)
 	{
 		appLayers.push_back(_layer);
 		return false;
 	}
 
-	App& App::getInstance()
+	App* App::Get()
 	{
-		return *instance;
+		return instance;
 	}
 
 	App::App()
 	{
 		if (instance != nullptr)
 		{
-			SR_CORE_ERROR("Application already exists.");
+			SR_CORE_ERROR("Application already exists!");
 		}
 		else
 		{
@@ -120,7 +117,7 @@ namespace SoliRom
 
 	Window* App::getCurrentWindow()
 	{
-		if (appWindows.size() == 1)
+		if (appWindows.size() != 0)
 		{
 			return appWindows[0];
 		}
