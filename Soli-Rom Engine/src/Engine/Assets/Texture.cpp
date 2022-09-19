@@ -38,6 +38,11 @@ namespace SoliRom::Asset
 		return true;
 	}
 
+	Window* Texture::GetWindow()
+	{
+		return window;
+	}
+
 	SDL_Texture* Texture::Get()
 	{
 		return texture;
