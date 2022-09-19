@@ -31,8 +31,8 @@ namespace SoliRom::Asset
 		void Start();
 		void Skip();
 		void Stop();
-		//returns true if animation is done?
-		bool Done();
+		//returns number of times animation has completed
+		int Done();
 
 		bool switchFrame(int _frame, std::string _path);
 		bool switchFrame(int _frame, Texture* _texture);
@@ -58,6 +58,7 @@ namespace SoliRom::Asset
 		bool playing = false;
 		bool finished = false;
 		bool loaded = false;
+		int loopCounter = 0;
 
 	public:
 		friend class ::SoliRom::AssetManager;

@@ -125,6 +125,7 @@ namespace SoliRom::Asset
 				if (currentFrame >= frame.size())
 				{
 					finished = true;
+					loopCounter++;
 					currentFrame = 0;
 				}
 
@@ -141,6 +142,8 @@ namespace SoliRom::Asset
 		frameTimer.Reset();
 
 		currentFrame = 0;
+
+		loopCounter = 0;
 
 		finished = false;
 	}
@@ -165,7 +168,7 @@ namespace SoliRom::Asset
 		playing = false;
 	}
 
-	bool Animation::Done()
+	int Animation::Done()
 	{
 		return finished;
 	}
