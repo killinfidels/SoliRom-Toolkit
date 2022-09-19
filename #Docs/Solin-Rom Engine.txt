@@ -9,6 +9,9 @@ Working on:
 	-FINALLY ASSET MANAGER - :) its functional now but not finished
 		Should be able to load all assets automatically from a text file containing a list of all assets
 		also a way to create that text file
+		also also a way to actually GET an asset
+		also also also a way to view all current asssets
+			maybe a window opens where you can preview / play all dem assets?
 	-Animation loading from text file and saving to text file
 
 To do:
