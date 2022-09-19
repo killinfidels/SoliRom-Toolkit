@@ -98,11 +98,11 @@ point TestLayer::pointToScreen(int _x, int _y, int _z)
 void TestLayer::objSetScreenRect(obj_3D* _obj)
 {
 	point screenPoint
-		= pointToScreen(_obj->getRect()->x, _obj->getRect()->y, _obj->getZ());
+		= pointToScreen(_obj->GetRect()->x, _obj->GetRect()->y, _obj->getZ());
 
 	point screenPointH = pointToScreen(
-		_obj->getRect()->x,
-		_obj->getRect()->h,
+		_obj->GetRect()->x,
+		_obj->GetRect()->h,
 		_obj->getZ());
 
 	//SDL_Rect screenRect
@@ -139,9 +139,9 @@ void TestLayer::drawRoad()
 	int relz2 = z2 - cam.pos.z;
 
 	SDL_Rect roadSize = {
-		tree[0].getRect()->x,
+		tree[0].GetRect()->x,
 		0,
-		tree[1].getRect()->x - tree[0].getRect()->x,
+		tree[1].GetRect()->x - tree[0].GetRect()->x,
 		0
 	};
 
@@ -190,7 +190,7 @@ void TestLayer::draw2D()
 	{
 		//find relative position of trees to camera
 		SDL_Rect relative = {
-			(tree[i].getRect()->x + tree[1].getRect()->w / 2) - 15 - cam.pos.x,
+			(tree[i].GetRect()->x + tree[1].GetRect()->w / 2) - 15 - cam.pos.x,
 			(-tree[i].getZ() - 15 + cam.pos.z),
 			30,
 			30
@@ -222,9 +222,9 @@ void TestLayer::vertexRender()
 	int relz2 = z2 - cam.pos.z;
 
 	SDL_Rect roadSize = {
-		tree[0].getRect()->x,
+		tree[0].GetRect()->x,
 		0,
-		tree[1].getRect()->x - tree[0].getRect()->x,
+		tree[1].GetRect()->x - tree[0].GetRect()->x,
 		0
 	};
 

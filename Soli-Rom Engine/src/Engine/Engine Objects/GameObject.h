@@ -15,9 +15,8 @@ namespace SoliRom
 		bool visible = true;
 		bool use = true;
 
-		SDL_Rect* getRect();
+		SDL_Rect* GetRect();
 
-		SDL_Rect scaled;
 		int sizeMul;
 	private:
 		SDL_Rect Rect;

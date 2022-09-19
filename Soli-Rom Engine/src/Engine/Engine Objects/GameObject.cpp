@@ -23,7 +23,8 @@ namespace SoliRom
 		Rect.x = x;
 		Rect.y = y;
 	}
-	SDL_Rect* GameObject::getRect()
+
+	SDL_Rect* GameObject::GetRect()
 	{
 		return &Rect;
 	}
