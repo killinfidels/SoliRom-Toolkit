@@ -95,20 +95,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameLayer.h" />
-    <ClInclude Include="src\WeedGame.h" />
-    <ClInclude Include="src\Menu.h" />
-    <ClInclude Include="src\Shack.h" />
-    <ClInclude Include="src\Zone.h" />
     <ClInclude Include="src\core.h" />
-    <ClInclude Include="src\timer.h" />
+    <ClInclude Include="src\levels\ShackInt.h" />
+    <ClInclude Include="src\objects\items\Chip.h" />
+    <ClInclude Include="src\objects\items\Boof.h" />
+    <ClInclude Include="src\objects\Items.h" />
+    <ClInclude Include="src\objects\items\Knife.h" />
+    <ClInclude Include="src\objects\items\Exhale.h" />
+    <ClInclude Include="src\objects\Object.h" />
+    <ClInclude Include="src\objects\items\Guy.h" />
+    <ClInclude Include="src\layers\GameLayer.h" />
+    <ClInclude Include="src\levels\Menu.h" />
+    <ClInclude Include="src\levels\ShackExt.h" />
+    <ClInclude Include="src\levels\Level.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\levels\ShackInt.cpp" />
+    <ClCompile Include="src\objects\items\Boof.cpp" />
+    <ClCompile Include="src\objects\items\Chip.cpp" />
+    <ClCompile Include="src\objects\items\Exhale.cpp" />
+    <ClCompile Include="src\objects\items\Knife.cpp" />
+    <ClCompile Include="src\objects\Object.cpp" />
     <ClCompile Include="src\WeedGame.cpp" />
-    <ClCompile Include="src\GameLayer.cpp" />
-    <ClCompile Include="src\Menu.cpp" />
-    <ClCompile Include="src\Shack.cpp" />
-    <ClCompile Include="src\core.cpp" />
+    <ClCompile Include="src\objects\items\Guy.cpp" />
+    <ClCompile Include="src\layers\GameLayer.cpp" />
+    <ClCompile Include="src\levels\Menu.cpp" />
+    <ClCompile Include="src\levels\ShackExt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Soli-Rom Engine\Soli-Rom Engine.vcxproj">

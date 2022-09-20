@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 Menu* Menu::instance = 0;
-Menu* Menu::getInstance()
+Menu* Menu::Get()
 {
 	if (!instance)
 	{
@@ -13,4 +13,5 @@ Menu* Menu::getInstance()
 
 Menu::Menu()
 {
+	levelIdentification = LevelId::Menu;
 }

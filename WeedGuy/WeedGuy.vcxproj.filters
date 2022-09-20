@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="items">
+      <UniqueIdentifier>{2765AC0F-9379-D4C0-5CFB-7720C8CED0F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="layers">
+      <UniqueIdentifier>{3588EB0A-212A-16E1-0AE5-2935F6259D31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes">
+      <UniqueIdentifier>{A602591B-92A4-83F1-7B5F-974567A00A42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\objects\items\Guy.h">
+      <Filter>items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\layers\GameLayer.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\levels\Menu.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\levels\ShackExt.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\levels\Level.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\Object.h" />
+    <ClInclude Include="src\core.h" />
+    <ClInclude Include="src\levels\ShackInt.h" />
+    <ClInclude Include="src\objects\items\Exhale.h" />
+    <ClInclude Include="src\objects\items\Chip.h" />
+    <ClInclude Include="src\objects\items\Boof.h" />
+    <ClInclude Include="src\objects\items\Knife.h" />
+    <ClInclude Include="src\objects\Items.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\WeedGame.cpp" />
+    <ClCompile Include="src\objects\items\Guy.cpp">
+      <Filter>items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\layers\GameLayer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\levels\Menu.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\levels\ShackExt.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\Object.cpp" />
+    <ClCompile Include="src\levels\ShackInt.cpp" />
+    <ClCompile Include="src\objects\items\Chip.cpp" />
+    <ClCompile Include="src\objects\items\Exhale.cpp" />
+    <ClCompile Include="src\objects\items\Boof.cpp" />
+    <ClCompile Include="src\objects\items\Knife.cpp" />
+  </ItemGroup>
+</Project>
