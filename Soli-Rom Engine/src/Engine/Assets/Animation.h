@@ -62,6 +62,7 @@ namespace SoliRom::Asset
 
 	public:
 		friend class ::SoliRom::AssetManager;
+		friend class ::SoliRom::AssetViewer;
 	};
 }
 

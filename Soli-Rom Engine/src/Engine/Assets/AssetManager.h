@@ -44,6 +44,8 @@ namespace SoliRom
 		bool noWindowLoad = true;
 
 		Window* defaultWindow;
+
+		friend class AssetViewer;
 	};
 
 }

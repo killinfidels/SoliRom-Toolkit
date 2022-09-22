@@ -4,7 +4,8 @@
 
 namespace SoliRom
 {
-	class AssetManager;
+	extern class AssetManager;
+	extern class AssetViewer;
 }
 
 namespace SoliRom::Asset
@@ -16,8 +17,6 @@ namespace SoliRom::Asset
 		//stores info to create texture later
 		Texture(std::string _name, std::string _path, bool _frame);
 		//create texture
-
-	private:
 
 		//have to set rendering window if thats not done
 		bool Load();
@@ -41,6 +40,7 @@ namespace SoliRom::Asset
 		~Texture();
 
 		friend class ::SoliRom::AssetManager;
+		friend class ::SoliRom::AssetViewer;
 		friend class Animation;
 	};
 }

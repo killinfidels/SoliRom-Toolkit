@@ -1,7 +1,5 @@
 #include "precompiledheaders.h"
-#include "Engine/Windows/Window.h"
 #include "Texture.h"
-#include "Engine/Log.h"
 
 namespace SoliRom::Asset
 {
@@ -22,10 +20,6 @@ namespace SoliRom::Asset
 
 	bool Texture::Load()
 	{
-		std::string textureOrFrame = "Texture";
-		if (frame) //Says frame failed instead of texute if its part of an animation :p
-			textureOrFrame = "Frame";
-
 		if (window == NULL)
 		{
 			SR_CORE_WARN("%s '%' loading failed, no target window to render.\nPath: '%s'", textureOrFrame.c_str(), name.c_str(), path.c_str());

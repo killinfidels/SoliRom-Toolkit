@@ -10,6 +10,9 @@
     <Filter Include="Engine\Engine Objects">
       <UniqueIdentifier>{8A13F703-F67F-B2FE-BF73-4A5C2B9FD466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Tools">
+      <UniqueIdentifier>{9B443096-87A7-BF3A-302D-F8F01C6F8BBD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Engine\Windows">
       <UniqueIdentifier>{151D2DBC-01EB-20C2-EA7E-91E8D6EBFC26}</UniqueIdentifier>
     </Filter>
@@ -17,6 +20,18 @@
   <ItemGroup>
     <ClInclude Include="src\Engine\App.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Assets\Animation.h">
+      <Filter>Engine\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Assets\AssetManager.h">
+      <Filter>Engine\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Assets\AssetViewer.h">
+      <Filter>Engine\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Assets\Sound.h">
+      <Filter>Engine\Assets</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Assets\Texture.h">
       <Filter>Engine\Assets</Filter>
@@ -33,6 +48,9 @@
     <ClInclude Include="src\Engine\Log.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Tools\Timer.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Windows\Layer.h">
       <Filter>Engine\Windows</Filter>
     </ClInclude>
@@ -41,14 +59,22 @@
     </ClInclude>
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
-    <ClInclude Include="src\Engine\Tools\Timer.h" />
-    <ClInclude Include="src\Engine\Assets\Animation.h" />
-    <ClInclude Include="src\Engine\Assets\Sound.h" />
-    <ClInclude Include="src\Engine\Assets\AssetManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Assets\Animation.cpp">
+      <Filter>Engine\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Assets\AssetManager.cpp">
+      <Filter>Engine\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Assets\AssetViewer.cpp">
+      <Filter>Engine\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Assets\Sound.cpp">
+      <Filter>Engine\Assets</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Assets\Texture.cpp">
       <Filter>Engine\Assets</Filter>
@@ -62,6 +88,9 @@
     <ClCompile Include="src\Engine\Log.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Tools\Timer.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Windows\Layer.cpp">
       <Filter>Engine\Windows</Filter>
     </ClCompile>
@@ -69,9 +98,5 @@
       <Filter>Engine\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\precompiledheaders.cpp" />
-    <ClCompile Include="src\Engine\Tools\Timer.cpp" />
-    <ClCompile Include="src\Engine\Assets\Animation.cpp" />
-    <ClCompile Include="src\Engine\Assets\Sound.cpp" />
-    <ClCompile Include="src\Engine\Assets\AssetManager.cpp" />
   </ItemGroup>
 </Project>

@@ -13,15 +13,18 @@ Working on:
 		also also also a way to view all current asssets
 			maybe a window opens where you can preview / play all dem assets?
 	-Animation loading from text file and saving to text file
+	-Finish AssetViewer and maybe combine it with the asset manager somehow
+		-texture, and animation clases could have an extra renderer stored for just the asset viewer
 
 To do:
+	-Animation update command that is run every frame by app if the animation is loaded && running
 	-window resizing
 	-camera
 	-geometry rendering
 	-managers
 	-Asset Manager
 	-make comments
-	
+
 	preferred order:
 		-Window
 		-Layers
@@ -80,7 +83,7 @@ Finished:
 	X-get sdl image
 	X-Textures
 	X-Timer class
-	
+
 	temp for WEEDBOY: Gotta make them good after temp work
 			x-Asset: just texture for now, made a temp texture, cant be bothered with
 			figuring out arrays

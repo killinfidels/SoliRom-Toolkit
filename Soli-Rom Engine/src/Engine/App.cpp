@@ -1,8 +1,9 @@
 #include "precompiledheaders.h"
 #include "Log.h"
 #include "Input.h"
+#include "Assets/AssetManager.h"
+#include "Assets/AssetViewer.h"
 #include "App.h"
-#include "Input.h"
 
 namespace SoliRom
 {
@@ -58,15 +59,12 @@ namespace SoliRom
 
 	void App::Run()
 	{
-		running = true;
+		AddLayer(new AssetViewer());
 
 		while (running)
 		{
 			//call eventhandler, it stores all events in keyboardstate, mousestate and windowstate
 			EventHandler::update();
-
-			running = !EventHandler::getQuit();
-
 
 			//if not minimized
 				//update all layers
