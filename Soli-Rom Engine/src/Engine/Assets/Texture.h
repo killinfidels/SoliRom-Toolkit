@@ -38,6 +38,8 @@ namespace SoliRom::Asset
 		SDL_Texture* Get();
 		Window* GetWindow();
 
+		~Texture();
+
 		friend class ::SoliRom::AssetManager;
 		friend class Animation;
 	};

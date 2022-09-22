@@ -56,4 +56,9 @@ namespace SoliRom::Asset
 	{
 		return texture;
 	}
+
+	Texture::~Texture()
+	{
+		SDL_DestroyTexture(texture);
+	}
 }
