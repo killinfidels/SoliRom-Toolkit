@@ -15,9 +15,6 @@ ShackExt* ShackExt::Get()
 ShackExt::ShackExt()
 {
 	levelIdentification = LevelId::ShackExt;
-	app = SoliRom::App::Get();
-	w_game = app->getCurrentWindow();
-	assetManager = SoliRom::AssetManager::Get();
 
 	//exterior
 	exterior = assetManager->createTexture("assets/shackExt.jpg");

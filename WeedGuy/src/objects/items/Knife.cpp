@@ -7,7 +7,7 @@ Knife::Knife()
 	sizeMul = 3;
 	setSize(30 * sizeMul, 78 * sizeMul);
 
-	setPosition(SoliRom::App::Get()->getCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->getCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
+	setPosition(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
 	//size 30 78
 	a_knife->Start();
 }
@@ -37,7 +37,7 @@ bool Knife::knifeLogic(Guy* _weedguy)
 		if (SoliRom::EventHandler::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::EventHandler::click())
 		{
 			held = false;
-			setPosition(SoliRom::App::Get()->getCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->getCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
+			setPosition(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
 
 			if (SoliRom::EventHandler::mouseInObj(_weedguy))
 			{

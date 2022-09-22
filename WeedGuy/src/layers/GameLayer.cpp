@@ -2,7 +2,9 @@
 
 GameLayer::GameLayer() : Layer("WeedGuy Main Layer")
 {
-	w_game = SoliRom::App::Get()->createWindow("Virtual pet weed guy : )", 1280, 960);
+	app = SoliRom::App::Get();
+	w_game = app->CreateWindow("Virtual pet weed guy : )", 1280, 960);
+	app->SetCurrentWindow(w_game->getWindowName());
 
 	currentLevel = ShackExt::Get();
 	nextLevel = lastLevel = currentLevel->GetId();
@@ -10,7 +12,7 @@ GameLayer::GameLayer() : Layer("WeedGuy Main Layer")
 	printf("\x1B[?25l");
 }
 
-void GameLayer::onUpdate()
+void GameLayer::OnUpdate()
 {
 	frameT.Start();
 

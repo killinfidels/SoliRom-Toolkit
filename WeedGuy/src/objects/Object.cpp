@@ -58,6 +58,6 @@ void Object::CheckRender()
 {
 	if (renderer == NULL)
 	{
-		SoliRom::App::Get()->getCurrentWindow()->getSDL_Renderer();
+		SoliRom::App::Get()->GetCurrentWindow()->getSDL_Renderer();
 	}
 }

@@ -9,8 +9,8 @@ class WeedGame : public SoliRom::App
 public:
 	WeedGame() : SoliRom::App()
 	{
-		addLayer(new GameLayer);
-		//addLayer(new InterFaceLayer);
+		AddLayer(new GameLayer);
+		//AddLayer(new InterFaceLayer);
 	}
 
 private:

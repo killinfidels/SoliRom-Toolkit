@@ -32,8 +32,9 @@ protected:
 	Level()
 	{
 		app = SoliRom::App::Get();
-		w_game = app->getCurrentWindow();
+		w_game = app->GetCurrentWindow();
 		assetManager = SoliRom::AssetManager::Get();
+		//assetManager->setWindow(w_game);
 
 		levelIdentification = LevelId::ENDOFLIST;
 	};

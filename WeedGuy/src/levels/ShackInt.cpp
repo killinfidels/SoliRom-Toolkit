@@ -15,9 +15,6 @@ ShackInt* ShackInt::Get()
 ShackInt::ShackInt() : smoke(&weedGuy)
 {
 	levelIdentification = LevelId::ShackInt;
-	app = SoliRom::App::Get();
-	w_game = app->getCurrentWindow();
-	assetManager = SoliRom::AssetManager::Get();
 
 	//interior
 	interior = assetManager->createTexture("assets/shackInt.jpg");
@@ -255,12 +252,15 @@ void ShackInt::Draw()
 
 
 	SDL_RenderPresent(w_game->getSDL_Renderer());
+
+	SpecialQUIT();
 }
 
 bool ShackInt::SpecialQUIT()
 {
 	if (SoliRom::EventHandler::getQuit() && !bloodT.checkElapsed(1000) && bloodT.checkElapsed(200))
 	{
+		app->Quit();
 		return true;
 	}
 
