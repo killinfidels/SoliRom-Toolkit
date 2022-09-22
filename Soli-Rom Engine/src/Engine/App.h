@@ -15,8 +15,9 @@ namespace SoliRom
 		Window* GetCurrentWindow();
 		Window* GetWindow(std::string _name);
 		bool SetCurrentWindow(std::string _name);
-		bool addLayer(Layer* _layer);
+		void DestroyWindow(std::string _name);
 		bool AddLayer(Layer* _layer);
+		void Quit();
 
 		//Returns pointer to instance
 		static App* Get();
@@ -34,6 +35,9 @@ namespace SoliRom
 
 		//App run loop
 		void Run();
+		bool running;
+
+		int FindWindow(std::string _name);
 
 		//Instance of app
 		static App* instance;

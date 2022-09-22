@@ -1,5 +1,6 @@
 #include "precompiledheaders.h"
 #include "Log.h"
+#include "Input.h"
 #include "App.h"
 #include "Input.h"
 
@@ -11,6 +12,11 @@ namespace SoliRom
 	{
 		appLayers.push_back(_layer);
 		return false;
+	}
+
+	void App::Quit()
+	{
+		running = false;
 	}
 
 	App* App::Get()
@@ -44,6 +50,7 @@ namespace SoliRom
 				else
 				{
 					SR_CORE_INFO("SDL_img Init Success.");
+					running = true;
 				}
 			}
 		}
@@ -51,7 +58,7 @@ namespace SoliRom
 
 	void App::Run()
 	{
-		bool running = true;
+		running = true;
 
 		while (running)
 		{
@@ -67,7 +74,7 @@ namespace SoliRom
 				//update windows/render
 			for (int i = 0; i < appLayers.size(); i++)
 			{
-				appLayers[i]->onUpdate();
+				appLayers[i]->OnEvent();
 				appLayers[i]->OnUpdate();
 			}
 		}
@@ -76,6 +83,20 @@ namespace SoliRom
 		//free all assets
 	}
 
+	int App::FindWindow(std::string _name)
+	{
+		for (int i = 0; i < appWindows.size(); i++)
+		{
+			if (appWindows[i]->getWindowName() == _name)
+			{
+				return i;
+			}
+		}
+
+		SR_CORE_WARN("NO WINDOW WITH NAME: '%s'!!", _name);
+
+		return -1;
+	}
 
 	App::~App()
 	{
@@ -120,9 +141,53 @@ namespace SoliRom
 	{
 		if (appWindows.size() != 0)
 		{
-			return appWindows[0];
+			return appWindows[currentWindow];
 		}
 
+		SR_CORE_FATAL("COULD NOT GET CURRENT WINDOW, NO WINDOWS!!");
+
 		return NULL;
+	}
+
+	Window* App::GetWindow(std::string _name)
+	{
+		int tempNr = FindWindow(_name);
+
+		if (tempNr != -1)
+			return appWindows[tempNr];
+
+		SR_CORE_FATAL("COULD NOT GET WINDOW: '%s'!!", _name);
+
+		return NULL;
+	}
+
+	bool App::SetCurrentWindow(std::string _name)
+	{
+		int tempNr = FindWindow(_name);
+
+		if (tempNr != -1)
+		{
+			currentWindow = tempNr;
+			return true;
+		}
+
+		SR_CORE_ERROR("COULD NOT SET CURRENT WINDOW: '%s'!!", _name);
+
+		return false;
+	}
+
+	void App::DestroyWindow(std::string _name)
+	{
+		int tempNr = FindWindow(_name);
+
+		if (tempNr != -1)
+		{
+			delete appWindows[tempNr];
+			appWindows.erase(appWindows.begin() + tempNr);
+		}
+		else
+		{
+			SR_CORE_ERROR("COULD NOT DESTROY WINDOW: '%s'!!", _name);
+		}
 	}
 }
