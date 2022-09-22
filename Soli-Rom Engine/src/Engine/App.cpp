@@ -7,7 +7,7 @@ namespace SoliRom
 {
 	App* App::instance = nullptr;
 
-	bool App::addLayer(Layer* _layer)
+	bool App::AddLayer(Layer* _layer)
 	{
 		appLayers.push_back(_layer);
 		return false;
@@ -68,6 +68,7 @@ namespace SoliRom
 			for (int i = 0; i < appLayers.size(); i++)
 			{
 				appLayers[i]->onUpdate();
+				appLayers[i]->OnUpdate();
 			}
 		}
 
@@ -85,7 +86,7 @@ namespace SoliRom
 		IMG_Quit();
 	}
 
-	Window* App::createWindow(std::string _name, int _width, int _height)
+	Window* App::CreateWindow(std::string _name, int _width, int _height)
 	{
 		bool change = false;
 		int nameNr = 1;
@@ -115,7 +116,7 @@ namespace SoliRom
 		return instance->appWindows.back();
 	}
 
-	Window* App::getCurrentWindow()
+	Window* App::GetCurrentWindow()
 	{
 		if (appWindows.size() != 0)
 		{

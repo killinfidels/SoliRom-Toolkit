@@ -1,11 +1,5 @@
 #include "precompiledheaders.h"
-#include "Engine/Log.h"
-#include "Engine/Windows/Window.h"
-#include "Engine/Assets/Texture.h"
-#include "Engine/Assets/Animation.h"
-#include "Engine/Assets/Sound.h"
 #include "AssetManager.h"
-#include "Engine/App.h"
 
 namespace SoliRom
 {
@@ -21,7 +15,7 @@ namespace SoliRom
 		}
 		else
 		{
-			defaultWindow = App::Get()->getCurrentWindow();
+			defaultWindow = App::Get()->GetCurrentWindow();
 
 			if (defaultWindow == NULL)
 			{

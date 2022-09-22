@@ -1,4 +1,6 @@
 #pragma once
+#include "Engine/Windows/Window.h"
+#include "Engine/Log.h"
 
 namespace SoliRom
 {
@@ -21,8 +23,9 @@ namespace SoliRom::Asset
 		bool Load();
 
 		//path of texture file
-		std::string name;;
+		std::string name;
 		std::string path;
+		std::string textureOrFrame;
 
 		//Pointer to window to get renderer
 		Window* window = NULL;

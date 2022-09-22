@@ -11,11 +11,12 @@ namespace SoliRom
 		~App();
 
 		//Create new Window
-		Window* createWindow(std::string _name, int _width, int _height);
-		Window* getCurrentWindow();
-		Window* getCurrentWindow(std::string _name);
-		bool setCurrentWindow(std::string _name);
+		Window* CreateWindow(std::string _name, int _width, int _height);
+		Window* GetCurrentWindow();
+		Window* GetWindow(std::string _name);
+		bool SetCurrentWindow(std::string _name);
 		bool addLayer(Layer* _layer);
+		bool AddLayer(Layer* _layer);
 
 		//Returns pointer to instance
 		static App* Get();
@@ -23,7 +24,7 @@ namespace SoliRom
 	protected:
 		App();
 
-	public:
+	private:
 		//Layers - tempTest
 		std::vector<Layer*> appLayers;
 
