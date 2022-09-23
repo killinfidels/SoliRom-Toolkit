@@ -10,13 +10,15 @@ public:
 	GameLayer();
 	~GameLayer() = default;
 
-	virtual void onUpdate() override;
+	virtual void OnUpdate() override;
 
 	void LevelTransitionLogic();
 
 private:
 	Level* currentLevel;
 	Level::LevelId lastLevel, nextLevel, beforeMenu;
+
+	SoliRom::App* app;
 
 	bool exit;
 	bool debugBox;

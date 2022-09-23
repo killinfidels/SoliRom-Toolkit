@@ -1,4 +1,10 @@
 #pragma once
+#include "Engine/Log.h"
+#include "Engine/Windows/Window.h"
+#include "Engine/Assets/Texture.h"
+#include "Engine/Assets/Animation.h"
+#include "Engine/Assets/Sound.h"
+#include "Engine/App.h"
 
 namespace SoliRom
 {
@@ -38,6 +44,8 @@ namespace SoliRom
 		bool noWindowLoad = true;
 
 		Window* defaultWindow;
+
+		friend class AssetViewer;
 	};
 
 }

@@ -8,9 +8,9 @@ namespace SoliRom
 		Layer(std::string _name);
 		virtual ~Layer() = default;
 
-		virtual void onUpdate() {}
+		virtual void OnUpdate() {}
 
-		virtual void onEvent() {}
+		virtual void OnEvent() {}
 
 	private:
 		std::string name;

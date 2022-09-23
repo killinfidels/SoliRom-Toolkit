@@ -8,8 +8,8 @@ class TestSpace : public SoliRom::App
 public:
 	TestSpace() : SoliRom::App()
 	{
-		//w_TestSpace = createWindow("TestSpace :)", 700, 600);
-		addLayer(new TestLayer());
+		//w_TestSpace = CreateWindow("TestSpace :)", 700, 600);
+		AddLayer(new TestLayer());
 	}
 
 private:

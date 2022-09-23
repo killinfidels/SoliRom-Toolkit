@@ -29,7 +29,7 @@ public:
 	TestLayer();
 	~TestLayer() = default;
 
-	virtual void onUpdate() override;
+	virtual void OnUpdate() override;
 	//virtual void onEvent() override;
 private:
 

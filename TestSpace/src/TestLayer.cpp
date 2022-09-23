@@ -5,8 +5,8 @@ SoliRom::Asset::Texture* obj_3D::texture;
 
 TestLayer::TestLayer() : Layer("The Test Layer")
 {
-	w_3DTest = SoliRom::App::Get()->createWindow("WOAH 3D!?!?!?", 700, 600);
-	w_2DTest = SoliRom::App::Get()->createWindow("TOP DOWN DEBUG!", 700, 600);
+	w_3DTest = SoliRom::App::Get()->CreateWindow("WOAH 3D!?!?!?", 700, 600);
+	w_2DTest = SoliRom::App::Get()->CreateWindow("TOP DOWN DEBUG!", 700, 600);
 
 	int x, y;
 	SDL_GetWindowPosition(w_3DTest->getSDL_Window(), &x, &y);
@@ -62,6 +62,7 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 	animationTest->Start();
 
 	frameTime.Reset();
+	frameTime.Start();
 }
 
 point TestLayer::pointToScreen(int _x, int _y, int _z)
@@ -175,7 +176,7 @@ void TestLayer::drawRoad()
 
 		drawRect.w = sqrt(y * y + drawRect.w * drawRect.w);
 		
-		//draw until next liksom
+		//Draw until next liksom
 		//for (drawRect.y; drawRect.y < pointToScreen(roadSize.x, roadSize.y, i - 1 + cam.pos.z).y; drawRect.y++)
 		{
 			SDL_RenderCopyEx(w_3DTest->getSDL_Renderer(), t_road->Get(), &textureRect, &drawRect, atan2(y,drawRect.w) * 180 / 3.14159265, &zero, SDL_FLIP_NONE);
@@ -281,7 +282,7 @@ void TestLayer::vertexRender()
 	//SDL_Log("%s\n", SDL_GetError());
 }
 
-void TestLayer::onUpdate()
+void TestLayer::OnUpdate()
 {
 	int light = 25;
 	//2D WINDOW
@@ -401,8 +402,9 @@ void TestLayer::onUpdate()
 		SR_INFO("TIMER RESET");
 	}
 	
-	SR_TRACE("FRAMETIME: %f", frameTime.elapsed());
+	SR_TRACE("FRAMETIME: %i", (int)(1000 * frameTime.elapsed()));
 	printf("\x1B[F");
+	frameTime.Reset();
 
 
 	//SDL_Delay(20);

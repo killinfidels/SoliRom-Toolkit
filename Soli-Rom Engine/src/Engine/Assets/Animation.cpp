@@ -79,7 +79,7 @@ namespace SoliRom::Asset
 					i++;
 				} while (SDL_RWFromFile((firstHalf + std::to_string(i) + lastHalf).c_str(), "r") != NULL);
 
-				SR_CORE_TRACE("Animation '%s' loaded with %i frames", name.c_str(), i - 1);
+				SR_CORE_TRACE("Animation '%s' created with %i frames.", name.c_str(), i - 1);
 			}
 		}
 	}
@@ -98,6 +98,7 @@ namespace SoliRom::Asset
 				frame[i]->window = window;
 				frame[i]->Load();
 			}
+		SR_CORE_TRACE("Animation '%s' loaded for Window: '%s'.", name.c_str(), window->getWindowName().c_str());
 
 		loaded = true;
 		}

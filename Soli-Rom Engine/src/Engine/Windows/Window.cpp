@@ -40,11 +40,18 @@ namespace SoliRom
 
 	Window::~Window()
 	{
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
+
+		renderer = NULL;
+		window = NULL;
 	}
+
 	SDL_Renderer* Window::getSDL_Renderer()
 	{
 		return renderer;
 	}
+
 	SDL_Window* Window::getSDL_Window()
 	{
 		return window;

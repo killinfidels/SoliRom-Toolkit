@@ -28,4 +28,14 @@ namespace SoliRom
 	{
 		return &Rect;
 	}
+
+	void GameObject::Draw()
+	{
+		SDL_RenderCopy(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &Rect);
+	}
+
+	void GameObject::SetTexture(Asset::Texture* _texture)
+	{
+		texture = _texture;
+	}
 }

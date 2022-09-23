@@ -1,8 +1,11 @@
 #pragma once
+#include "Engine/Windows/Window.h"
+#include "Engine/Log.h"
 
 namespace SoliRom
 {
-	class AssetManager;
+	extern class AssetManager;
+	extern class AssetViewer;
 }
 
 namespace SoliRom::Asset
@@ -15,14 +18,13 @@ namespace SoliRom::Asset
 		Texture(std::string _name, std::string _path, bool _frame);
 		//create texture
 
-	private:
-
 		//have to set rendering window if thats not done
 		bool Load();
 
 		//path of texture file
-		std::string name;;
+		std::string name;
 		std::string path;
+		std::string textureOrFrame;
 
 		//Pointer to window to get renderer
 		Window* window = NULL;
@@ -35,7 +37,10 @@ namespace SoliRom::Asset
 		SDL_Texture* Get();
 		Window* GetWindow();
 
+		~Texture();
+
 		friend class ::SoliRom::AssetManager;
+		friend class ::SoliRom::AssetViewer;
 		friend class Animation;
 	};
 }

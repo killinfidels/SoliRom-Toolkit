@@ -1,7 +1,5 @@
 #include "precompiledheaders.h"
-#include "Engine/Windows/Window.h"
 #include "Texture.h"
-#include "Engine/Log.h"
 
 namespace SoliRom::Asset
 {
@@ -11,17 +9,20 @@ namespace SoliRom::Asset
 		path = _path;
 		loaded = false;
 		frame = _frame;
+
+		textureOrFrame = "Texture";
+
+		if (frame) //Says frame failed instead of texute if its part of an animation :p
+			textureOrFrame = "Frame";
+
+		SR_CORE_TRACE("%s '%s' created.", textureOrFrame.c_str(), name.c_str());
 	}
 
 	bool Texture::Load()
 	{
-		std::string textureOrFrame = "Texture";
-		if (frame) //Says frame failed instead of texute if its part of an animation :p
-			textureOrFrame = "Frame";
-
 		if (window == NULL)
 		{
-			SR_CORE_WARN("%s: '%' loading failed, no target window to render.\nPath: '%s'", textureOrFrame.c_str(), name.c_str(), path.c_str());
+			SR_CORE_WARN("%s '%' loading failed, no target window to render.\nPath: '%s'", textureOrFrame.c_str(), name.c_str(), path.c_str());
 			return false;
 		}
 		else
@@ -34,6 +35,8 @@ namespace SoliRom::Asset
 			}
 		}
 
+		SR_CORE_TRACE("%s '%s' loaded for Window: '%s'.", textureOrFrame.c_str(), name.c_str(), window->getWindowName().c_str());
+		
 		loaded = true;
 		return true;
 	}
@@ -46,5 +49,10 @@ namespace SoliRom::Asset
 	SDL_Texture* Texture::Get()
 	{
 		return texture;
+	}
+
+	Texture::~Texture()
+	{
+		SDL_DestroyTexture(texture);
 	}
 }

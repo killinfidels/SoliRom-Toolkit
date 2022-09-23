@@ -1,4 +1,6 @@
 #pragma once
+#include "Engine/Assets/Texture.h"
+#include "Engine/Windows/Window.h"
 
 namespace SoliRom
 {
@@ -18,7 +20,13 @@ namespace SoliRom
 		SDL_Rect* GetRect();
 
 		int sizeMul;
+
+		void Draw();
+
+		void SetTexture(Asset::Texture* _texture);
+
 	private:
+		Asset::Texture* texture;
 		SDL_Rect Rect;
 		int assetsN;
 	};
