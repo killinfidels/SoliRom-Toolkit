@@ -26,6 +26,7 @@ ShackInt::ShackInt() : smoke(&weedGuy)
 	grass = assetManager->createTexture("assets/grass.png");
 	bloodsplat = assetManager->createTexture("assets/blood.png");
 
+	level.setTexture(interior);
 	back.setTexture(arrowDown);
 	bagDorito.setTexture(doritoBag);
 	block.setTexture(grass);
@@ -37,12 +38,11 @@ ShackInt::ShackInt() : smoke(&weedGuy)
 	blood.setSize(200, 200);
 	level.setSize(w_game->getWidth(), w_game->getHeight());
 
-	back.setPosition((w_game->getWidth() / 2) - (back.GetRect()->w / 2), w_game->getHeight() - right.GetRect()->h);
+	back.setPosition((w_game->getWidth() / 2) - (back.GetRect()->w / 2), w_game->getHeight() - back.GetRect()->h);
 	bagDorito.setPosition(bagDorito.GetRect()->w / 10, (int)(w_game->getHeight() - bagDorito.GetRect()->h));
 	block.setPosition(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (block.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h) - (block.GetRect()->h / 2) - 20);
 	blood.setPosition(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (blood.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2) - (blood.GetRect()->h / 2));
 
-	level.setTexture(interior);
 }
 
 void ShackInt::Load(LevelId _previousLevel)

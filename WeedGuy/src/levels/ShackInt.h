@@ -32,8 +32,6 @@ private:
 	SoliRom::Asset::Texture* doritoBag;
 
 	Object level;
-	Object left;
-	Object right;
 	Object back;
 
 	Guy weedGuy;
