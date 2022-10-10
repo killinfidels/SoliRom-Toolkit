@@ -25,7 +25,14 @@ namespace SoliRom
 
 		void SetTexture(Asset::Texture* _texture);
 
-	private:
+		void Draw(SDL_RendererFlip _flip);
+
+		void DrawRect(bool defaultColor);
+
+		//Move that amount left or right
+		void Move(int _x, int _y);
+
+	protected:
 		Asset::Texture* texture;
 		SDL_Rect Rect;
 		int assetsN;
