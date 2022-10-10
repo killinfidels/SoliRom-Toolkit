@@ -108,7 +108,7 @@ namespace SoliRom::Asset
 
 	Texture* Animation::Get()
 	{
-		if (name == "NO ANIMATION")
+		if (frame.size() == 0)
 		{
 			SR_CORE_WARN("No animation to play!");
 

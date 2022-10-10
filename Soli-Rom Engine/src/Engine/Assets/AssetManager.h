@@ -22,6 +22,7 @@ namespace SoliRom
 		//filename will be used as name
 		Asset::Texture* createTexture(std::string _path);
 		Asset::Texture* createTexture(std::string _name, std::string _path);
+		Asset::Texture* createTextureFromText(std::string _text, int _size, SDL_Color _color);
 		Asset::Animation* createAnimation(std::string _path, int _frameTime);
 		Asset::Animation* createAnimation(std::string _name, std::string _path, int _frameTime);
 		Asset::Animation* createAnimation(std::string _path);
@@ -34,6 +35,7 @@ namespace SoliRom
 		Asset::Animation* getAnimation(std::string _name);
 		Asset::Sound* getSound(std::string _name);
 
+		void DestroyTexture(Asset::Texture* _texture);
 		void setWindow(Window* _window);
 
 	private:
