@@ -24,6 +24,7 @@ To do:
 	-managers
 	-Asset Manager
 	-make comments
+	-make EVENTHANDLER NOT SHIT and singleton
 
 	preferred order:
 		-Window
