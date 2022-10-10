@@ -11,16 +11,19 @@ class obj_3D : public SoliRom::GameObject
 public:
 	void setZ(int _z) { z = _z; }
 	int getZ() { return z; }
-	void drawRect() { if (visible) { SDL_RenderDrawRect(renderer, &renderRect); } }
-	void draw() { if (visible) { SDL_RenderCopy(renderer, texture->Get(), NULL, &renderRect); } }
-	static void setTexture(SoliRom::Asset::Texture* _texture) { texture = _texture; }
+	void DrawRect() { if (visible) { SDL_RenderDrawRect(renderer, &renderRect); } }
+	void Draw() { if (visible) { SDL_RenderCopy(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &renderRect); } }
+	static void SetTexture(SoliRom::Asset::Texture* _texture) { texture = _texture; }
 	static void setRenderer(SoliRom::Window* _window) { renderer = _window->getSDL_Renderer(); }
 	void setRenderRect(SDL_Rect _rect) { renderRect = _rect; }
-private:
+
+	
+	SDL_Rect sizeRect;
 	SDL_Rect renderRect;
 	int z;
 	static SDL_Renderer* renderer;
 	static SoliRom::Asset::Texture* texture;
+private:
 };
 
 class TestLayer : public SoliRom::Layer

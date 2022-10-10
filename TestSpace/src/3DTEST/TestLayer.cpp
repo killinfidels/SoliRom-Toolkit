@@ -32,7 +32,7 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 	t_road2 = SoliRom::AssetManager::Get()->createTexture("assets/Road.png");
 
 	SoliRom::AssetManager::Get()->setWindow(w_3DTest);
-	obj_3D::setTexture(t_tree);
+	obj_3D::SetTexture(t_tree);
 	obj_3D::setRenderer(w_3DTest);
 	
 	float scale = 1;
@@ -146,11 +146,11 @@ void TestLayer::drawRoad()
 		0
 	};
 
-	SDL_Rect drawRect, textureRect;
+	SDL_Rect DrawRect, textureRect;
 
 	for (int i = relz2; i > 0 && i > relz1; i--)
 	{
-		drawRect = {
+		DrawRect = {
 			pointToScreen(roadSize.x, roadSize.y, i + cam.pos.z).x,
 			pointToScreen(roadSize.x, roadSize.y, i + cam.pos.z).y,
 			pointToScreen(roadSize.x + roadSize.w, roadSize.y, i + cam.pos.z).x - pointToScreen(roadSize.x, roadSize.y, i + cam.pos.z).x,
@@ -174,12 +174,12 @@ void TestLayer::drawRoad()
 			0, 0
 		};
 
-		drawRect.w = sqrt(y * y + drawRect.w * drawRect.w);
+		DrawRect.w = sqrt(y * y + DrawRect.w * DrawRect.w);
 		
 		//Draw until next liksom
-		//for (drawRect.y; drawRect.y < pointToScreen(roadSize.x, roadSize.y, i - 1 + cam.pos.z).y; drawRect.y++)
+		//for (DrawRect.y; DrawRect.y < pointToScreen(roadSize.x, roadSize.y, i - 1 + cam.pos.z).y; DrawRect.y++)
 		{
-			SDL_RenderCopyEx(w_3DTest->getSDL_Renderer(), t_road->Get(), &textureRect, &drawRect, atan2(y,drawRect.w) * 180 / 3.14159265, &zero, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(w_3DTest->getSDL_Renderer(), t_road->Get(), &textureRect, &DrawRect, atan2(y,DrawRect.w) * 180 / 3.14159265, &zero, SDL_FLIP_NONE);
 		}
 
 	}
@@ -205,7 +205,7 @@ void TestLayer::draw2D()
 			relative.h
 		};
 
-		//move to middle of screen
+		//Move to middle of screen
 		rotated.x += cam.middleX2;
 		rotated.y += cam.middleY2;
 
@@ -362,13 +362,13 @@ void TestLayer::OnUpdate()
 
 	drawRoad();
 
-	obj_3D::setTexture(animationTest->Get());
+	obj_3D::SetTexture(animationTest->Get());
 
 	for (int i = 0; i < 24; i++)
 	{
 		objSetScreenRect(&tree[i]);
-		//tree[i].drawRect();
-		tree[i].draw();
+		//tree[i].DrawRect();
+		tree[i].Draw();
 	}
 
 
