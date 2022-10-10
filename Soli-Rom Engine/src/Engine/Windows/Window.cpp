@@ -58,10 +58,12 @@ namespace SoliRom
 	}
 	int Window::getWidth()
 	{
+		SDL_GetWindowSize(window, &width, NULL);
 		return width;
 	}
 	int Window::getHeight()
 	{
+		SDL_GetWindowSize(window, NULL, &height);
 		return height;
 	}
 }
