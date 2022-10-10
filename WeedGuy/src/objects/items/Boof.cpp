@@ -3,7 +3,7 @@
 Boof::Boof()
 {
 	boof = SoliRom::AssetManager::Get()->createTexture("assets/jont.png");
-	setTexture(boof);
+	SetTexture(boof);
 	setSize(450 / 2, 250 / 2);
 }
 

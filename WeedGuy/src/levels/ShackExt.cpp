@@ -17,23 +17,24 @@ ShackExt::ShackExt()
 	levelIdentification = LevelId::ShackExt;
 
 	//exterior
-	exterior = assetManager->createTexture("assets/shackExt.jpg");
+	t_shack = assetManager->createTexture("assets/Shack.png");
 	arrow = assetManager->createTexture("assets/Arrow.png");
 
-	right.setTexture(arrow);
-	left.setTexture(arrow);
+	right.SetTexture(arrow);
+	left.SetTexture(arrow);
 
-	level.setSize(w_game->getWidth(), w_game->getHeight());
+	shack.setSize(900, 900);
 	right.setSize(128, 128);
 	left.setSize(128, 128);
-	door.setSize(187, 482);
+	door.setSize(124, 254);
 
+	shack.setPosition(80, 60);
 	right.setPosition(w_game->getWidth() - right.GetRect()->w, (w_game->getHeight() / 2) - (right.GetRect()->h / 2));
 	left.setPosition(0, right.GetRect()->y);
-	door.setPosition(405, 310);
+	door.setPosition(396, 568);
 
 	//rest
-	level.setTexture(exterior);
+	shack.SetTexture(t_shack);
 }
 
 void ShackExt::Load(LevelId _previousLevel)
@@ -55,13 +56,20 @@ void ShackExt::Script()
 
 Level::LevelId ShackExt::LevelTransition()
 {
+	LevelId tempID = levelIdentification;
 	if (SoliRom::EventHandler::click())
 	{
 		if (SoliRom::EventHandler::mouseInObj(&door))
-		{
-			loadSuccess = false;
-			return LevelId::ShackInt;
-		}
+			tempID = LevelId::ShackInt;
+
+		if (SoliRom::EventHandler::mouseInObj(&left))
+			tempID = LevelId::CaveExt;
+	}
+
+	if (tempID != levelIdentification)
+	{
+		loadSuccess = false;
+		return tempID;
 	}
 
 	return LevelId::ShackExt;
@@ -69,13 +77,8 @@ Level::LevelId ShackExt::LevelTransition()
 
 void ShackExt::Draw()
 {
-	SDL_RenderClear(w_game->getSDL_Renderer());
-
-	level.draw();
-	right.draw();
-	left.draw(SDL_FLIP_HORIZONTAL);
-	door.drawRect(true);
-
-
-	SDL_RenderPresent(w_game->getSDL_Renderer());
+	shack.Draw();
+	right.Draw();
+	left.Draw(SDL_FLIP_HORIZONTAL);
+	door.DrawRect(true);
 }

@@ -8,6 +8,7 @@ exhale::exhale(Guy* _weedGuy)
 	//size 30 78
 
 	a_exhale = SoliRom::AssetManager::Get()->createAnimation("assets/exhale_1.png", 200);
+	done = true;
 
 }
 
@@ -26,6 +27,6 @@ bool exhale::animate()
 		done = true;
 	}
 
-	setTexture(a_exhale->Get());
+	SetTexture(a_exhale->Get());
 	return done;
 }

@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Extra\SDL2-2.0.22\include;..\Extra\SDL2_image-2.6.0\include;..\Soli-Rom Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Extra\SDL2-2.0.22\include;..\Extra\SDL2_image-2.6.0\include;..\Extra\SDL2_ttf-2.20.1\include;..\Soli-Rom Engine\src;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -68,8 +68,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Extra\SDL2-2.0.22\lib\x64;..\Extra\SDL2_image-2.6.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Extra\SDL2-2.0.22\lib\x64;..\Extra\SDL2_image-2.6.0\lib\x64;..\Extra\SDL2_ttf-2.20.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -77,7 +77,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Extra\SDL2-2.0.22\include;..\Extra\SDL2_image-2.6.0\include;..\Soli-Rom Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Extra\SDL2-2.0.22\include;..\Extra\SDL2_image-2.6.0\include;..\Extra\SDL2_ttf-2.20.1\include;..\Soli-Rom Engine\src;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -90,13 +90,15 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Extra\SDL2-2.0.22\lib\x64;..\Extra\SDL2_image-2.6.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Extra\SDL2-2.0.22\lib\x64;..\Extra\SDL2_image-2.6.0\lib\x64;..\Extra\SDL2_ttf-2.20.1\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\core.h" />
     <ClInclude Include="src\layers\GameLayer.h" />
+    <ClInclude Include="src\levels\CaveExt.h" />
+    <ClInclude Include="src\levels\CaveInt.h" />
     <ClInclude Include="src\levels\Level.h" />
     <ClInclude Include="src\levels\Menu.h" />
     <ClInclude Include="src\levels\ShackExt.h" />
@@ -108,10 +110,14 @@
     <ClInclude Include="src\objects\items\Exhale.h" />
     <ClInclude Include="src\objects\items\Guy.h" />
     <ClInclude Include="src\objects\items\Knife.h" />
+    <ClInclude Include="src\objects\items\Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WeedGame.cpp" />
     <ClCompile Include="src\layers\GameLayer.cpp" />
+    <ClCompile Include="src\levels\CaveExt.cpp" />
+    <ClCompile Include="src\levels\CaveInt.cpp" />
+    <ClCompile Include="src\levels\CaveWalls.cpp" />
     <ClCompile Include="src\levels\Menu.cpp" />
     <ClCompile Include="src\levels\ShackExt.cpp" />
     <ClCompile Include="src\levels\ShackInt.cpp" />
@@ -121,6 +127,7 @@
     <ClCompile Include="src\objects\items\Exhale.cpp" />
     <ClCompile Include="src\objects\items\Guy.cpp" />
     <ClCompile Include="src\objects\items\Knife.cpp" />
+    <ClCompile Include="src\objects\items\Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Soli-Rom Engine\Soli-Rom Engine.vcxproj">

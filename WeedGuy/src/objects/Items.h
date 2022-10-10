@@ -3,3 +3,4 @@
 #include "items/Knife.h"
 #include "items/Exhale.h"
 #include "items/Boof.h"
+#include "items/Tree.h"

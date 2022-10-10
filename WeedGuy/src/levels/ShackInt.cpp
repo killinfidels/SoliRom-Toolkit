@@ -23,11 +23,11 @@ ShackInt::ShackInt() : smoke(&weedGuy)
 	grass = assetManager->createTexture("assets/grass.png");
 	bloodsplat = assetManager->createTexture("assets/blood.png");
 
-	level.setTexture(interior);
-	back.setTexture(arrowDown);
-	bagDorito.setTexture(doritoBag);
-	block.setTexture(grass);
-	blood.setTexture(bloodsplat);
+	level.SetTexture(interior);
+	back.SetTexture(arrowDown);
+	bagDorito.SetTexture(doritoBag);
+	block.SetTexture(grass);
+	blood.SetTexture(bloodsplat);
 
 	back.setSize(128, 128);
 	bagDorito.setSize(200, 200);
@@ -46,8 +46,6 @@ void ShackInt::Load(LevelId _previousLevel)
 {
 	if (!loadSuccess)
 	{
-		level.setTexture(interior);
-
 		physicsT.Reset();
 		physicsT.Start();
 
@@ -127,7 +125,7 @@ void ShackInt::Script()
 				}
 				else if (Chips[i].GetRect()->y < weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2.5) && i != Chip::heldChip)
 				{
-					Chips[i].move(0, 1000);
+					Chips[i].Move(0, 1000);
 				}
 			}
 			//set used Chip when used
@@ -146,7 +144,7 @@ void ShackInt::Script()
 			{
 				if (i != Chip::heldChip && Chips[i].used == true)
 				{
-					Chips[i].move(0, 7);
+					Chips[i].Move(0, 7);
 				}
 			}
 
@@ -157,11 +155,11 @@ void ShackInt::Script()
 
 				if (weedGuy.GetRect()->x > 300)
 				{
-					weedGuy.move((300 - weedGuy.GetRect()->x) / 10, 0);
+					weedGuy.Move((300 - weedGuy.GetRect()->x) / 10, 0);
 				}
 				if (weedGuy.GetRect()->y > 700)
 				{
-					weedGuy.move(0, (700 - weedGuy.GetRect()->y) / 10);
+					weedGuy.Move(0, (700 - weedGuy.GetRect()->y) / 10);
 				}
 				blood.setPosition(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (blood.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2) - (blood.GetRect()->h / 2));
 				//weedGuy.setSize(weedGuy.GetRect()->w + 2, weedGuy.GetRect()->h + 2);
@@ -210,48 +208,43 @@ Level::LevelId ShackInt::LevelTransition()
 
 void ShackInt::Draw()
 {
-	SDL_RenderClear(w_game->getSDL_Renderer());
-
 	//background
-	level.draw();
+	level.Draw();
 
 	//Object
-	block.draw();
-	weedGuy.draw();
+	block.Draw();
+	weedGuy.Draw();
 
 	if (!SoliRom::EventHandler::getQuit())
 	{
 		if (!smoke.done)
 		{
-			smoke.draw();
+			smoke.Draw();
 		}
 
-		bagDorito.draw();
-		joint.draw();
+		bagDorito.Draw();
+		joint.Draw();
 
 
 		for (int i = 0; i < ChipAmount; i++)
 		{
 			Chips[i].animate();
-			Chips[i].draw();
+			Chips[i].Draw();
 		}
 
 		//hud
-		back.draw();
+		back.Draw();
 
 	}
 	else
 	{
 		if (!bloodT.checkElapsed(1000))
 		{
-			blood.draw();
+			blood.Draw();
 		}
 
-		knife.draw();
+		knife.Draw();
 	}
-
-
-	SDL_RenderPresent(w_game->getSDL_Renderer());
 
 	SpecialQUIT();
 }

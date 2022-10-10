@@ -8,6 +8,8 @@ public:
 		Menu,
 		ShackExt,
 		ShackInt,
+		CaveExt,
+		CaveInt,
 		ENDOFLIST
 	};
 

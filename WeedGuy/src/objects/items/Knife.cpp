@@ -15,7 +15,7 @@ Knife::Knife()
 void Knife::animate()
 {
 
-	setTexture(a_knife->Get());
+	SetTexture(a_knife->Get());
 
 }
 

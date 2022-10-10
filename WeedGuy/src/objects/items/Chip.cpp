@@ -15,5 +15,5 @@ Chip::Chip()
 
 void Chip::animate()
 {
-	setTexture(a_chip->Get());
+	SetTexture(a_chip->Get());
 }

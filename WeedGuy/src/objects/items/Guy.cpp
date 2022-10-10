@@ -39,6 +39,8 @@ void Guy::setAnimation(animation _setAnim, bool _interupt, bool _fullAnimation)
 
 void Guy::animate()
 {
+	SoliRom::Asset::Animation* a_currentAnimation;
+
 	if (animationComplete || skip)
 	{
 		skip = false;
@@ -59,9 +61,14 @@ void Guy::animate()
 		a_hungry->Reset();
 		a_smoke->Reset();
 		a_fuck->Reset();
+
+		a_idle->Stop();
+		a_pick->Stop();
+		a_hungry->Stop();
+		a_smoke->Stop();
+		a_fuck->Stop();
 	}
 
-	SoliRom::Asset::Animation* a_currentAnimation;
 
 	switch (currentAnimation)
 	{
@@ -84,7 +91,8 @@ void Guy::animate()
 		break;
 	}
 
-	setTexture(a_currentAnimation->Get());
+	a_currentAnimation->Start();
+	SetTexture(a_currentAnimation->Get());
 
 	switch (currentAnimation)
 	{

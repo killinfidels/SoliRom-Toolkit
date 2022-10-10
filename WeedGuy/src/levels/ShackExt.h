@@ -20,10 +20,10 @@ public:
 	virtual LevelId LevelTransition() override;
 
 private:
-	SoliRom::Asset::Texture* exterior;
+	SoliRom::Asset::Texture* t_shack;
 	SoliRom::Asset::Texture* arrow;
 
-	Object level;
+	Object shack;
 	Object door;
 	Object left;
 	Object right;
