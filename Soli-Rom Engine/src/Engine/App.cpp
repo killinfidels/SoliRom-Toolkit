@@ -46,12 +46,20 @@ namespace SoliRom
 				//	Unecessary BUT: Initialize SDL_img for .PNG and .JPG
 				if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)))
 				{
-					SR_CORE_FATAL("SDL_img Init Failed: %s", SDL_GetError());
+					SR_CORE_FATAL("SDL_img Init Failed: %s", IMG_GetError());
 				}
 				else
 				{
 					SR_CORE_INFO("SDL_img Init Success.");
-					running = true;
+					if (TTF_Init() == -1)
+					{
+						SR_CORE_FATAL("SDL_ttf Init Failed: %s", TTF_GetError());
+					}
+					else
+					{
+						SR_CORE_INFO("SDL_ttf Init Success.");
+						running = true;
+					}
 				}
 			}
 		}
@@ -61,19 +69,33 @@ namespace SoliRom
 	{
 		AddLayer(new AssetViewer());
 
+		frameTimer.Start();
 		while (running)
 		{
-			//call eventhandler, it stores all events in keyboardstate, mousestate and windowstate
-			EventHandler::update();
+			frameTimer.update();
 
-			//if not minimized
-				//update all layers
-				//LAYERS IS HOW U MAKE GAME
-				//update windows/render
-			for (int i = 0; i < appLayers.size(); i++)
+			if (!usingUpdateTick || frameTimer.checkElapsed(updateTick))
 			{
-				appLayers[i]->OnEvent();
-				appLayers[i]->OnUpdate();
+				frameTimer.Reset();
+
+				//call eventhandler, it stores all events in keyboardstate, mousestate and windowstate
+				EventHandler::update();
+
+				//if not minimized
+					//update all layers
+					//LAYERS IS HOW U MAKE GAME
+					//update windows/render
+				for (int i = 0; i < appWindows.size(); i++)
+					SDL_RenderClear(appWindows[i]->getSDL_Renderer());
+
+				for (int i = 0; i < appLayers.size(); i++)
+				{
+					appLayers[i]->OnEvent();
+					appLayers[i]->OnUpdate();
+				}
+
+				for (int i = 0; i < appWindows.size(); i++)
+					SDL_RenderPresent(appWindows[i]->getSDL_Renderer());
 			}
 		}
 
@@ -157,6 +179,14 @@ namespace SoliRom
 		SR_CORE_FATAL("COULD NOT GET WINDOW: '%s'!!", _name);
 
 		return NULL;
+	}
+
+	void App::SetUpdateTick(int _millis)
+	{
+		if (!usingUpdateTick)
+			usingUpdateTick = !usingUpdateTick;
+
+		updateTick = _millis;
 	}
 
 	bool App::SetCurrentWindow(std::string _name)
