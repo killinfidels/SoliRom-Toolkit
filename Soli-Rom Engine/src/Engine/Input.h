@@ -1,6 +1,8 @@
 #pragma once
 #include "precompiledheaders.h"
 #include "Engine Objects/GameObject.h"
+#include "Windows/Window.h"
+#include "App.h"
 
 namespace SoliRom
 {
@@ -17,6 +19,7 @@ namespace SoliRom
 		int x, y;
 		bool click = false;
 		MouseState state = IDLE;
+		Window* window = NULL;
 	};
 	//key state
 

@@ -22,6 +22,7 @@ namespace SoliRom
 		while (SDL_PollEvent(&e) != 0)
 		{
 			bool success = false;
+			std::string windowName;
 
 			switch (e.type)
 			{
@@ -32,6 +33,10 @@ namespace SoliRom
 			case SDL_MOUSEBUTTONDOWN:
 				mouse.click = true;
 				mouse.state = CLICKED;
+				
+				windowName = SDL_GetWindowTitle(SDL_GetWindowFromID(e.button.windowID));
+				
+				mouse.window = App::Get()->GetWindow(windowName);
 				break;
 			case SDL_MOUSEBUTTONUP:
 				mouse.state = IDLE;
