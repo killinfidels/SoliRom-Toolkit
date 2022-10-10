@@ -30,6 +30,7 @@ project "Soli-Rom Engine"
 	{
 		"Extra/SDL2-2.0.22/include",
 		"Extra/SDL2_image-2.6.0/include",
+		"Extra/SDL2_ttf-2.20.1/include",
 		"%{prj.name}/src"
 	}
 
@@ -37,14 +38,15 @@ project "Soli-Rom Engine"
 	{
 		"Extra/SDL2-2.0.22/lib/x64/",
 		"Extra/SDL2_image-2.6.0/lib/x64/",
-
+		"Extra/SDL2_ttf-2.20.1/lib/x64/"
 	}
 
 	links
 	{
 		"SDL2",
 		"SDL2main",
-		"SDL2_image"
+		"SDL2_image",
+		"SDL2_ttf"
 	}
 
 	defines
@@ -83,13 +85,16 @@ project "Soli-Rom Engine"
 	{
 		"Extra/SDL2-2.0.22/include",
 		"Extra/SDL2_image-2.6.0/include",
-		"Soli-Rom Engine/src"
+		"Extra/SDL2_ttf-2.20.1/include",
+		"Soli-Rom Engine/src",
+		"%{prj.name}/src"
 	}
 
 	libdirs
 	{
 		"Extra/SDL2-2.0.22/lib/x64/",
-		"Extra/SDL2_image-2.6.0/lib/x64/"
+		"Extra/SDL2_image-2.6.0/lib/x64/",
+		"Extra/SDL2_ttf-2.20.1/lib/x64/"
 	}
 
 	links
@@ -97,6 +102,7 @@ project "Soli-Rom Engine"
 		"SDL2",
 		"SDL2main",
 		"SDL2_image",
+		"SDL2_ttf",
 		"Soli-Rom Engine"
 	}
 	
@@ -129,7 +135,7 @@ project "Soli-Rom Engine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
  
-		files
+	files
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
@@ -139,13 +145,16 @@ project "Soli-Rom Engine"
 	{
 		"Extra/SDL2-2.0.22/include",
 		"Extra/SDL2_image-2.6.0/include",
-		"Soli-Rom Engine/src"
+		"Extra/SDL2_ttf-2.20.1/include",
+		"Soli-Rom Engine/src",
+		"%{prj.name}/src"
 	}
 
 	libdirs
 	{
 		"Extra/SDL2-2.0.22/lib/x64/",
-		"Extra/SDL2_image-2.6.0/lib/x64/"
+		"Extra/SDL2_image-2.6.0/lib/x64/",
+		"Extra/SDL2_ttf-2.20.1/lib/x64/"
 	}
 
 	links
@@ -153,6 +162,70 @@ project "Soli-Rom Engine"
 		"SDL2",
 		"SDL2main",
 		"SDL2_image",
+		"SDL2_ttf",
+		"Soli-Rom Engine"
+	}
+	
+	--postbuildcommands
+	--{ -- relpath = relative path, copies EcoScape.dll to Sandbox
+		--("{COPYFILE} %{SolutionDir}Extra/SDL2_image-2.6.0/lib/x64/SDL2_image.dll " .. outputdir.. "/Sandbox"),
+		--("{COPYFILE} %{SolutionDir}Extra/SDL2-2.0.22/lib/x64/SDL2.dll " .. outputdir.. "/Sandbox")
+	--}
+
+	filter "configurations:Debug"
+		defines "SOL_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "SOL_RELEASE"
+		runtime "Release"
+		optimize "on"
+		
+		
+	
+	project "PlaneGame2"
+	location "PlaneGame2"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++latest"
+	staticruntime "on"
+	systemversion "latest"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
+	
+	--pchheader "precompiledheaders.h"
+	--pchsource "PlaneGame2/src/precompiledheaders.cpp"
+ 
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Extra/SDL2-2.0.22/include",
+		"Extra/SDL2_image-2.6.0/include",
+		"Extra/SDL2_ttf-2.20.1/include",
+		"Soli-Rom Engine/src",
+		"%{prj.name}/src"
+	}
+
+	libdirs
+	{
+		"Extra/SDL2-2.0.22/lib/x64/",
+		"Extra/SDL2_image-2.6.0/lib/x64/",
+		"Extra/SDL2_ttf-2.20.1/lib/x64/"
+	}
+
+	links
+	{
+		"SDL2",
+		"SDL2main",
+		"SDL2_image",
+		"SDL2_ttf",
 		"Soli-Rom Engine"
 	}
 	
