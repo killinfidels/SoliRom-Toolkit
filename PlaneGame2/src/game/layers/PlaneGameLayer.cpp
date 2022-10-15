@@ -2,39 +2,42 @@
 
 GameLayer::GameLayer() : Layer("PlaneGame")
 {
+	//system init
 	game = App::Get();
 	game->SetUpdateTick(20);
+
 	w_game = game->CreateWindow("911 BUNGHOLE GAME", 800, 800);
 	SDL_MaximizeWindow(w_game->getSDL_Window());
+	SDL_SetWindowFullscreen(w_game->getSDL_Window(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+
 	assetM = AssetManager::Get();
 	assetM->setWindow(w_game);
 
-	cam.zoom = 2;
-	
+	//cam init
+	cam.w = w_game->getWidth();
+	cam.h = w_game->getHeight();
+
+	//player init
 	player = new Player;
+	player->SetCam(&cam);
 
+	//map init
+	float mapScale = 2.5;
 	t_map = assetM->createTexture("assets/sea.png");
-
 	map.SetTexture(t_map);
-	SDL_QueryTexture(t_map->Get(), NULL, NULL, &map.GetRect()->w, &map.GetRect()->h);
-	map.setSize(map.GetRect()->w / 1 * cam.zoom, map.GetRect()->h / 1 * cam.zoom);
-
-	mapRect = 
-	{
-		(float)map.GetRect()->x,
-		(float)map.GetRect()->y,
-		(float)map.GetRect()->w,
-		(float)map.GetRect()->h
+	
+	*map.GetRect() = {
+		0, 0,
+		(float)t_map->GetSize().w * mapScale, (float)t_map->GetSize().w * mapScale
 	};
+	map.SetCam(&cam);
 
-	fps.Start();
+	Bullet::BindToRect(*map.GetRect());
 }
 
 void GameLayer::OnEvent()
 {
-	fps.update();
-
-	if (EventHandler::getQuit())
+	if (EventHandler::getQuit() || EventHandler::keyPressed(SDLK_ESCAPE))
 	{
 		game->Quit();
 	}
@@ -42,10 +45,9 @@ void GameLayer::OnEvent()
 
 void GameLayer::OnUpdate()
 {
-	cam.w = w_game->getWidth();
-	cam.h = w_game->getHeight();
-	cam.x = player->rect.x - cam.w / 2;
-	cam.y = player->rect.y - cam.h / 2;
+	cam.x = player->GetPos()->x - cam.w / 2;
+	cam.y = player->GetPos()->y - cam.h / 2;
+
 	if (cam.x < 0)
 		cam.x = 0;
 	if (cam.y < 0)
@@ -58,10 +60,6 @@ void GameLayer::OnUpdate()
 	Bullet::Update();
 
 	player->Update();
-
-	map.setPosition(-cam.x, -cam.y);
-
-	Bullet::BindToRect(mapRect);
 
 	map.Draw();
 

@@ -4,15 +4,6 @@
 
 using namespace SoliRom;
 
- struct Camera
-{
-	int x, y, w, h;
-	float zoom;
-};
-
-
-extern Camera cam;
-
 enum Allegiance
 {
 	FRIEND,

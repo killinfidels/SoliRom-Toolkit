@@ -1,13 +1,22 @@
 #include "Bullet.h"
 
 std::vector<std::vector<Bullet*>> Bullet::bullets;
+Asset::Texture* Bullet::bulletTexture;
+SDL_FRect Bullet::boundingBox;
 
 Bullet::Bullet(float _x, float _y, float _angle, float _vel, Allegiance _team)
 {
-	rect.x = _x;
-	rect.y = _y;
-	rect.w = 5 * cam.zoom;
-	rect.h = 5 * cam.zoom;
+	pos.x = _x;
+	pos.y = _y;
+	rect.w = 5;
+	rect.h = 5;
+
+	UpdatePos();
+
+	offset.x = -rect.w / 2;
+	offset.y = -rect.h / 2;
+
+	UpdateOffset();
 
 	vel = 20 + _vel;
 	angle = _angle;
@@ -31,8 +40,9 @@ Bullet::~Bullet()
 
 void Bullet::BulletUpdate()
 {
-	rect.x += sin(angle * 3.14159265 / 180) * vel;
-	rect.y += -cos(angle * 3.14159265 / 180) * vel;
+	pos.x += sin(angle * 3.14159265 / 180) * vel;
+	pos.y += -cos(angle * 3.14159265 / 180) * vel;
+	UpdatePos();
 }
 
 void Bullet::Update()
@@ -42,19 +52,20 @@ void Bullet::Update()
 		for (int z = 0; z < bullets[i].size(); z++)
 		{
 			bullets[i][z]->BulletUpdate();
+
+			if (!SDL_HasIntersectionF(&bullets[i][z]->rect, &boundingBox))
+			{
+				delete bullets[i][z];
+				bullets[i].erase(bullets[i].begin() + z);
+				break;
+			}
 		}
 	}
 }
 
 void Bullet::BulletDraw()
 {
-	drawRect =
-	{
-		rect.x - cam.x - rect.w / 2,
-		rect.y - cam.y - rect.h / 2,
-		rect.w,
-		rect.h
-	};
+	UpdateDrawRectToCam();
 
 	SDL_RenderDrawRectF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), &drawRect);
 }
@@ -108,16 +119,5 @@ bool Bullet::CheckCollision(SDL_FRect _rect, Allegiance _team)
 
 void Bullet::BindToRect(SDL_FRect _rect)
 {
-	for (int i = 0; i < bullets.size(); i++)
-	{
-		for (int z = 0; z < bullets[i].size(); z++)
-		{
-			if (!SDL_HasIntersectionF(&bullets[i][z]->rect, &_rect))
-			{
-				delete bullets[i][z];
-				bullets[i].erase(bullets[i].begin() + z);
-				break;
-			}
-		}
-	}
+	boundingBox = _rect;
 }

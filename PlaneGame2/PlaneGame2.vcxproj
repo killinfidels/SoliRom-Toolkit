@@ -101,7 +101,6 @@
     <ClInclude Include="src\game\player\abilities\Bullet.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\PlaneGame.cpp" />
     <ClCompile Include="src\game\layers\PlaneGameLayer.cpp" />
     <ClCompile Include="src\game\player\Player.cpp" />

@@ -3,17 +3,22 @@
 
 Player::Player()
 {
-	a_player = AssetManager::Get()->createAnimation("assets/plane2_1.png", 50);
+	a_player = AssetManager::Get()->createAnimation("assets/plane1_1.png", 50);
 	a_explosion = AssetManager::Get()->createAnimation("assets/explosion_1.png", 100);
 	a_gunfire = AssetManager::Get()->createAnimation("assets/gunfire_1.png", 100);
 
-	int tempW, tempH;
-	SDL_QueryTexture(a_player->Get()->Get(), NULL, NULL, &tempW, &tempH);
-	rect.w = tempW * 1.25 * cam.zoom;
-	rect.h = tempH * 1.25 * cam.zoom;
+	rect.w = a_player->Get()->GetSize().w * 2;
+	rect.h = a_player->Get()->GetSize().h * 2;
 
-	rect.x = ((App::Get()->GetCurrentWindow()->getWidth() - rect.w) / 2) * cam.zoom;
-	rect.y = ((App::Get()->GetCurrentWindow()->getHeight() - rect.h) / 2) * cam.zoom;
+	pos.x = App::Get()->GetCurrentWindow()->getWidth() / 2;
+	pos.y = App::Get()->GetCurrentWindow()->getHeight() / 2;
+
+	UpdatePos();
+
+	offset.x = -rect.w / 2;
+	offset.y = -rect.h / 2;
+
+	UpdateOffset();
 
 	gun.x = 0;
 	gun.y = -rect.h / 2;
@@ -25,9 +30,8 @@ Player::Player()
 	maxV = 10;
 	minV = 3;
 
-
 	a_player->Start();
-	spaceTimer.Start();
+	shootCooldown.Start();
 }
 
 Player::~Player()
@@ -54,42 +58,48 @@ void Player::Update()
 	if (velocity < minV)
 		velocity = minV;
 
-	rect.x += sin(angle * 3.14159265 / 180) * velocity;
-	rect.y += -cos(angle * 3.14159265 / 180) * velocity;
+	pos.x += sin(angle * 3.14159265 / 180) * velocity;
+	pos.y += -cos(angle * 3.14159265 / 180) * velocity;
 
-	if (rect.x < cam.x - rect.h * 4 || rect.x >  cam.x + cam.w + rect.h * 4)
+	UpdatePos();
+
+	//flip if player goes outside camera - camera stops at map borders :)
+	if (pos.x < cam->x - rect.h * 4 || pos.x >  cam->x + cam->w + rect.h * 4)
 	{
 		angle -= 180;
 	}
 
-	if (rect.y < cam.y - rect.h * 4 || rect.y >  cam.y + cam.h + rect.h * 4)
+	if (pos.y < cam->y - rect.h * 4 || pos.y >  cam->y + cam->h + rect.h * 4)
 	{
 		angle -= 180;
 	}
 	
-	spaceTimer.update();
+	shootCooldown.update();
 
-	if (EventHandler::keyPressed(SDLK_SPACE) && spaceTimer.checkElapsed(200))
+	if (EventHandler::keyPressed(SDLK_SPACE) && shootCooldown.checkElapsed(200))
 	{
-		spaceTimer.Reset();
-		gunTranslated.x = rect.x + gun.y * -sin(angle * 3.14159265 / 180);
-		gunTranslated.y = rect.y + gun.y * cos(angle * 3.14159265 / 180);
-		new Bullet(gunTranslated.x, gunTranslated.y, angle, velocity, FRIEND);
+		shootCooldown.Reset();
+		//angle = 90;
+		float test = sin(angle * 3.14159265 / 180);
+		SDL_FPoint tempGunTranslated = {
+			pos.x + gun.x * cos(angle * 3.14159265 / 180) + gun.y * -sin(angle * 3.14159265 / 180),
+			pos.y + gun.y * cos(angle * 3.14159265 / 180) + gun.x * sin(angle * 3.14159265 / 180),
+		};
+
+		Bullet* bullet = new Bullet(tempGunTranslated.x, tempGunTranslated.y, angle, velocity, FRIEND);
+		bullet->SetCam(cam);
+		bullet = nullptr;
 	}
 }
 
 
 void Player::PlayerDraw()
 {
-	Window* w_game = App::Get()->GetCurrentWindow();
+	SDL_Renderer* renderer = a_player->Get()->GetWindow()->getSDL_Renderer();
 
-	drawRect =
-	{
-		rect.x - cam.x - rect.w / 2,
-		rect.y - cam.y - rect.h / 2,
-		rect.w,
-		rect.h
-	};
+	UpdateDrawRectToCam();
 
-	SDL_RenderCopyExF(w_game->getSDL_Renderer(), a_player->Get()->Get(), NULL, &drawRect, angle, NULL, SDL_FLIP_NONE);
+	texture = a_player->Get();
+
+	SDL_RenderCopyExF(renderer, texture->Get(), NULL, &drawRect, angle, NULL, SDL_FLIP_NONE);
 }

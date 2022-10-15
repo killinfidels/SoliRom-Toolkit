@@ -27,7 +27,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\PlaneGame.cpp" />
     <ClCompile Include="src\game\layers\PlaneGameLayer.cpp">
       <Filter>game\layers</Filter>

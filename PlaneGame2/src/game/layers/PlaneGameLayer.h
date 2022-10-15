@@ -17,10 +17,9 @@ public:
 
 	Player* player;
 
-	GameObject map;
+	EngineObject map;
 	Asset::Texture* t_map;
-	SDL_FRect mapRect;
 
-	Timer fps;
+	Camera cam;
 };
 

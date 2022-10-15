@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-class Bullet
+class Bullet : public EngineObject
 {
 public:
 	Bullet(float _x, float _y, float _angle, float _vel, Allegiance _team);
@@ -13,9 +13,8 @@ public:
 	static void BindToRect(SDL_FRect _rect);
 
 private:
-	//Asset::Texture* bulletTexture;
-	SDL_FRect rect;
-	SDL_FRect drawRect;
+	static Asset::Texture* bulletTexture;
+	static SDL_FRect boundingBox;
 	float vel, angle;
 	Allegiance team;
 	void BulletUpdate();
