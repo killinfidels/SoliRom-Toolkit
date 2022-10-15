@@ -73,7 +73,7 @@ void ShackInt::Script()
 				{
 					if (Chips[i].used == false)
 					{
-						Chips[i].setPosition((SoliRom::EventHandler::getMouse().x * (1 / scale)) - (Chips[i].GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (Chips[i].GetRect()->h / 2));
+						Chips[i].setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (Chips[i].GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (Chips[i].GetRect()->h / 2));
 						Chips[i].used = true;
 						break;
 						//Chip::heldChip = i;
@@ -104,7 +104,7 @@ void ShackInt::Script()
 			//if held on dorito follow mouse
 			if (Chip::heldChip != -1)
 			{
-				Chips[Chip::heldChip].setPosition((SoliRom::EventHandler::getMouse().x * (1 / scale)) - (Chips[Chip::heldChip].GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (Chips[Chip::heldChip].GetRect()->h / 2));
+				Chips[Chip::heldChip].setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (Chips[Chip::heldChip].GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (Chips[Chip::heldChip].GetRect()->h / 2));
 			}
 		}
 

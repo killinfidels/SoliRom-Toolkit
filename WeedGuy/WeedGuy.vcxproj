@@ -111,8 +111,11 @@
     <ClInclude Include="src\objects\items\Guy.h" />
     <ClInclude Include="src\objects\items\Knife.h" />
     <ClInclude Include="src\objects\items\Tree.h" />
+    <ClInclude Include="src\objects\Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core.cpp" />
+    <ClCompile Include="src\objects\Player.cpp" />
     <ClCompile Include="src\WeedGame.cpp" />
     <ClCompile Include="src\layers\GameLayer.cpp" />
     <ClCompile Include="src\levels\CaveExt.cpp" />

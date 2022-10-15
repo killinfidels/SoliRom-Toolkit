@@ -21,7 +21,7 @@ bool Boof::jointLogic(Guy* _weedguy)
 
 	if (held)
 	{
-		setPosition((SoliRom::EventHandler::getMouse().x * (1 / scale)) - (GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / scale)) - (GetRect()->h / 2));
+		setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (GetRect()->h / 2));
 
 		if (SoliRom::EventHandler::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::EventHandler::click())
 		{

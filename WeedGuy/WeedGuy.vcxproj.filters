@@ -64,6 +64,7 @@
     <ClInclude Include="src\objects\items\Tree.h">
       <Filter>objects\items</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WeedGame.cpp" />
@@ -109,5 +110,7 @@
     <ClCompile Include="src\objects\items\Tree.cpp">
       <Filter>objects\items</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\Player.cpp" />
+    <ClCompile Include="src\core.cpp" />
   </ItemGroup>
 </Project>

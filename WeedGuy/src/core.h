@@ -5,4 +5,10 @@
 #include <chrono>
 #include <map>
 
-const float scale = 1;
+struct Camera
+{
+	int x, y, w, h;
+	float scale;
+};
+
+extern Camera cam;
