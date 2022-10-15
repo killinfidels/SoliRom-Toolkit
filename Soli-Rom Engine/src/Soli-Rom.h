@@ -11,3 +11,4 @@
 #include "Engine/Assets/Sound.h"
 #include "Engine/Assets/AssetManager.h"
 #include "Engine/Engine Objects/Camera.h"
+#include "Engine/Tools/RectConversions.h"
