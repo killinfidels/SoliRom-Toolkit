@@ -4,7 +4,7 @@
 #include "../objects/Items.h"
 #include "../objects/Object.h"
 
-struct Camera
+struct Camera3D
 {
 	int x, y, z;
 	int screenDistance = 1500;
@@ -16,7 +16,7 @@ public:
 	CaveWalls();
 	~CaveWalls();
 
-	static void LoadTextureAndCamera(std::string _path, Camera* _cam);
+	static void LoadTextureAndCamera(std::string _path, Camera3D* _cam);
 	void DrawRect();
 	void Draw();
 
@@ -25,7 +25,7 @@ public:
 	bool visible;
 private:
 	static SoliRom::Asset::Texture* texture;
-	static Camera* cam;
+	static Camera3D* cam;
 	static SDL_Rect rect;
 	SDL_Rect renderRect;
 	void rect3D();
@@ -53,7 +53,7 @@ private:
 	SoliRom::Asset::Texture* t_background;
 	SoliRom::Asset::Texture* t_arrowDown;
 
-	Camera cam;
+	Camera3D cam;
 	Object level;
 	Object caveLayers;
 	Object back;

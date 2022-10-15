@@ -2,7 +2,7 @@
 
 
 SoliRom::Asset::Texture* CaveWalls::texture = NULL;
-Camera* CaveWalls::cam = NULL;
+Camera3D* CaveWalls::cam = NULL;
 SDL_Rect CaveWalls::rect;
 
 CaveWalls::CaveWalls()
@@ -15,7 +15,7 @@ CaveWalls::~CaveWalls()
 
 }
 
-void CaveWalls::LoadTextureAndCamera(std::string _path, Camera* _cam)
+void CaveWalls::LoadTextureAndCamera(std::string _path, Camera3D* _cam)
 {
 	texture = SoliRom::AssetManager::Get()->createTexture(_path);
 	cam = _cam;
