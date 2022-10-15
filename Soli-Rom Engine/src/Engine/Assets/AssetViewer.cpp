@@ -39,79 +39,9 @@ namespace SoliRom
 		t_AnimationsButton = CreateTexture("Engine/TextBox.png");
 		t_SoundsButton = CreateTexture("Engine/TextBox.png");
 
-		header.setPosition(scale * 0, scale * 0);
-		header.setSize(scale * 150, scale * 20);
-		assetList.setPosition(scale * 0, scale * 20);
-		assetList.setSize(scale * 50, scale * 100);
-		assetWindow.setPosition(scale * 50, scale * 20);
-		assetWindow.setSize(scale * 100, scale * 100);
-		assetWindowBorder.setPosition(scale * 50, scale * 20);
-		assetWindowBorder.setSize(scale * 100, scale * 100);
-		splash.setPosition(scale * 0, scale * 0);
-		splash.setSize(scale * 150, scale * 120);
-
-		updateButton.setPosition(scale * 52, scale * 109);
-		updateButton.setSize(scale * 31, scale * 9);
-		texturesButton.setPosition(scale * 2, scale * 25);
-		texturesButton.setSize(scale * 38, scale * 9);
-		animationsButton.setPosition(scale * 2, scale * 25 * 2);
-		animationsButton.setSize(scale * 38, scale * 9);
-		soundsButton.setPosition(scale * 2, scale * 25 * 3);
-		soundsButton.setSize(scale * 38, scale * 9);
-
-		arrowUpList.setPosition(scale * 44, scale * 21);
-		arrowUpList.setSize(scale * 5, scale * 3);
-		arrowDownList.setPosition(scale * 44, scale * 116);
-		arrowDownList.setSize(scale * 5, scale * 3);
-
-		arrowUpWindow.setPosition(scale * 144, scale * 21);
-		arrowUpWindow.setSize(scale * 5, scale * 3);
-		arrowDownWindow.setPosition(scale * 144, scale * 116);
-		arrowDownWindow.setSize(scale * 5, scale * 3);
-
-		scrollBarBorderList1.setPosition(arrowUpList.GetRect()->x, arrowUpList.GetRect()->y + arrowUpList.GetRect()->h);
-		scrollBarBorderList1.setSize(scale * 5, scale * 1);
-		scrollBarMiddleList.setPosition(scrollBarBorderList1.GetRect()->x, scrollBarBorderList1.GetRect()->y + scrollBarBorderList1.GetRect()->h);
-		scrollBarMiddleList.setSize(scale * 5, scale * 1);
-		scrollBarBorderList2.setPosition(scrollBarMiddleList.GetRect()->x, scrollBarMiddleList.GetRect()->y + scrollBarMiddleList.GetRect()->h);
-		scrollBarBorderList2.setSize(scale * 5, scale * 1);
-
-		scrollBarBorderWindow1.setPosition(arrowUpWindow.GetRect()->x, arrowUpWindow.GetRect()->y + arrowUpWindow.GetRect()->h);
-		scrollBarBorderWindow1.setSize(scale * 5, scale * 1);
-		scrollBarMiddleWindow.setPosition(scrollBarBorderWindow1.GetRect()->x, scrollBarBorderWindow1.GetRect()->y + scrollBarBorderWindow1.GetRect()->h);
-		scrollBarMiddleWindow.setSize(scale * 5, scale * 1);
-		scrollBarBorderWindow2.setPosition(scrollBarMiddleWindow.GetRect()->x, scrollBarMiddleWindow.GetRect()->y + scrollBarMiddleWindow.GetRect()->h);
-		scrollBarBorderWindow2.setSize(scale * 5, scale * 1);
-
+		InitUIRects();
 
 		UpdateAssetList();
-	}
-
-	void AssetViewer::OnUpdate()
-	{
-		if (running)
-		{
-			if (update)
-			{
-				LoadAssets();
-
-				update = !update;
-			}
-
-			SetBoxes();
-
-			//update animations
-			if (currentSelection == ANIMATIONS)
-			{
-				for (int i = 0; i < boxes.size(); i++)
-				{
-					boxes[i].SetTexture(animations[i].Get());
-				}
-			}
-
-			Draw();
-		}
-
 	}
 
 	void AssetViewer::OnEvent()
@@ -141,45 +71,66 @@ namespace SoliRom
 
 		if (running)
 		{
+			//everything Clicking related :)
 			if (EventHandler::click())
 			{
-				if (EventHandler::mouseInObj(&texturesButton))
+				//textures button - runs if not already selected
+				if (EventHandler::MouseInRect(texturesButton.GetDrawRect()))
 				{
-					currentSelection = Selection::TEXTURES;
-					boxesLoadedFlag = ENDOFLIST;
-					selectedAssetType = *texturesButton.GetRect();
+					if (currentSelection != Selection::TEXTURES)
+					{
+						ClearBoxes();
+						currentSelection = Selection::TEXTURES;
+						boxesLoadedFlag = ENDOFLIST;
+						selectedAssetType = *texturesButton.GetRect();
+					}
 				}
 
-				if (EventHandler::mouseInObj(&animationsButton))
+				////animations button - runs if not already selected
+				if (EventHandler::MouseInRect(animationsButton.GetDrawRect()))
 				{
-					currentSelection = Selection::ANIMATIONS;
-					boxesLoadedFlag = ENDOFLIST;
-					selectedAssetType = *animationsButton.GetRect();
+					if (currentSelection != Selection::ANIMATIONS)
+					{
+						ClearBoxes();
+						currentSelection = Selection::ANIMATIONS;
+						boxesLoadedFlag = ENDOFLIST;
+						selectedAssetType = *animationsButton.GetRect();
+					}
 				}
 
-				if (EventHandler::mouseInObj(&soundsButton))
+				//sound button - runs if not already selected
+				if (EventHandler::MouseInRect(soundsButton.GetDrawRect()))
 				{
-					currentSelection = Selection::SOUNDS;
-					boxesLoadedFlag = ENDOFLIST;
-					selectedAssetType = *soundsButton.GetRect();
+					if (currentSelection != Selection::SOUNDS)
+					{
+						ClearBoxes();
+						currentSelection = Selection::SOUNDS;
+						boxesLoadedFlag = ENDOFLIST;
+						selectedAssetType = *soundsButton.GetRect();
+					}
 				}
-				bool tempboxclicked = false;
 
-				if (EventHandler::mouseInObj(&updateButton))
+				//update button
+				if (EventHandler::MouseInRect(updateButton.GetDrawRect()))
 				{
 					update = true;
 				}
 
+				//flag for box clicked
+				bool tempboxclicked = false;
+
+				//box clicks
 				for (int i = 0; i < boxes.size(); i++)
 				{
-					if (EventHandler::mouseInObj(&boxes[i]))
+					if (EventHandler::MouseInRect(boxes[i]->GetDrawRect()))
 					{
-						selectedBox = *boxes[i].GetRect();
+						selectedBox = *boxes[i]->GetRect();
 						selectedBoxId = i;
 						tempboxclicked = true;
 					}
 				}
 
+				//hides box if nothing is selected
 				if (!tempboxclicked)
 				{
 					selectedBox.x = -10000;
@@ -215,13 +166,13 @@ namespace SoliRom
 
 		for (int i = 0; i < boxes.size(); i++)
 		{
-			SDL_Rect tempBoxBackground = *boxes[i].GetRect();
+			SDL_FRect tempBoxBackground = *boxes[i]->GetRect();
 			tempBoxBackground.x -= 1 * scale;
 			tempBoxBackground.y -= 1 * scale;
 			tempBoxBackground.w += 2 * scale;
 			tempBoxBackground.h += 2 * scale;
-			SDL_RenderCopy(window->getSDL_Renderer(), t_Box->Get(), NULL, &tempBoxBackground);
-			boxes[i].Draw();
+			SDL_RenderCopyF(window->getSDL_Renderer(), t_Box->Get(), NULL, &tempBoxBackground);
+			boxes[i]->Draw();
 		}
 
 		assetWindowBorder.Draw();
@@ -230,14 +181,41 @@ namespace SoliRom
 
 		SDL_SetRenderDrawColor(window->getSDL_Renderer(), 255, 0, 0, 255);
 
-		SDL_RenderDrawRect(window->getSDL_Renderer(), &selectedBox);
-		SDL_RenderDrawRect(window->getSDL_Renderer(), &selectedAssetType);
+		SDL_RenderDrawRectF(window->getSDL_Renderer(), &selectedBox);
+		SDL_RenderDrawRectF(window->getSDL_Renderer(), &selectedAssetType);
 
 		SDL_SetRenderDrawColor(window->getSDL_Renderer(), 255, 255, 255, 255);
 
 		updateButton.Draw();
 
 		SDL_RenderPresent(window->getSDL_Renderer());
+	}
+
+	void AssetViewer::OnUpdate()
+	{
+		if (running)
+		{
+			if (update)
+			{
+				LoadAssets();
+
+				update = !update;
+			}
+
+			SetBoxes();
+
+			//update animations
+			if (currentSelection == ANIMATIONS)
+			{
+				for (int i = 0; i < boxes.size(); i++)
+				{
+					boxes[i]->SetTexture(animations[i].Get());
+				}
+			}
+
+			Draw();
+		}
+
 	}
 
 	void AssetViewer::Open()
@@ -328,7 +306,6 @@ namespace SoliRom
 		sounds.clear();
 	}
 
-
 	bool AssetViewer::UpdateAssetList()
 	{
 		bool tempupdate = false;
@@ -388,16 +365,16 @@ namespace SoliRom
 		case SoliRom::AssetViewer::TEXTURES:
 			if (boxesLoadedFlag != TEXTURES)
 			{
-				boxes.clear();
-
 				if (assetsLoaded[TEXTURES])
 				{
 					for (int i = 0; i < textures.size(); i++)
 					{
-						boxes.emplace_back();
-						boxes[i].setPosition(scale * 59 + 30 * scale * (i % 3), scale * 26 + 26 * scale * (i / 3));
-						boxes[i].setSize(scale * 22, scale * 22);
-						boxes[i].SetTexture(&textures[i]);
+						boxes.push_back(new EngineObject);
+						*boxes[i]->GetRect() = {
+							scale * 59 + 30 * scale * (i % 3), scale * 26 + 26 * scale * (i / 3),
+							scale * 22, scale * 22
+						};
+						boxes[i]->SetTexture(&textures[i]);
 					}
 
 					boxesLoadedFlag = TEXTURES;
@@ -408,16 +385,16 @@ namespace SoliRom
 		case SoliRom::AssetViewer::ANIMATIONS:
 			if (boxesLoadedFlag != ANIMATIONS)
 			{
-				boxes.clear();
-
 				if (assetsLoaded[ANIMATIONS])
 				{
 					for (int i = 0; i < animations.size(); i++)
 					{
-						boxes.emplace_back();
-						boxes[i].setPosition(scale * 59 + 30 * scale * (i % 3), scale * 26 + 26 * scale * (i / 3));
-						boxes[i].setSize(scale * 22, scale * 22);
-						boxes[i].SetTexture(animations[i].Get());
+						boxes.push_back(new EngineObject);
+						*boxes[i]->GetRect() = {
+							scale * 59 + 30 * scale * (i % 3), scale * 26 + 26 * scale * (i / 3),
+							scale * 22, scale * 22
+						};
+						boxes[i]->SetTexture(animations[i].Get());
 					}
 
 					boxesLoadedFlag = ANIMATIONS;
@@ -428,15 +405,15 @@ namespace SoliRom
 		case SoliRom::AssetViewer::SOUNDS:
 			if (boxesLoadedFlag != SOUNDS)
 			{
-				boxes.clear();
-
 				if (assetsLoaded[SOUNDS])
 				{
 					for (int i = 0; i < sounds.size(); i++)
 					{
-						boxes.emplace_back();
-						boxes[i].setPosition(scale * 59 + 30 * scale * (i % 3), scale * 26 + 26 * scale * (i / 3));
-						boxes[i].setSize(scale * 22, scale * 22);
+						boxes.push_back(new EngineObject);
+						*boxes[i]->GetRect() = {
+							scale * 59 + 30 * scale * (i % 3), scale * 26 + 26 * scale * (i / 3),
+							scale * 22, scale * 22
+						};
 					}
 
 					boxesLoadedFlag = SOUNDS;
@@ -446,6 +423,115 @@ namespace SoliRom
 		default:
 			break;
 		}
+	}
+
+	void AssetViewer::ClearBoxes()
+	{
+		for (int i = 0; i < boxes.size(); i++)
+			delete (boxes[i]);
+
+		boxes.clear();
+	}
+
+	void AssetViewer::InitUIRects()
+	{
+		*header.GetRect() = {
+			scale * 0, scale * 0,
+			scale * 150, scale * 20
+		};
+
+		header.UpdateRect();
+
+		*assetList.GetRect() = {
+			scale * 0, scale * 20,
+			scale * 50, scale * 100
+		};
+
+		*assetWindow.GetRect() = {
+			scale * 50, scale * 20,
+			scale * 100, scale * 100
+		};
+
+		*assetWindowBorder.GetRect() = {
+			scale * 50, scale * 20,
+			scale * 100, scale * 100
+		};
+
+		*splash.GetRect() = {
+			scale * 0, scale * 0,
+			scale * 150, scale * 120
+		};
+
+		*updateButton.GetRect() = {
+			scale * 52, scale * 109,
+			scale * 31, scale * 9
+		};
+
+		*texturesButton.GetRect() = {
+			scale * 2, scale * 25,
+			scale * 38, scale * 9
+		};
+
+		*animationsButton.GetRect() = {
+			scale * 2, scale * 25 * 2,
+			scale * 38, scale * 9
+		};
+
+		*soundsButton.GetRect() = {
+			scale * 2, scale * 25 * 3,
+			scale * 38, scale * 9
+		};
+
+		*arrowUpList.GetRect() = {
+			scale * 44, scale * 21,
+			scale * 5, scale * 3
+		};
+
+		*arrowDownList.GetRect() = {
+			scale * 44, scale * 116,
+			scale * 5, scale * 3
+		};
+
+		*arrowUpWindow.GetRect() = {
+			scale * 144, scale * 21,
+			scale * 5, scale * 3
+		};
+
+		*arrowDownWindow.GetRect() = {
+			scale * 144, scale * 116,
+			scale * 5, scale * 3
+		};
+
+
+		*scrollBarBorderList1.GetRect() = {
+			arrowUpList.GetRect()->x, arrowUpList.GetRect()->y + arrowUpList.GetRect()->h,
+			scale * 5, scale * 1
+		};
+
+		*scrollBarMiddleList.GetRect() = {
+			scrollBarBorderList1.GetRect()->x, scrollBarBorderList1.GetRect()->y + scrollBarBorderList1.GetRect()->h,
+			scale * 5, scale * 1
+		};
+
+		*scrollBarBorderList2.GetRect() = {
+			scrollBarMiddleList.GetRect()->x, scrollBarMiddleList.GetRect()->y + scrollBarMiddleList.GetRect()->h,
+			scale * 5, scale * 1
+		};
+
+		*scrollBarBorderWindow1.GetRect() = {
+			arrowUpWindow.GetRect()->x, arrowUpWindow.GetRect()->y + arrowUpWindow.GetRect()->h,
+			scale * 5, scale * 1
+		};
+
+		*scrollBarMiddleWindow.GetRect() = {
+			scrollBarBorderWindow1.GetRect()->x, scrollBarBorderWindow1.GetRect()->y + scrollBarBorderWindow1.GetRect()->h,
+			scale * 5, scale * 1
+		};
+
+		*scrollBarBorderWindow2.GetRect() = {
+			scrollBarMiddleWindow.GetRect()->x, scrollBarMiddleWindow.GetRect()->y + scrollBarMiddleWindow.GetRect()->h,
+			scale * 5, scale * 1
+		};
 	}
 
 	void AssetViewer::LoadAssets()

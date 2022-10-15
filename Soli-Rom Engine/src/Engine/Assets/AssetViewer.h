@@ -16,7 +16,7 @@ namespace SoliRom
 		virtual void OnUpdate() override;
 		virtual void OnEvent() override;
 
-		int scale = 5;
+		float scale = 5;
 	private:
 		App* app;
 		AssetManager* manager;
@@ -30,9 +30,9 @@ namespace SoliRom
 			ENDOFLIST
 		};
 
-		SDL_Rect selectedBox;
+		SDL_FRect selectedBox;
 		int selectedBoxId = -1;
-		SDL_Rect selectedAssetType;
+		SDL_FRect selectedAssetType;
 
 		Selection currentSelection;
 		Selection boxesLoadedFlag;
@@ -42,16 +42,16 @@ namespace SoliRom
 		std::vector<Asset::Animation> animations;
 		std::vector<Asset::Sound> sounds;
 
-		GameObject splash;
+		EngineObject splash;
 			Asset::Texture* t_Splash;
 
-		GameObject header;
+		EngineObject header;
 			Asset::Texture* t_Header;
 
-		GameObject updateButton;
+		EngineObject updateButton;
 			Asset::Texture* t_UpdateButton;
 
-		GameObject
+		EngineObject
 			texturesButton,
 			animationsButton,
 			soundsButton;
@@ -62,37 +62,37 @@ namespace SoliRom
 			*t_SoundsButton;
 
 
-		GameObject assetList;
+		EngineObject assetList;
 			Asset::Texture* t_AssetList;
 
-		GameObject assetWindow;
+		EngineObject assetWindow;
 			Asset::Texture* t_AssetWindow;
 
-		GameObject assetWindowBorder;
+		EngineObject assetWindowBorder;
 			Asset::Texture* t_AssetWindowBorder;
 
 
-		GameObject arrowUpList;
+		EngineObject arrowUpList;
 			Asset::Texture* t_ArrowUpList;
-		GameObject arrowDownList;
+		EngineObject arrowDownList;
 			Asset::Texture* t_ArrowDownList;
 
-		GameObject arrowUpWindow;
+		EngineObject arrowUpWindow;
 			Asset::Texture* t_ArrowUpWindow;
-		GameObject arrowDownWindow;
+		EngineObject arrowDownWindow;
 			Asset::Texture* t_ArrowDownWindow;
 
-		GameObject scrollBarBorderList1, scrollBarBorderList2, scrollBarMiddleList;
+		EngineObject scrollBarBorderList1, scrollBarBorderList2, scrollBarMiddleList;
 		Asset::Texture
 			* t_ScrollBarBorderList,
 			* t_ScrollBarMiddleList;
 
-		GameObject scrollBarBorderWindow1, scrollBarBorderWindow2, scrollBarMiddleWindow;
+		EngineObject scrollBarBorderWindow1, scrollBarBorderWindow2, scrollBarMiddleWindow;
 			Asset::Texture
 				* t_ScrollBarBorderWindow,
 				* t_ScrollBarMiddleWindow;
 
-		std::vector<GameObject> boxes;
+		std::vector<EngineObject*> boxes;
 		Asset::Texture* t_Box;
 		const int horizontalBoxAmount = 4;
 
@@ -110,6 +110,8 @@ namespace SoliRom
 		bool UpdateAssetList();
 		void LoadAssets();
 		void SetBoxes();
+		void ClearBoxes();
+		void InitUIRects();
 
 		Asset::Texture* CreateTexture(std::string _path);
 		void LoadTexture(Asset::Texture* _texture);
