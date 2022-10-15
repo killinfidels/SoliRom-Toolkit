@@ -10,6 +10,9 @@ namespace SoliRom::Asset
 		loaded = false;
 		frame = _frame;
 		text = false;
+		size = {
+		0, 0, 0, 0
+		};
 
 		textureOrFrame = "Texture";
 
@@ -28,6 +31,9 @@ namespace SoliRom::Asset
 		loaded = false;
 		frame = false;
 		text = true;
+		size = {
+			0, 0, 0, 0
+		};
 
 		textureOrFrame = "Text";
 		SR_CORE_TRACE("%s '%s' created.", textureOrFrame.c_str(), name.c_str());
@@ -68,6 +74,8 @@ namespace SoliRom::Asset
 
 		SR_CORE_TRACE("%s '%s' loaded for Window: '%s'.", textureOrFrame.c_str(), name.c_str(), window->getWindowName().c_str());
 		
+		SDL_QueryTexture(texture, NULL, NULL, &size.w, &size.h);
+
 		loaded = true;
 		return true;
 	}
@@ -75,6 +83,11 @@ namespace SoliRom::Asset
 	Window* Texture::GetWindow()
 	{
 		return window;
+	}
+
+	SDL_Rect Texture::GetSize()
+	{
+		return size;
 	}
 
 	SDL_Texture* Texture::Get()

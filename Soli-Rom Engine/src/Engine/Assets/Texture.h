@@ -33,6 +33,7 @@ namespace SoliRom::Asset
 		Window* window = NULL;
 		SDL_Texture* texture = NULL;
 		SDL_Color color;
+		SDL_Rect size;
 
 		bool loaded;
 		bool frame;
@@ -41,7 +42,8 @@ namespace SoliRom::Asset
 	public:
 		SDL_Texture* Get();
 		Window* GetWindow();
-
+		//Returns a rect with texture size and position at 0, 0
+		SDL_Rect GetSize();
 		~Texture();
 
 		friend class ::SoliRom::AssetManager;
