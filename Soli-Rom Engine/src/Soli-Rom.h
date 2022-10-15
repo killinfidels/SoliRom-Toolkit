@@ -10,3 +10,4 @@
 #include "Engine/Assets/Animation.h"
 #include "Engine/Assets/Sound.h"
 #include "Engine/Assets/AssetManager.h"
+#include "Engine/Engine Objects/Camera.h"

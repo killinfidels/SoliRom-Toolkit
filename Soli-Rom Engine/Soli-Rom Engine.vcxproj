@@ -106,9 +106,11 @@
     <ClInclude Include="src\Engine\Assets\Sound.h" />
     <ClInclude Include="src\Engine\Assets\Texture.h" />
     <ClInclude Include="src\Engine\Engine Objects\GameObject.h" />
+    <ClInclude Include="src\Engine\Engine Objects\Camera.h" />
     <ClInclude Include="src\Engine\EntryPoint.h" />
     <ClInclude Include="src\Engine\Input.h" />
     <ClInclude Include="src\Engine\Log.h" />
+    <ClInclude Include="src\Engine\Tools\RectConversions.h" />
     <ClInclude Include="src\Engine\Tools\Timer.h" />
     <ClInclude Include="src\Engine\Windows\Layer.h" />
     <ClInclude Include="src\Engine\Windows\Window.h" />
@@ -125,6 +127,7 @@
     <ClCompile Include="src\Engine\Engine Objects\GameObject.cpp" />
     <ClCompile Include="src\Engine\Input.cpp" />
     <ClCompile Include="src\Engine\Log.cpp" />
+    <ClCompile Include="src\Engine\Tools\RectConversions.cpp" />
     <ClCompile Include="src\Engine\Tools\Timer.cpp" />
     <ClCompile Include="src\Engine\Windows\Layer.cpp" />
     <ClCompile Include="src\Engine\Windows\Window.cpp" />

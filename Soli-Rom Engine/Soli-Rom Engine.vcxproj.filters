@@ -59,6 +59,8 @@
     </ClInclude>
     <ClInclude Include="src\Soli-Rom.h" />
     <ClInclude Include="src\precompiledheaders.h" />
+    <ClInclude Include="src\Engine\Engine Objects\Camera.h" />
+    <ClInclude Include="src\Engine\Tools\RectConversions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\App.cpp">
@@ -98,5 +100,6 @@
       <Filter>Engine\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\precompiledheaders.cpp" />
+    <ClCompile Include="src\Engine\Tools\RectConversions.cpp" />
   </ItemGroup>
 </Project>
