@@ -1,41 +1,53 @@
 #pragma once
 #include "Engine/Assets/Texture.h"
 #include "Engine/Windows/Window.h"
+#include "Camera.h"
 
 namespace SoliRom
 {
-	class GameObject
+	class EngineObject
 	{
 	public:
-		GameObject();
+		EngineObject();
+		~EngineObject();
 
-		//virtual int script();
-
-		void setSize(int width, int height);
-		void setPosition(int x, int y);
+		virtual void script() {};
 
 		bool visible = true;
-		bool use = true;
+		bool useSript = true;
 
-		SDL_Rect* GetRect();
+		//pos - if used to change value then call UpdatePos
+		SDL_FPoint* GetPos();
+		void UpdatePos();
 
-		int sizeMul;
+		//World Rect - if used to change x,y then call UpdateRect
+		SDL_FRect* GetRect();
+		void UpdateRect();
+
+		//Rect offset - if used to change value then call Update Offset
+		SDL_FPoint* GetOffset();
+		void UpdateOffset();
+
+		//return draw rect - for clicking and such
+		SDL_FRect* GetDrawRect();
 
 		void Draw();
-
-		void SetTexture(Asset::Texture* _texture);
-
 		void Draw(SDL_RendererFlip _flip);
-
 		void DrawRect(bool defaultColor);
 
-		//Move that amount left or right
-		void Move(int _x, int _y);
-
+		void SetTexture(Asset::Texture* _texture);
+		void SetCam(Camera* _cam);
+	private:
+		static std::vector<EngineObject*> objectList;
+		int id;
 	protected:
+		void UpdateDrawRectToCam();
 		Asset::Texture* texture;
-		SDL_Rect Rect;
-		int assetsN;
+		SDL_FPoint pos;
+		SDL_FPoint offset;
+		SDL_FRect rect;
+		SDL_FRect drawRect;
+		Camera* cam;
 	};
 }
 

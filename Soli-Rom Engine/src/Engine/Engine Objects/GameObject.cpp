@@ -4,69 +4,137 @@
 
 namespace SoliRom
 {
-	GameObject::GameObject()
-	{
-		Rect.x = 0;
-		Rect.y = 0;
-		Rect.w = 10;
-		Rect.h = 10;
+	std::vector<EngineObject*> EngineObject::objectList;
 
-		assetsN = 0;
+	EngineObject::EngineObject()
+	{
+		rect.w = 100;
+		rect.h = 100;
+		pos.x = rect.w / 2;
+		pos.y = rect.h / 2;
+		rect.x = pos.x - rect.w / 2;
+		rect.y = pos.y - rect.h / 2;
+
+		offset.x = 0;
+		offset.y = 0;
+
+
+		cam = nullptr;
+		texture = nullptr;
+
+		UpdateDrawRectToCam();
+
+		id = objectList.size();
+		objectList.push_back(this);
 	}
 
-	void GameObject::setSize(int width, int height)
+	SDL_FPoint* EngineObject::GetPos()
 	{
-		Rect.w = width;
-		Rect.h = height;
-	}
-	void GameObject::setPosition(int x, int y)
-	{
-		Rect.x = x;
-		Rect.y = y;
+		return &pos;
 	}
 
-	SDL_Rect* GameObject::GetRect()
+	void EngineObject::UpdatePos()
 	{
-		return &Rect;
+		rect.x = pos.x + offset.x;
+		rect.y = pos.y + offset.y;
 	}
 
-	void GameObject::Draw()
+	SDL_FRect* EngineObject::GetRect()
 	{
-		SDL_RenderCopy(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &Rect);
+		return &rect;
 	}
 
-	void GameObject::SetTexture(Asset::Texture* _texture)
+	void EngineObject::UpdateRect()
 	{
-		texture = _texture;
+		pos.x = rect.x - offset.x;
+		pos.y = rect.y - offset.x;
 	}
 
-	void GameObject::Draw(SDL_RendererFlip _flip)
+	SDL_FPoint* EngineObject::GetOffset()
 	{
-		if (texture != NULL)
+		return &offset;
+	}
+
+	void EngineObject::UpdateOffset()
+	{
+		rect.x = pos.x + offset.x;
+		rect.y = pos.y + offset.y;
+	}
+
+	SDL_FRect* EngineObject::GetDrawRect()
+	{
+		return &drawRect;
+	}
+
+	void EngineObject::Draw()
+	{
+		if (texture != nullptr)
 		{
-			SDL_RenderCopyEx(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, GetRect(), NULL, NULL, _flip);
+			UpdateDrawRectToCam();
+			SDL_RenderCopyF(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &drawRect);
 		}
 		else
-		{
 			DrawRect(true);
-		}
 	}
 
-	void GameObject::DrawRect(bool defaultColor)
+	void EngineObject::Draw(SDL_RendererFlip _flip)
 	{
+		if (texture != nullptr)
+		{
+			UpdateDrawRectToCam();
+			SDL_RenderCopyExF(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &drawRect, NULL, NULL, _flip);
+		}
+		else
+			DrawRect(true);
+	}
+
+	void EngineObject::DrawRect(bool defaultColor)
+	{
+		UpdateDrawRectToCam();
+
 		if (defaultColor)
 			SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 255, 0, 0, 255);
 
-		SDL_RenderDrawRect(App::Get()->GetCurrentWindow()->getSDL_Renderer(), GetRect());
+		SDL_RenderDrawRectF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), &drawRect);
+		SDL_RenderDrawPointF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), pos.x, pos.y);
 
 		if (defaultColor)
 			SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 255, 255, 255, 255);
 	}
 
-	//Move that amount left or right
-	void GameObject::Move(int _x, int _y)
+	void EngineObject::SetTexture(Asset::Texture* _texture)
 	{
-		setPosition(GetRect()->x + _x, GetRect()->y + _y);
+		texture = _texture;
+	}
+
+	void EngineObject::SetCam(Camera* _cam)
+	{
+		cam = _cam;
+	}
+
+	void EngineObject::UpdateDrawRectToCam()
+	{
+		if (cam != nullptr)
+		{
+			drawRect = {
+				(rect.x - cam->x) * cam->scale,
+				(rect.y - cam->y) * cam->scale,
+				rect.w * cam->scale,
+				rect.h * cam->scale
+			};
+		}
+		else
+		{
+			drawRect = rect;
+		}
+	}
+
+	EngineObject::~EngineObject()
+	{
+		//erases from list
+		objectList.erase(objectList.begin() + id);
+		//remaps ids
+		for (int i = id; i < objectList.size(); i++)
+			objectList[i]->id--;
 	}
 }
-
