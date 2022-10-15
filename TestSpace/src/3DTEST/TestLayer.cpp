@@ -362,7 +362,7 @@ void TestLayer::OnUpdate()
 
 	drawRoad();
 
-	obj_3D::SetTexture(animationTest->Get());
+	obj_3D::SetTexture(t_tree);
 
 	for (int i = 0; i < 24; i++)
 	{
