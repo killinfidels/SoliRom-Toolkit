@@ -37,5 +37,9 @@ private:
 
 	bool creating = false;
 	int clickWorldPosX, clickWorldPosY;
+
+	float scale = 1;
+
+	bool saveToggle = false;
 };
 
