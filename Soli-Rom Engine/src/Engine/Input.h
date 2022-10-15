@@ -35,7 +35,7 @@ namespace SoliRom
 		static bool keyPressed(int _keyCode);
 
 
-		static bool mouseInObj(GameObject* obj);
+		static bool MouseInRect(SDL_FRect* _rect);
 		static bool click();
 	private:
 		EventHandler();

@@ -105,11 +105,11 @@ namespace SoliRom
 		return quit;
 	}
 
-	bool EventHandler::mouseInObj(GameObject* _obj)
+	bool EventHandler::MouseInRect(SDL_FRect* _rect)
 	{
-		if (EventHandler::getMouse().x > _obj->GetRect()->x && EventHandler::getMouse().x < _obj->GetRect()->x + _obj->GetRect()->w)
+		if (EventHandler::getMouse().x > _rect->x && EventHandler::getMouse().x < _rect->x + _rect->w)
 		{
-			if (EventHandler::getMouse().y > _obj->GetRect()->y && EventHandler::getMouse().y < _obj->GetRect()->y + _obj->GetRect()->h)
+			if (EventHandler::getMouse().y > _rect->y && EventHandler::getMouse().y < _rect->y + _rect->h)
 			{
 				return true;
 			}
