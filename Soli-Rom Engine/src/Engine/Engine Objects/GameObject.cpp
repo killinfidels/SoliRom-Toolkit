@@ -22,10 +22,18 @@ namespace SoliRom
 		cam = nullptr;
 		texture = nullptr;
 
-		UpdateDrawRectToCam();
+		UpdateScreenPositions();
 
 		id = objectList.size();
 		objectList.push_back(this);
+	}
+
+	void EngineObject::Move(float _x, float _y)
+	{
+		pos.x += _x;
+		pos.y += _y;
+
+		UpdatePos();
 	}
 
 	SDL_FPoint* EngineObject::GetPos()
@@ -37,6 +45,16 @@ namespace SoliRom
 	{
 		rect.x = pos.x + offset.x;
 		rect.y = pos.y + offset.y;
+
+		UpdateScreenPositions();
+	}
+
+	void EngineObject::SetPos(float _x, float _y)
+	{
+		pos.x = _x;
+		pos.y = _y;
+
+		UpdatePos();
 	}
 
 	SDL_FRect* EngineObject::GetRect()
@@ -48,6 +66,26 @@ namespace SoliRom
 	{
 		pos.x = rect.x - offset.x;
 		pos.y = rect.y - offset.x;
+
+		UpdateScreenPositions();
+	}
+
+	void EngineObject::SetRect(float _x, float _y, float _w, float _h)
+	{
+		rect = { _x,_y,_w,_h };
+		UpdateRect();
+	}
+
+	void EngineObject::SetRect(SDL_FRect _rect)
+	{
+		rect = _rect;
+		UpdateRect();
+	}
+
+	void EngineObject::SetSize(float _w, float _h)
+	{
+		rect.w = _w;
+		rect.h = _h;
 	}
 
 	SDL_FPoint* EngineObject::GetOffset()
@@ -59,47 +97,54 @@ namespace SoliRom
 	{
 		rect.x = pos.x + offset.x;
 		rect.y = pos.y + offset.y;
+
+		UpdateScreenPositions();
 	}
 
-	SDL_FRect* EngineObject::GetDrawRect()
+	void EngineObject::SetOffset(float _x, float _y)
 	{
-		return &drawRect;
+		offset = { _x, _y };
+		UpdateOffset();
+	}
+
+	SDL_FRect* EngineObject::GetScreenRect()
+	{
+		return &screenRect;
 	}
 
 	void EngineObject::Draw()
 	{
 		if (texture != nullptr)
 		{
-			UpdateDrawRectToCam();
-			SDL_RenderCopyF(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &drawRect);
+			UpdateScreenPositions();
+			SDL_RenderCopyF(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &screenRect);
 		}
 		else
-			DrawRect(true);
+			DrawRect();
 	}
 
 	void EngineObject::Draw(SDL_RendererFlip _flip)
 	{
 		if (texture != nullptr)
 		{
-			UpdateDrawRectToCam();
-			SDL_RenderCopyExF(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &drawRect, NULL, NULL, _flip);
+			UpdateScreenPositions();
+			SDL_RenderCopyExF(texture->GetWindow()->getSDL_Renderer(), texture->Get(), NULL, &screenRect, NULL, NULL, _flip);
 		}
 		else
-			DrawRect(true);
+			DrawRect();
 	}
 
-	void EngineObject::DrawRect(bool defaultColor)
+	void EngineObject::DrawRect()
 	{
-		UpdateDrawRectToCam();
+		UpdateScreenPositions();
 
-		if (defaultColor)
-			SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 255, 0, 0, 255);
+		SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 255, 0, 0, 255);
+		SDL_RenderDrawRectF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), &screenRect);
 
-		SDL_RenderDrawRectF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), &drawRect);
-		SDL_RenderDrawPointF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), pos.x, pos.y);
+		SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 0, 0, 255, 255);
+		SDL_RenderDrawPointF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), screenPos.x, screenPos.y);
 
-		if (defaultColor)
-			SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 255, 255, 255, 255);
+		SDL_SetRenderDrawColor(App::Get()->GetCurrentWindow()->getSDL_Renderer(), 255, 255, 255, 255);
 	}
 
 	void EngineObject::SetTexture(Asset::Texture* _texture)
@@ -112,20 +157,26 @@ namespace SoliRom
 		cam = _cam;
 	}
 
-	void EngineObject::UpdateDrawRectToCam()
+	void EngineObject::UpdateScreenPositions()
 	{
 		if (cam != nullptr)
 		{
-			drawRect = {
+			screenRect = {
 				(rect.x - cam->x) * cam->scale,
 				(rect.y - cam->y) * cam->scale,
 				rect.w * cam->scale,
 				rect.h * cam->scale
 			};
+
+			screenPos = {
+				(pos.x - cam->x) * cam->scale,
+				(pos.y - cam->y) * cam->scale,
+			};
 		}
 		else
 		{
-			drawRect = rect;
+			screenRect = rect;
+			screenPos = pos;
 		}
 	}
 
