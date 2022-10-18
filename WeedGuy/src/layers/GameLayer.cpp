@@ -10,29 +10,30 @@ GameLayer::GameLayer() : Layer("WeedGuy Main Layer")
 
 	t_loading = SoliRom::AssetManager::Get()->createTexture("Engine/Loading.png");
 
-	loadingScreen.setSize(w_game->getWidth(), w_game->getHeight());
+	loadingScreen.SetSize(w_game->getWidth(), w_game->getHeight());
 	loadingScreen.SetTexture(t_loading);
 
-	currentLevel = ShackExt::Get();
+	currentLevel = ShackInt::Get();
 	nextLevel = lastLevel = currentLevel->GetId();
 
+	app->SetUpdateTick(20);
 	printf("\x1B[?25l");
 }
 
 void GameLayer::OnEvent()
 {
-	if (SoliRom::EventHandler::click())
+	if (SoliRom::Input::Click())
 	{
-		int tempX = SoliRom::EventHandler::getMouse().x;
-		int tempY = SoliRom::EventHandler::getMouse().y;
+		int tempX = SoliRom::Input::getMouse().x;
+		int tempY = SoliRom::Input::getMouse().y;
 
 		SR_TRACE("x: %i y: %i w: %i h: %i", prevX, prevY, tempX - prevX, tempY - prevY);
 
-		prevX = SoliRom::EventHandler::getMouse().x;
-		prevY = SoliRom::EventHandler::getMouse().y;
+		prevX = SoliRom::Input::getMouse().x;
+		prevY = SoliRom::Input::getMouse().y;
 
 		//debug tree spawner
-		if (SoliRom::EventHandler::keyPressed(SDLK_t))
+		if (SoliRom::Input::keyPressed(SDLK_t))
 		{
 			trees.push_back(new Tree(0, 700, tempX, tempY));
 			treePlace.emplace_back(currentLevel->GetId());
@@ -40,13 +41,13 @@ void GameLayer::OnEvent()
 			SR_WARN("trees.push_back(new Tree(%i, %i, %i, %i));", 0, trees.back()->GetRect()->w, tempX, tempY);
 		}
 
-		if (SoliRom::EventHandler::keyPressed(SDLK_r) && SoliRom::EventHandler::keyPressed(SDLK_t))
+		if (SoliRom::Input::keyPressed(SDLK_r) && SoliRom::Input::keyPressed(SDLK_t))
 		{
 			trees.clear();
 		}
 	}
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_ESCAPE))
+	if (SoliRom::Input::keyPressed(SDLK_ESCAPE))
 	{
 		app->Quit();
 	}

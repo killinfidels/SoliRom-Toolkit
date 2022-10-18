@@ -44,4 +44,6 @@ private:
 	Object block;
 	Object blood;
 	exhale smoke;
+
+	SoliRom::Camera cam;
 };

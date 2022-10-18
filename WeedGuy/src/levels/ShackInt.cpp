@@ -29,16 +29,16 @@ ShackInt::ShackInt() : smoke(&weedGuy)
 	block.SetTexture(grass);
 	blood.SetTexture(bloodsplat);
 
-	back.setSize(128, 128);
-	bagDorito.setSize(200, 200);
-	block.setSize(300, 300);
-	blood.setSize(200, 200);
-	level.setSize(w_game->getWidth(), w_game->getHeight());
+	back.SetSize(128, 128);
+	bagDorito.SetSize(200, 200);
+	block.SetSize(300, 300);
+	blood.SetSize(200, 200);
+	level.SetSize(w_game->getWidth(), w_game->getHeight());
 
-	back.setPosition((w_game->getWidth() / 2) - (back.GetRect()->w / 2), w_game->getHeight() - back.GetRect()->h);
-	bagDorito.setPosition(bagDorito.GetRect()->w / 10, (int)(w_game->getHeight() - bagDorito.GetRect()->h));
-	block.setPosition(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (block.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h) - (block.GetRect()->h / 2) - 20);
-	blood.setPosition(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (blood.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2) - (blood.GetRect()->h / 2));
+	back.SetPos((w_game->getWidth() / 2) - (back.GetRect()->w / 2), w_game->getHeight() - back.GetRect()->h);
+	bagDorito.SetPos(bagDorito.GetRect()->w / 10, (int)(w_game->getHeight() - bagDorito.GetRect()->h));
+	block.SetPos(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (block.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h) - (block.GetRect()->h / 2) - 20);
+	blood.SetPos(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (blood.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2) - (blood.GetRect()->h / 2));
 
 }
 
@@ -49,6 +49,7 @@ void ShackInt::Load(LevelId _previousLevel)
 		physicsT.Reset();
 		physicsT.Start();
 
+		bloodT.Stop();
 		bloodT.Reset();
 
 		loadSuccess = true;
@@ -63,17 +64,17 @@ void ShackInt::Script()
 
 		bloodT.update();
 
-		//mouse click
-		if (SoliRom::EventHandler::click())
+		//mouse Click
+		if (SoliRom::Input::Click())
 		{
-			//if bag click spawn dorito on bag
-			if (SoliRom::EventHandler::mouseInObj(&bagDorito))
+			//if bag Click spawn dorito on bag
+			if (SoliRom::Input::MouseInRect(bagDorito.GetScreenRect()))
 			{
 				for (int i = 0; i < ChipAmount; i++)
 				{
 					if (Chips[i].used == false)
 					{
-						Chips[i].setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (Chips[i].GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (Chips[i].GetRect()->h / 2));
+						Chips[i].SetPos(SoliRom::Input::getMouse().x + cam.x, SoliRom::Input::getMouse().y + cam.y);
 						Chips[i].used = true;
 						break;
 						//Chip::heldChip = i;
@@ -81,10 +82,10 @@ void ShackInt::Script()
 				}
 			}
 
-			//click dorito to select
+			//Click dorito to select
 			for (int i = 0; i < ChipAmount; i++)
 			{
-				if (SoliRom::EventHandler::mouseInObj(&Chips[i]))
+				if (SoliRom::Input::MouseInRect(Chips[i].GetScreenRect()))
 				{
 					Chip::heldChip = i;
 					break;
@@ -92,24 +93,24 @@ void ShackInt::Script()
 			}
 
 			//if idle switch animation to booger
-			if (SoliRom::EventHandler::mouseInObj(&weedGuy) && weedGuy.currentAnimation == Guy::IDLE)
+			if (SoliRom::Input::MouseInRect(weedGuy.GetScreenRect()) && weedGuy.currentAnimation == Guy::IDLE)
 			{
 				weedGuy.setAnimation(Guy::BOOGER, true, true);
 			}
 		}
 
 		//mouse holding:
-		if (SoliRom::EventHandler::getMouse().state == SoliRom::MouseState::HELD)
+		if (SoliRom::Input::Held())
 		{
 			//if held on dorito follow mouse
 			if (Chip::heldChip != -1)
 			{
-				Chips[Chip::heldChip].setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (Chips[Chip::heldChip].GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (Chips[Chip::heldChip].GetRect()->h / 2));
+				Chips[Chip::heldChip].SetPos(SoliRom::Input::getMouse().x + cam.x, SoliRom::Input::getMouse().y + cam.y);
 			}
 		}
 
 		//mouse idle
-		if (SoliRom::EventHandler::getMouse().state == SoliRom::MouseState::IDLE)
+		if (SoliRom::Input::getMouse().state == SoliRom::MouseState::IDLE)
 		{
 			Chip::heldChip = -1;
 		}
@@ -149,7 +150,7 @@ void ShackInt::Script()
 			}
 
 			//sends guy flying if you quit
-			if (SoliRom::EventHandler::getQuit())
+			if (SoliRom::Input::getQuit())
 			{
 				weedGuy.setAnimation(Guy::FUCK, true, true);
 
@@ -161,13 +162,13 @@ void ShackInt::Script()
 				{
 					weedGuy.Move(0, (700 - weedGuy.GetRect()->y) / 10);
 				}
-				blood.setPosition(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (blood.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2) - (blood.GetRect()->h / 2));
-				//weedGuy.setSize(weedGuy.GetRect()->w + 2, weedGuy.GetRect()->h + 2);
+				blood.SetPos(weedGuy.GetRect()->x + (weedGuy.GetRect()->w / 2) - (blood.GetRect()->w / 2), weedGuy.GetRect()->y + (weedGuy.GetRect()->h / 2) - (blood.GetRect()->h / 2));
+				//weedGuy.SetSize(weedGuy.GetRect()->w + 2, weedGuy.GetRect()->h + 2);
 			}
 		}
 
 		//you ghave to kill him !!!
-		if (SoliRom::EventHandler::getQuit() && knife.knifeLogic(&weedGuy))
+		if (SoliRom::Input::getQuit() && knife.knifeLogic(&weedGuy))
 		{
 			bloodT.Start();
 		}
@@ -194,9 +195,9 @@ void ShackInt::Script()
 
 Level::LevelId ShackInt::LevelTransition()
 {
-	if (SoliRom::EventHandler::click())
+	if (SoliRom::Input::Click())
 	{
-		if (SoliRom::EventHandler::mouseInObj(&back))
+		if (SoliRom::Input::MouseInRect(back.GetScreenRect()))
 		{
 			loadSuccess = false;
 			return LevelId::ShackExt;
@@ -215,7 +216,7 @@ void ShackInt::Draw()
 	block.Draw();
 	weedGuy.Draw();
 
-	if (!SoliRom::EventHandler::getQuit())
+	if (!SoliRom::Input::getQuit())
 	{
 		if (!smoke.done)
 		{
@@ -251,7 +252,7 @@ void ShackInt::Draw()
 
 bool ShackInt::SpecialQUIT()
 {
-	if (SoliRom::EventHandler::getQuit() && !bloodT.checkElapsed(1000) && bloodT.checkElapsed(200))
+	if (SoliRom::Input::getQuit() && !bloodT.checkElapsed(1000) && bloodT.checkElapsed(200))
 	{
 		app->Quit();
 		return true;

@@ -1,6 +1,6 @@
 #pragma once
 
-class Object : public SoliRom::GameObject
+class Object : public SoliRom::EngineObject
 {
 public:
 

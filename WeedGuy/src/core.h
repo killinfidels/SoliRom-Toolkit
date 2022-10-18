@@ -5,10 +5,8 @@
 #include <chrono>
 #include <map>
 
-struct Camera
-{
-	int x, y, w, h;
-	float scale;
-};
+void ScaleRect(SDL_FRect* _rect, float _scale);
 
-extern Camera cam;
+bool BindToRect(SDL_FRect* _in, SDL_FRect* _out, bool _enforce);
+
+bool CheckCollision(SDL_FRect* _in, SDL_FRect* _out);

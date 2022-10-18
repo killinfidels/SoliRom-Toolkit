@@ -23,12 +23,12 @@ CaveExt::CaveExt()
 	right.SetTexture(t_arrow);
 	level.SetTexture(t_exterior);
 
-	level.setSize(w_game->getWidth(), w_game->getHeight());
-	right.setSize(128, 128);
-	caveEntrance.setSize(700, 700);
+	level.SetSize(w_game->getWidth(), w_game->getHeight());
+	right.SetSize(128, 128);
+	caveEntrance.SetSize(700, 700);
 
-	right.setPosition(w_game->getWidth() - right.GetRect()->w, (w_game->getHeight() / 2) - (right.GetRect()->h / 2));
-	caveEntrance.setPosition(100, 200);
+	right.SetPos(w_game->getWidth() - right.GetRect()->w, (w_game->getHeight() / 2) - (right.GetRect()->h / 2));
+	caveEntrance.SetPos(100, 200);
 
 	a_entrance->Start();
 }
@@ -54,12 +54,12 @@ Level::LevelId CaveExt::LevelTransition()
 {
 	LevelId tempID = levelIdentification;
 
-	if (SoliRom::EventHandler::click())
+	if (SoliRom::Input::Click())
 	{
-		if (SoliRom::EventHandler::mouseInObj(&right))
+		if (SoliRom::Input::MouseInRect(right.GetScreenRect()))
 			tempID = LevelId::ShackExt;
 
-		if (SoliRom::EventHandler::mouseInObj(&caveEntrance))
+		if (SoliRom::Input::MouseInRect(caveEntrance.GetScreenRect()))
 			tempID = LevelId::CaveInt;
 	}
 

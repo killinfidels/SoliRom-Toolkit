@@ -2,9 +2,9 @@
 
 Guy::Guy()
 {
-	sizeMul = 4;
-	setSize(100 * sizeMul, 100 * sizeMul);
-	setPosition(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.4) - (GetRect()->h / 2));
+	int sizeMul = 4;
+	SetSize(100 * sizeMul, 100 * sizeMul);
+	SetPos(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.4) - (GetRect()->h / 2));
 
 	SoliRom::AssetManager* m_temp = SoliRom::AssetManager::Get();
 

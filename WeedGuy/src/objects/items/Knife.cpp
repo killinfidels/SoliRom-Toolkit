@@ -4,10 +4,10 @@ Knife::Knife()
 {
 	a_knife = SoliRom::AssetManager::Get()->createAnimation("assets/KNIFE_1.png", 200);
 
-	sizeMul = 3;
-	setSize(30 * sizeMul, 78 * sizeMul);
+	int sizeMul = 3;
+	SetSize(30 * sizeMul, 78 * sizeMul);
 
-	setPosition(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
+	SetPos(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
 	//size 30 78
 	a_knife->Start();
 }
@@ -22,9 +22,9 @@ void Knife::animate()
 bool Knife::knifeLogic(Guy* _weedguy)
 {
 	//IF KNIFE CLICKED
-	if (SoliRom::EventHandler::click())
+	if (SoliRom::Input::Click())
 	{
-		if (SoliRom::EventHandler::mouseInObj(this))
+		if (SoliRom::Input::MouseInRect(&screenRect))
 		{
 			held = true;
 		}
@@ -32,17 +32,17 @@ bool Knife::knifeLogic(Guy* _weedguy)
 
 	if (held)
 	{
-		setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (GetRect()->h / 2));
+		SetPos((SoliRom::Input::getMouse().x * (1 / cam->scale)) - (GetRect()->w / 2), (SoliRom::Input::getMouse().y * (1 / cam->scale)) - (GetRect()->h / 2));
 
-		if (SoliRom::EventHandler::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::EventHandler::click())
+		if (SoliRom::Input::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::Input::Click())
 		{
 			held = false;
-			setPosition(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
+			SetPos(SoliRom::App::Get()->GetCurrentWindow()->getWidth() - GetRect()->w, (int)(SoliRom::App::Get()->GetCurrentWindow()->getHeight() / 1.5) - (GetRect()->h / 2));
 
-			if (SoliRom::EventHandler::mouseInObj(_weedguy))
+			if (SoliRom::Input::MouseInRect(_weedguy->GetScreenRect()))
 			{
 				//kill the guy liksom
-				setPosition(-1000, -1000);
+				SetPos(-1000, -1000);
 				return true;
 			}
 		}

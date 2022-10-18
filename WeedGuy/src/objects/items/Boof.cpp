@@ -4,16 +4,16 @@ Boof::Boof()
 {
 	boof = SoliRom::AssetManager::Get()->createTexture("assets/jont.png");
 	SetTexture(boof);
-	setSize(450 / 2, 250 / 2);
+	SetSize(450 / 2, 250 / 2);
 }
 
 bool Boof::jointLogic(Guy* _weedguy)
 {
 	//IF JOINT CLICKED
 
-	if (SoliRom::EventHandler::click())
+	if (SoliRom::Input::Click())
 	{
-		if (SoliRom::EventHandler::mouseInObj(this))
+		if (SoliRom::Input::MouseInRect(GetScreenRect()))
 		{
 			held = true;
 		}
@@ -21,14 +21,14 @@ bool Boof::jointLogic(Guy* _weedguy)
 
 	if (held)
 	{
-		setPosition((SoliRom::EventHandler::getMouse().x * (1 / cam.scale)) - (GetRect()->w / 2), (SoliRom::EventHandler::getMouse().y * (1 / cam.scale)) - (GetRect()->h / 2));
+		SetPos(SoliRom::Input::getMouse().x - GetRect()->w / 2, SoliRom::Input::getMouse().y - GetRect()->h / 2);
 
-		if (SoliRom::EventHandler::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::EventHandler::click())
+		if (SoliRom::Input::getMouse().state != SoliRom::MouseState::HELD && !SoliRom::Input::Click())
 		{
 			held = false;
-			setPosition(0, 0);
+			SetPos(0, 0);
 
-			if (SoliRom::EventHandler::mouseInObj(_weedguy))
+			if (SoliRom::Input::MouseInRect(_weedguy->GetScreenRect()))
 			{
 				//smoke joint
 				return true;

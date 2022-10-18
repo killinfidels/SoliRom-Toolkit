@@ -22,10 +22,10 @@ CaveInt::CaveInt()
 	back.SetTexture(t_arrowDown);
 	level.SetTexture(t_background);
 
-	level.setSize(w_game->getWidth(), w_game->getHeight());
-	back.setSize(128, 128);
+	level.SetSize(w_game->getWidth(), w_game->getHeight());
+	back.SetSize(128, 128);
 
-	back.setPosition((w_game->getWidth() / 2) - (back.GetRect()->w / 2), w_game->getHeight() - back.GetRect()->h);
+	back.SetPos((w_game->getWidth() / 2) - (back.GetRect()->w / 2), w_game->getHeight() - back.GetRect()->h);
 
 	cam.x = 0;
 	cam.y = 0;
@@ -53,12 +53,12 @@ void CaveInt::Script()
 {
 	if (loadSuccess)
 	{
-		if (SoliRom::EventHandler::keyPressed(SDLK_w))
+		if (SoliRom::Input::keyPressed(SDLK_w))
 		{
 			cam.z += 10;
 		}
 
-		if (SoliRom::EventHandler::keyPressed(SDLK_s))
+		if (SoliRom::Input::keyPressed(SDLK_s))
 		{
 			cam.z -= 10;
 		}
@@ -68,9 +68,9 @@ void CaveInt::Script()
 Level::LevelId CaveInt::LevelTransition()
 {
 	LevelId tempID = levelIdentification;
-	if (SoliRom::EventHandler::click())
+	if (SoliRom::Input::Click())
 	{
-		if (SoliRom::EventHandler::mouseInObj(&back))
+		if (SoliRom::Input::MouseInRect(back.GetScreenRect()))
 			tempID = LevelId::CaveExt;
 
 	}

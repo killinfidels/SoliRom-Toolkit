@@ -14,8 +14,8 @@ Tree::Tree(int _tree, int _size, int _x, int _y)
 
 		SDL_QueryTexture(a_tree->Get()->Get(), NULL, NULL, &picW, &picH);
 
-		setSize(_size, _size * (picH / (float)picW));
-		setPosition(_x - GetRect()->w / 2, _y - GetRect()->h);
+		SetSize(_size, _size * (picH / (float)picW));
+		SetPos(_x - GetRect()->w / 2, _y - GetRect()->h);
 	}
 }
 
