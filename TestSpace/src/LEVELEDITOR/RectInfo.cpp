@@ -16,8 +16,8 @@ RectInfo::RectInfo(int _i, SDL_Rect* _rect)
 
 	//ID BOX
 	t_id = am->createTextureFromText(std::to_string(id), textSize, black);
-	SDL_QueryTexture(t_id->Get(), NULL, NULL, &g_id.GetRect()->w, &g_id.GetRect()->h);
-	g_id.setPosition(0, id * g_id.GetRect()->h * 5);
+	g_id.SetRect(SoliRom::RectToFRect(t_id->GetSize()));
+	g_id.SetPos(0, id * g_id.GetRect()->h * 5);
 	g_id.SetTexture(t_id);
 
 	//VALUE INDICATORS
@@ -25,14 +25,14 @@ RectInfo::RectInfo(int _i, SDL_Rect* _rect)
 	g_y.SetTexture(t_y);
 	g_w.SetTexture(t_w);
 	g_h.SetTexture(t_h);
-	SDL_QueryTexture(t_x->Get(), NULL, NULL, &g_x.GetRect()->w, &g_x.GetRect()->h);
-	SDL_QueryTexture(t_y->Get(), NULL, NULL, &g_y.GetRect()->w, &g_y.GetRect()->h);
-	SDL_QueryTexture(t_w->Get(), NULL, NULL, &g_w.GetRect()->w, &g_w.GetRect()->h);
-	SDL_QueryTexture(t_h->Get(), NULL, NULL, &g_h.GetRect()->w, &g_h.GetRect()->h);
-	g_x.setPosition(0, g_id.GetRect()->y + g_id.GetRect()->h);
-	g_y.setPosition(0, g_x.GetRect()->y + g_x.GetRect()->h);
-	g_w.setPosition(0, g_y.GetRect()->y + g_y.GetRect()->h);
-	g_h.setPosition(0, g_w.GetRect()->y + g_w.GetRect()->h);
+	g_x.SetRect(SoliRom::RectToFRect(t_x->GetSize()));
+	g_y.SetRect(SoliRom::RectToFRect(t_y->GetSize()));
+	g_w.SetRect(SoliRom::RectToFRect(t_w->GetSize()));
+	g_h.SetRect(SoliRom::RectToFRect(t_h->GetSize()));
+	g_x.SetPos(0, g_id.GetRect()->y + g_id.GetRect()->h);
+	g_y.SetPos(0, g_x.GetRect()->y + g_x.GetRect()->h);
+	g_w.SetPos(0, g_y.GetRect()->y + g_y.GetRect()->h);
+	g_h.SetPos(0, g_w.GetRect()->y + g_w.GetRect()->h);
 
 	//VALUES
 	t_xValue = am->createTextureFromText(std::to_string(previous.x), textSize, black);
@@ -43,14 +43,14 @@ RectInfo::RectInfo(int _i, SDL_Rect* _rect)
 	g_yValue.SetTexture(t_yValue);
 	g_wValue.SetTexture(t_wValue);
 	g_hValue.SetTexture(t_hValue);
-	SDL_QueryTexture(t_xValue->Get(), NULL, NULL, &g_xValue.GetRect()->w, &g_xValue.GetRect()->h);
-	SDL_QueryTexture(t_yValue->Get(), NULL, NULL, &g_yValue.GetRect()->w, &g_yValue.GetRect()->h);
-	SDL_QueryTexture(t_wValue->Get(), NULL, NULL, &g_wValue.GetRect()->w, &g_wValue.GetRect()->h);
-	SDL_QueryTexture(t_hValue->Get(), NULL, NULL, &g_hValue.GetRect()->w, &g_hValue.GetRect()->h);
-	g_xValue.setPosition(g_x.GetRect()->x + g_x.GetRect()->w, g_x.GetRect()->y);
-	g_yValue.setPosition(g_y.GetRect()->x + g_y.GetRect()->w, g_y.GetRect()->y);
-	g_wValue.setPosition(g_w.GetRect()->x + g_w.GetRect()->w, g_w.GetRect()->y);
-	g_hValue.setPosition(g_h.GetRect()->x + g_h.GetRect()->w, g_h.GetRect()->y);
+	g_xValue.SetRect(SoliRom::RectToFRect(t_xValue->GetSize()));
+	g_yValue.SetRect(SoliRom::RectToFRect(t_yValue->GetSize()));
+	g_wValue.SetRect(SoliRom::RectToFRect(t_wValue->GetSize()));
+	g_hValue.SetRect(SoliRom::RectToFRect(t_hValue->GetSize()));
+	g_xValue.SetPos(g_x.GetRect()->x + g_x.GetRect()->w, g_x.GetRect()->y);
+	g_yValue.SetPos(g_y.GetRect()->x + g_y.GetRect()->w, g_y.GetRect()->y);
+	g_wValue.SetPos(g_w.GetRect()->x + g_w.GetRect()->w, g_w.GetRect()->y);
+	g_hValue.SetPos(g_h.GetRect()->x + g_h.GetRect()->w, g_h.GetRect()->y);
 }
 
 RectInfo::~RectInfo()

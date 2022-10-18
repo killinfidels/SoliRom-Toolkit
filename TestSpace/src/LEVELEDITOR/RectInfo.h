@@ -29,13 +29,13 @@ private:
 	SoliRom::Asset::Texture* t_hValue;
 	SoliRom::Asset::Texture* t_id;
 
-	SoliRom::GameObject g_x;
-	SoliRom::GameObject g_y;
-	SoliRom::GameObject g_w;
-	SoliRom::GameObject g_h;
-	SoliRom::GameObject g_xValue;
-	SoliRom::GameObject g_yValue;
-	SoliRom::GameObject g_wValue;
-	SoliRom::GameObject g_hValue;
-	SoliRom::GameObject g_id;
+	SoliRom::EngineObject g_x;
+	SoliRom::EngineObject g_y;
+	SoliRom::EngineObject g_w;
+	SoliRom::EngineObject g_h;
+	SoliRom::EngineObject g_xValue;
+	SoliRom::EngineObject g_yValue;
+	SoliRom::EngineObject g_wValue;
+	SoliRom::EngineObject g_hValue;
+	SoliRom::EngineObject g_id;
 };

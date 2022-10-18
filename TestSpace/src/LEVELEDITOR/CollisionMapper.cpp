@@ -39,26 +39,22 @@ CollisionMapper::CollisionMapper() : Layer("Collision Mapping Layer")
 	SoliRom::AssetManager::Get()->setWindow(w_map);
 	t_map = SoliRom::AssetManager::Get()->createTexture(mapPath);
 
-	int w, h;
-	SDL_QueryTexture(t_map->Get(), NULL, NULL, &w, &h);
-
-	//temp
-	float ratio = w / h;
-	if (w > 1900)
+	if (t_map->GetSize().w > 1900 || t_map->GetSize().h > 900)
 	{
-		scale = w / 1900;
-		w = 1900;
-		h = 1900 / ratio;
+		if (t_map->GetSize().w / 1900.0 > t_map->GetSize().h / 900.0)
+		{
+			cam.scale = 1900.0 / t_map->GetSize().w;
+		}
+		else
+		{
+			cam.scale = 900.0 / t_map->GetSize().h;
+		}
 	}
 
-	if (w <= 1900 && h <= 1900)
-	{
-		SDL_SetWindowSize(w_map->getSDL_Window(), w, h);
-	}
-	//temp
-
+	g_map.SetSize(t_map->GetSize().w * cam.scale, t_map->GetSize().h * cam.scale);
 	g_map.SetTexture(t_map);
-	g_map.setSize(w, h);
+
+	SDL_SetWindowSize(w_map->getSDL_Window(), g_map.GetRect()->w, g_map.GetRect()->h);
 
 	cam.x = 0;
 	cam.y = 0;
@@ -73,12 +69,10 @@ CollisionMapper::CollisionMapper() : Layer("Collision Mapping Layer")
 
 	t_text = SoliRom::AssetManager::Get()->createTextureFromText("poo", 100, poo);
 
-	SDL_QueryTexture(t_text->Get(), NULL, NULL, &w, &h);
-
-	SDL_SetWindowSize(w_rect->getSDL_Window(), w, h);
+	SDL_SetWindowSize(w_rect->getSDL_Window(), t_text->GetSize().w, t_text->GetSize().h);
 
 	g_text.SetTexture(t_text);
-	g_text.setSize(w, h);
+	g_text.SetSize(t_text->GetSize().w, t_text->GetSize().h);
 
 	RectInfo::init();
 
@@ -87,42 +81,42 @@ CollisionMapper::CollisionMapper() : Layer("Collision Mapping Layer")
 
 void CollisionMapper::OnEvent()
 {
-	if (SoliRom::EventHandler::keyPressed(SDLK_ESCAPE))
+	if (SoliRom::Input::keyPressed(SDLK_ESCAPE) || SoliRom::Input::getQuit())
 	{
 		app->Quit();
 	}
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_s) && !saveToggle)
+	if (SoliRom::Input::keyPressed(SDLK_s) && !saveToggle)
 	{
 		save();
 		saveToggle = true;
 	}
 	
-	if (!SoliRom::EventHandler::keyPressed(SDLK_s))
+	if (!SoliRom::Input::keyPressed(SDLK_s))
 	{
 		saveToggle = false;
 	}
 
-	if (SoliRom::EventHandler::click() && !creating && SoliRom::EventHandler::getMouse().window == w_map)
+	if (SoliRom::Input::Click() && !creating && SoliRom::Input::getMouse().window == w_map)
 	{
 		creating = true;
-		clickWorldPosX = SoliRom::EventHandler::getMouse().x + cam.x;
-		clickWorldPosY = SoliRom::EventHandler::getMouse().y + cam.y;
+		clickWorldPosX = SoliRom::Input::getMouse().x + cam.x;
+		clickWorldPosY = SoliRom::Input::getMouse().y + cam.y;
 
-		//temp scale
-		farts.emplace_back(clickWorldPosX * scale, clickWorldPosY * scale, 0, 0);
+		//temp cam.scale
+		farts.emplace_back(clickWorldPosX * 1 / cam.scale, clickWorldPosY * 1 / cam.scale, 0, 0);
 	}
 
-	if (SoliRom::EventHandler::getMouse().state == SoliRom::HELD && creating)
+	if (SoliRom::Input::getMouse().state == SoliRom::HELD && creating)
 	{
-		clickWorldPosX = SoliRom::EventHandler::getMouse().x + cam.x;
-		clickWorldPosY = SoliRom::EventHandler::getMouse().y + cam.y;
+		clickWorldPosX = SoliRom::Input::getMouse().x + cam.x;
+		clickWorldPosY = SoliRom::Input::getMouse().y + cam.y;
 
-		//temp scale
-		farts.back().w = clickWorldPosX * scale - farts.back().x;
-		farts.back().h = clickWorldPosY * scale - farts.back().y;
+		//temp cam.scale
+		farts.back().w = clickWorldPosX * 1 / cam.scale - farts.back().x;
+		farts.back().h = clickWorldPosY * 1 / cam.scale - farts.back().y;
 	}
-	else if (SoliRom::EventHandler::getMouse().state == SoliRom::IDLE && creating)
+	else if (SoliRom::Input::getMouse().state == SoliRom::IDLE && creating)
 	{
 		creating = false;
 
@@ -134,7 +128,9 @@ void CollisionMapper::OnEvent()
 
 void CollisionMapper::OnUpdate()
 {
-	g_map.setPosition(-cam.x, -cam.y);
+	*g_map.GetPos() = { (float)-cam.x, (float)-cam.y};
+	g_map.UpdatePos();
+
 	g_map.Draw();
 	//g_text.Draw();
 
@@ -146,10 +142,10 @@ void CollisionMapper::OnUpdate()
 		drawFarts[i].y = farts[i].y - cam.y;
 
 		//temp
-		drawFarts[i].x = drawFarts[i].x / scale;
-		drawFarts[i].y = drawFarts[i].y / scale;
-		drawFarts[i].w = drawFarts[i].w / scale;
-		drawFarts[i].h = drawFarts[i].h / scale;
+		drawFarts[i].x = drawFarts[i].x * cam.scale;
+		drawFarts[i].y = drawFarts[i].y * cam.scale;
+		drawFarts[i].w = drawFarts[i].w * cam.scale;
+		drawFarts[i].h = drawFarts[i].h * cam.scale;
 		//temp
 
 		SDL_RenderDrawRect(w_map->getSDL_Renderer(), &drawFarts[i]);
@@ -167,11 +163,11 @@ void CollisionMapper::save()
 	std::string data = "\n";
 	for (int i = 0; i < farts.size(); i++)
 	{
-		data += "farts.emplace_back("
-			+ std::to_string(farts[i].x) + " * rescale, "
-			+ std::to_string(farts[i].y) + " * rescale, "
-			+ std::to_string(farts[i].w) + " * rescale, "
-			+ std::to_string(farts[i].h) + " * rescale);\n";
+		data += ""
+			+ std::to_string(farts[i].x) + ", "
+			+ std::to_string(farts[i].y) + ", "
+			+ std::to_string(farts[i].w) + ", "
+			+ std::to_string(farts[i].h) + "\n";
 	}
 
 	SR_WARN(data.c_str());

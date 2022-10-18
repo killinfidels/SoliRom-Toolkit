@@ -25,20 +25,18 @@ private:
 	SoliRom::Asset::Texture* t_map;
 	SoliRom::Asset::Texture* t_text;
 
-	SoliRom::GameObject g_map;
-	SoliRom::GameObject g_text;
+	SoliRom::EngineObject g_map;
+	SoliRom::EngineObject g_text;
 
 	SoliRom::Window* w_map;
 	SoliRom::Window* w_rect;
 
 	std::vector<RectInfo*> test;
 
-	SDL_Point cam;
+	SoliRom::Camera cam;
 
 	bool creating = false;
 	int clickWorldPosX, clickWorldPosY;
-
-	float scale = 1;
 
 	bool saveToggle = false;
 };
