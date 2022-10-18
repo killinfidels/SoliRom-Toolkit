@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	a_player = AssetManager::Get()->createAnimation("assets/plane1_1.png", 50);
+	a_player = AssetManager::Get()->createAnimation("assets/plane2_1.png", 50);
 	a_explosion = AssetManager::Get()->createAnimation("assets/explosion_1.png", 100);
 	a_gunfire = AssetManager::Get()->createAnimation("assets/gunfire_1.png", 100);
 
@@ -40,18 +40,18 @@ Player::~Player()
 
 void Player::Update()
 {
-	if (EventHandler::keyPressed(SDLK_RIGHT) || EventHandler::keyPressed(SDLK_d))
+	if (Input::keyPressed(SDLK_RIGHT) || Input::keyPressed(SDLK_d))
 		angle += 1 / (velocity * 1.5 / maxV);
-	if (EventHandler::keyPressed(SDLK_LEFT) || EventHandler::keyPressed(SDLK_a))
+	if (Input::keyPressed(SDLK_LEFT) || Input::keyPressed(SDLK_a))
 		angle -= 1 / (velocity * 1.5 / maxV);
 	if (angle > 360)
 		angle -= 360;
 	if (angle < 0)
 		angle += 360;
 
-	if (EventHandler::keyPressed(SDLK_UP) || EventHandler::keyPressed(SDLK_w))
+	if (Input::keyPressed(SDLK_UP) || Input::keyPressed(SDLK_w))
 		velocity += acceleration;
-	if (EventHandler::keyPressed(SDLK_DOWN) || EventHandler::keyPressed(SDLK_s))
+	if (Input::keyPressed(SDLK_DOWN) || Input::keyPressed(SDLK_s))
 		velocity -= acceleration;
 	if (velocity > maxV)
 		velocity = maxV;
@@ -76,7 +76,7 @@ void Player::Update()
 	
 	shootCooldown.update();
 
-	if (EventHandler::keyPressed(SDLK_SPACE) && shootCooldown.checkElapsed(200))
+	if (Input::keyPressed(SDLK_SPACE) && shootCooldown.checkElapsed(200))
 	{
 		shootCooldown.Reset();
 		//angle = 90;
@@ -97,9 +97,9 @@ void Player::PlayerDraw()
 {
 	SDL_Renderer* renderer = a_player->Get()->GetWindow()->getSDL_Renderer();
 
-	UpdateDrawRectToCam();
+	UpdateScreenPositions();
 
 	texture = a_player->Get();
 
-	SDL_RenderCopyExF(renderer, texture->Get(), NULL, &drawRect, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyExF(renderer, texture->Get(), NULL, &screenRect, angle, NULL, SDL_FLIP_NONE);
 }

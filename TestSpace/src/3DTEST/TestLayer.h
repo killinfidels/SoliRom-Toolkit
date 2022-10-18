@@ -6,7 +6,7 @@ struct point
 	int x, y, z;
 };
 
-class obj_3D : public SoliRom::GameObject
+class obj_3D : public SoliRom::EngineObject
 {
 public:
 	void setZ(int _z) { z = _z; }
@@ -17,7 +17,7 @@ public:
 	static void setRenderer(SoliRom::Window* _window) { renderer = _window->getSDL_Renderer(); }
 	void setRenderRect(SDL_Rect _rect) { renderRect = _rect; }
 
-	
+	bool visible = true;
 	SDL_Rect sizeRect;
 	SDL_Rect renderRect;
 	int z;

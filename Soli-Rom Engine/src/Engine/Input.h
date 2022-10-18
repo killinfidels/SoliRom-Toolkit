@@ -17,17 +17,14 @@ namespace SoliRom
 	struct Mouse
 	{
 		int x, y;
-		bool click = false;
 		MouseState state = IDLE;
 		Window* window = NULL;
 	};
 	//key state
 
-	class EventHandler
+	class Input
 	{
 	public:
-
-
 		static void update();
 
 		static Mouse getMouse();
@@ -36,9 +33,10 @@ namespace SoliRom
 
 
 		static bool MouseInRect(SDL_FRect* _rect);
-		static bool click();
+		static bool Click();
+		static bool Held();
 	private:
-		EventHandler();
+		Input();
 		//keyboardstate
 		static struct Key
 		{

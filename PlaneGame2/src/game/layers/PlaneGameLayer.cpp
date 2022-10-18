@@ -37,7 +37,7 @@ GameLayer::GameLayer() : Layer("PlaneGame")
 
 void GameLayer::OnEvent()
 {
-	if (EventHandler::getQuit() || EventHandler::keyPressed(SDLK_ESCAPE))
+	if (Input::getQuit() || Input::keyPressed(SDLK_ESCAPE))
 	{
 		game->Quit();
 	}

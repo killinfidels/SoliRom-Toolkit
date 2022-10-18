@@ -47,7 +47,7 @@ namespace SoliRom
 	void AssetViewer::OnEvent()
 	{
 		//open close window
-		if (EventHandler::keyPressed(SDLK_F11))
+		if (Input::keyPressed(SDLK_F11))
 		{
 			if (!toggle)
 			{
@@ -72,10 +72,10 @@ namespace SoliRom
 		if (running)
 		{
 			//everything Clicking related :)
-			if (EventHandler::click())
+			if (Input::Click())
 			{
 				//textures button - runs if not already selected
-				if (EventHandler::MouseInRect(texturesButton.GetDrawRect()))
+				if (Input::MouseInRect(texturesButton.GetScreenRect()))
 				{
 					if (currentSelection != Selection::TEXTURES)
 					{
@@ -87,7 +87,7 @@ namespace SoliRom
 				}
 
 				////animations button - runs if not already selected
-				if (EventHandler::MouseInRect(animationsButton.GetDrawRect()))
+				if (Input::MouseInRect(animationsButton.GetScreenRect()))
 				{
 					if (currentSelection != Selection::ANIMATIONS)
 					{
@@ -99,7 +99,7 @@ namespace SoliRom
 				}
 
 				//sound button - runs if not already selected
-				if (EventHandler::MouseInRect(soundsButton.GetDrawRect()))
+				if (Input::MouseInRect(soundsButton.GetScreenRect()))
 				{
 					if (currentSelection != Selection::SOUNDS)
 					{
@@ -111,7 +111,7 @@ namespace SoliRom
 				}
 
 				//update button
-				if (EventHandler::MouseInRect(updateButton.GetDrawRect()))
+				if (Input::MouseInRect(updateButton.GetScreenRect()))
 				{
 					update = true;
 				}
@@ -122,7 +122,7 @@ namespace SoliRom
 				//box clicks
 				for (int i = 0; i < boxes.size(); i++)
 				{
-					if (EventHandler::MouseInRect(boxes[i]->GetDrawRect()))
+					if (Input::MouseInRect(boxes[i]->GetScreenRect()))
 					{
 						selectedBox = *boxes[i]->GetRect();
 						selectedBoxId = i;

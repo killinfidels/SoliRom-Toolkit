@@ -44,14 +44,16 @@ TestLayer::TestLayer() : Layer("The Test Layer")
 
 	for (int i = 0; i < 24; i++)
 	{
-		tree[i].setSize(size, -size * 2.246543);
+		tree[i].GetRect()->w = size;
+		tree[i].GetRect()->h = -size * 2.246543;
+		tree[i].UpdateRect();
 
 		tree[i].setZ(zSpace * zRow);
-		tree[i].setPosition(-xSpace, 0);
+		*tree[i].GetPos() = { (float)-xSpace, 0 };
 
 		if ((i) % 2 != 0)
 		{
-			tree[i].setPosition(xSpace, 0);
+			*tree[i].GetPos() = { (float)xSpace, 0 };
 			zRow++;
 		}
 	}
@@ -306,44 +308,44 @@ void TestLayer::OnUpdate()
 	int speedMul = 4;
 	int newSpeed = cam.camSpeed;
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_LSHIFT))
+	if (SoliRom::Input::keyPressed(SDLK_LSHIFT))
 		newSpeed *= speedMul;
 
 	//cam pos
-	if (SoliRom::EventHandler::keyPressed(SDLK_w))
+	if (SoliRom::Input::keyPressed(SDLK_w))
 	{
 		cam.pos.x += newSpeed * sin(cam.xD * 3.14159265 / 180);
 		cam.pos.z += newSpeed * cos(cam.xD * 3.14159265 / 180);
 	}
-	if (SoliRom::EventHandler::keyPressed(SDLK_s))
+	if (SoliRom::Input::keyPressed(SDLK_s))
 	{
 		cam.pos.x -= newSpeed * sin(cam.xD * 3.14159265 / 180);
 		cam.pos.z -= newSpeed * cos(cam.xD * 3.14159265 / 180);
 	}
-	if (SoliRom::EventHandler::keyPressed(SDLK_a))
+	if (SoliRom::Input::keyPressed(SDLK_a))
 	{
 		cam.pos.x -= newSpeed * cos(cam.xD * 3.14159265 / 180);
 		cam.pos.z += newSpeed * sin(cam.xD * 3.14159265 / 180);
 	}
-	if (SoliRom::EventHandler::keyPressed(SDLK_d))
+	if (SoliRom::Input::keyPressed(SDLK_d))
 	{
 		cam.pos.x += newSpeed * cos(cam.xD * 3.14159265 / 180);
 		cam.pos.z -= newSpeed * sin(cam.xD * 3.14159265 / 180);
 	}
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_SPACE))
+	if (SoliRom::Input::keyPressed(SDLK_SPACE))
 		cam.pos.y -= newSpeed;
-	if (SoliRom::EventHandler::keyPressed(SDLK_LCTRL))
+	if (SoliRom::Input::keyPressed(SDLK_LCTRL))
 		cam.pos.y += newSpeed;
 
 	//cam angle
-	if (SoliRom::EventHandler::keyPressed(SDLK_UP))
+	if (SoliRom::Input::keyPressed(SDLK_UP))
 		cam.yD += newSpeed / 2;
-	if (SoliRom::EventHandler::keyPressed(SDLK_DOWN))
+	if (SoliRom::Input::keyPressed(SDLK_DOWN))
 		cam.yD -= newSpeed / 2;
-	if (SoliRom::EventHandler::keyPressed(SDLK_RIGHT))
+	if (SoliRom::Input::keyPressed(SDLK_RIGHT))
 		cam.xD += newSpeed / 2;
-	if (SoliRom::EventHandler::keyPressed(SDLK_LEFT))
+	if (SoliRom::Input::keyPressed(SDLK_LEFT))
 		cam.xD -= newSpeed / 2;
 
 	if (cam.xD > 180)
@@ -357,7 +359,7 @@ void TestLayer::OnUpdate()
 		cam.yD = -90;
 
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_0) && SoliRom::EventHandler::keyPressed(SDLK_1))
+	if (SoliRom::Input::keyPressed(SDLK_0) && SoliRom::Input::keyPressed(SDLK_1))
 		SR_TRACE("CAN PRESS BOTH");
 
 	drawRoad();
@@ -381,21 +383,21 @@ void TestLayer::OnUpdate()
 
 	frameTime.update();
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_1) && !pauseOnce)
+	if (SoliRom::Input::keyPressed(SDLK_1) && !pauseOnce)
 	{
 		//pauseOnce = true;
 		frameTime.Stop();
 		SR_INFO("TIMER PAUSED");
 	}
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_2) && !unpauseOnce)
+	if (SoliRom::Input::keyPressed(SDLK_2) && !unpauseOnce)
 	{
 		//unpauseOnce = true;
 		frameTime.Start();
 		SR_INFO("TIMER UNPAUSED");
 	}
 
-	if (SoliRom::EventHandler::keyPressed(SDLK_3) && !resetOnce)
+	if (SoliRom::Input::keyPressed(SDLK_3) && !resetOnce)
 	{
 		//resetOnce = true;
 		frameTime.Reset();

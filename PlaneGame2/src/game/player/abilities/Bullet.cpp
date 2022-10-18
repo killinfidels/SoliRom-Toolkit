@@ -65,9 +65,9 @@ void Bullet::Update()
 
 void Bullet::BulletDraw()
 {
-	UpdateDrawRectToCam();
+	UpdateScreenPositions();
 
-	SDL_RenderDrawRectF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), &drawRect);
+	SDL_RenderDrawRectF(App::Get()->GetCurrentWindow()->getSDL_Renderer(), &screenRect);
 }
 
 void Bullet::Draw()

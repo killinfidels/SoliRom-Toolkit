@@ -79,7 +79,7 @@ namespace SoliRom
 				frameTimer.Reset();
 
 				//call eventhandler, it stores all events in keyboardstate, mousestate and windowstate
-				EventHandler::update();
+				Input::update();
 
 				//if not minimized
 					//update all layers

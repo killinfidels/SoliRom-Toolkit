@@ -4,17 +4,16 @@
 
 namespace SoliRom
 {
-	Mouse EventHandler::mouse;
-	SDL_Event EventHandler::e;
-	std::vector<EventHandler::Key> EventHandler::keyboard;
-	bool EventHandler::quit = false;
+	Mouse Input::mouse;
+	SDL_Event Input::e;
+	std::vector<Input::Key> Input::keyboard;
+	bool Input::quit = false;
 
-	void EventHandler::update()
+	void Input::update()
 	{
-		//reset click and set held
-		if (mouse.click == true)
+		//reset Click and set held
+		if (mouse.state == CLICKED)
 		{
-			mouse.click = false;
 			//if its not actually held it will be reset by mousebutton up
 			mouse.state = HELD;
 		}
@@ -31,16 +30,14 @@ namespace SoliRom
 				mouse.y = e.motion.y;
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				mouse.click = true;
 				mouse.state = CLICKED;
-				
+				//SR_CORE_WARN("CLICK!");
 				windowName = SDL_GetWindowTitle(SDL_GetWindowFromID(e.button.windowID));
 				
 				mouse.window = App::Get()->GetWindow(windowName);
 				break;
 			case SDL_MOUSEBUTTONUP:
 				mouse.state = IDLE;
-				mouse.click = false;
 				break;
 			case SDL_KEYDOWN:
 				for (int i = 0; i <= keyboard.size() + 1; i++)
@@ -82,7 +79,7 @@ namespace SoliRom
 		}
 	}
 
-	bool EventHandler::keyPressed(int _keyID)
+	bool Input::keyPressed(int _keyID)
 	{
 		for (int i = 0; i < keyboard.size(); i++)
 		{
@@ -95,21 +92,21 @@ namespace SoliRom
 		return false;
 	}
 
-	Mouse EventHandler::getMouse()
+	Mouse Input::getMouse()
 	{
 		return mouse;
 	}
 
-	bool EventHandler::getQuit()
+	bool Input::getQuit()
 	{
 		return quit;
 	}
 
-	bool EventHandler::MouseInRect(SDL_FRect* _rect)
+	bool Input::MouseInRect(SDL_FRect* _rect)
 	{
-		if (EventHandler::getMouse().x > _rect->x && EventHandler::getMouse().x < _rect->x + _rect->w)
+		if (Input::getMouse().x > _rect->x && Input::getMouse().x < _rect->x + _rect->w)
 		{
-			if (EventHandler::getMouse().y > _rect->y && EventHandler::getMouse().y < _rect->y + _rect->h)
+			if (Input::getMouse().y > _rect->y && Input::getMouse().y < _rect->y + _rect->h)
 			{
 				return true;
 			}
@@ -117,9 +114,19 @@ namespace SoliRom
 
 		return false;
 	}
-	bool EventHandler::click()
+
+	bool Input::Click()
 	{
 		if (mouse.state == CLICKED)
+		{
+			return true;
+		}
+
+		return false;
+	}
+	bool Input::Held()
+	{
+		if (mouse.state < 2)
 		{
 			return true;
 		}

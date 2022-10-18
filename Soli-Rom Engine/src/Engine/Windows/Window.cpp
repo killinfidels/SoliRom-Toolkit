@@ -20,6 +20,8 @@ namespace SoliRom
 		{
 			//Create sdl renderer
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+			//allows alpha blending -- more blendmodes https://wiki.libsdl.org/SDL_BlendMode
+			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 			if (renderer == NULL)
 			{
 				SR_CORE_ERROR("Renderer: %s, failed. Error: %s", name, SDL_GetError());
