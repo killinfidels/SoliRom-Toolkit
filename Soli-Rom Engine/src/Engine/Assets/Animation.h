@@ -36,7 +36,10 @@ namespace SoliRom::Asset
 
 		bool switchFrame(int _frame, std::string _path);
 		bool switchFrame(int _frame, Texture* _texture);
-		bool switchFrameTime(int _frame, int _frameTime);
+		//changes all frametimes
+		void SetFrametime(int _frameTime);
+		//changes selected frametime
+		void SetFrametime(int _frame, int _frameTime);
 
 	private:
 		//path to first frame or .txt file

@@ -173,4 +173,12 @@ namespace SoliRom::Asset
 	{
 		return finished;
 	}
+
+	void Animation::SetFrametime(int _frameTime)
+	{
+		for (int i = 0; i < frameTime.size(); i++)
+		{
+			frameTime[i] = _frameTime;
+		}
+	}
 }
