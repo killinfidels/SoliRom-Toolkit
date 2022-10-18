@@ -21,6 +21,7 @@ namespace SoliRom
 	public:
 		void update();
 		void Reset();
+		//returns in seconds for some dumb reason
 		float elapsed();
 		bool checkElapsed(int _milli);
 		bool Stop();
