@@ -13,7 +13,7 @@ GameLayer::GameLayer() : Layer("WeedGuy Main Layer")
 	loadingScreen.SetSize(w_game->getWidth(), w_game->getHeight());
 	loadingScreen.SetTexture(t_loading);
 
-	currentLevel = ShackInt::Get();
+	currentLevel = ShackExt::Get();
 	nextLevel = lastLevel = currentLevel->GetId();
 
 	app->SetUpdateTick(20);
